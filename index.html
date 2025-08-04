@@ -13,7 +13,7 @@
     <main>
         <header class="app-header">
             <h1>ASTDX DPS Calculator</h1>
-            <p class="subtitle">Ver 1.3.0</p>
+            <p class="subtitle">Ver 1.4.1</p>
         </header>
 
         <div class="calculator-container">
@@ -74,8 +74,12 @@
             </section>
         </div>
     </main>
+    
+    <!-- External script with unit data -->
+    <script src="unit_stats.js"></script>
 
     <script>
+        // --- STATE VARIABLES ---
         let selectedUnit = '';
         let unitLevel = 80;
         let selectedTrait = 'Traitless';
@@ -83,16 +87,9 @@
         let rngRoll = 0;
         let spaRoll = 0;
         let selectedSkillTree = 'None';
+        let currentUpgradeIndex = 0;
 
-        const units = [
-            { name: 'koishi1', path: './images/units/placeholder.png' }, { name: 'koishi2', path: './images/units/placeholder.png' },
-            { name: 'koishi3', path: './images/units/placeholder.png' }, { name: 'koishi4', path: './images/units/placeholder.png' },
-            { name: 'koishi5', path: './images/units/placeholder.png' }, { name: 'koishi6', path: './images/units/placeholder.png' },
-            { name: 'koishi7', path: './images/units/placeholder.png' }, { name: 'koishi8', path: './images/units/placeholder.png' },
-            { name: 'koishi9', path: './images/units/placeholder.png' }, { name: 'koishi10', path: './images/units/placeholder.png' },
-            { name: 'koishi11', path: './images/units/placeholder.png' }, { name: 'koishi12', path: './images/units/placeholder.png' },
-        ];
-
+        // --- DATA ---
         const traitsData = [
             { "Traits": "Traitless", "Damage": 0, "Range": 0, "Spa": 0 }, 
             { "Traits": "Tank", "Damage": 0, "Range": 0, "Spa": 0 },
@@ -117,16 +114,31 @@
             { "Traits": "All Star", "Damage": 3, "Range": 0.1, "Spa": 0.1 }
         ];
 
+        // --- CORE FUNCTIONS ---
         function selectUnit(unitName) {
             selectedUnit = unitName;
+            currentUpgradeIndex = 0; // Reset to placement level on new unit selection
             updateSelectedUnit();
-            updateOutputDisplay(); // Update output on new selection
+            updateOutputDisplay();
             
             document.querySelectorAll('.unit-card.selected').forEach(card => card.classList.remove('selected'));
             const selectedCard = document.querySelector(`[data-unit="${unitName}"]`);
             if (selectedCard) selectedCard.classList.add('selected');
         }
 
+        function navigateUpgrade(direction) {
+            if (!selectedUnit) return;
+            const unitData = characterData[selectedUnit];
+            const maxIndex = unitData.MaxUpgrades;
+
+            currentUpgradeIndex += direction;
+            if (currentUpgradeIndex < 0) currentUpgradeIndex = 0;
+            if (currentUpgradeIndex > maxIndex) currentUpgradeIndex = maxIndex;
+
+            updateOutputDisplay();
+        }
+
+        // --- UI UPDATE FUNCTIONS ---
         function updateSelectedUnit() {
             const displayElement = document.getElementById('currentUnitDisplay');
             const hasSelection = !!selectedUnit;
@@ -136,15 +148,15 @@
                 : 'Select a unit by clicking its image.';
         }
         
-        // MODIFIED: This function now populates the output card with current inputs
+        // MODIFIED: This function now displays DoT and Placement Limit.
         function updateOutputDisplay() {
             const outputSection = document.getElementById('dpsOutputSection');
 
             if (!selectedUnit) {
                 outputSection.innerHTML = `
-                    <h2>Future DPS Output</h2>
+                    <h2>Unit Statistics</h2>
                     <p class="placeholder-text">
-                        (This is where calculated DPS, stats, and graphs will appear.)
+                        Select a unit to see its stats and calculated DPS.
                     </p>`;
                 outputSection.classList.add('placeholder');
                 return;
@@ -152,35 +164,54 @@
             
             outputSection.classList.remove('placeholder');
 
+            const unitData = characterData[selectedUnit];
+            const maxIndex = unitData.MaxUpgrades;
+            const stats = unitData.Stats;
+
+            // Get all stats for the current unit and upgrade index
+            const damage = parseFloat(stats.Damage[currentUpgradeIndex]);
+            const spa = parseFloat(stats.SPA[currentUpgradeIndex]);
+            const range = parseFloat(stats.Range[currentUpgradeIndex]);
+            const aoe = stats.AOE[currentUpgradeIndex];
+            const dot = stats.DoT[currentUpgradeIndex]; // NEW: Get DoT
+            const placementLimit = unitData.PlacementCount; // NEW: Get placement limit
+            
+            const dps = spa > 0 ? (damage / spa).toFixed(2) : 'N/A';
+            
+            let nextUpgradeCost = 'N/A';
+            if (currentUpgradeIndex < stats.Cost.length) {
+                nextUpgradeCost = `$${Number(stats.Cost[currentUpgradeIndex]).toLocaleString()}`;
+            }
+
+            const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
+
             outputSection.innerHTML = `
-                <h2>Calculation Inputs</h2>
-                <ul class="output-stats-list">
-                    <li>
-                        <strong>Unit:</strong>
-                        <span class="value">${selectedUnit.replace(/_/g, ' ')}</span>
-                    </li>
-                    <li>
-                        <strong>Level:</strong>
-                        <span class="value">${unitLevel}</span>
-                    </li>
-                    <li>
-                        <strong>Trait:</strong>
-                        <span class="value">${selectedTrait}</span>
-                    </li>
-                    <li>
-                        <strong>Stat Rolls:</strong>
-                        <span class="value">DMG: ${dmgRoll}% / RNG: ${rngRoll}% / SPA: ${spaRoll}%</span>
-                    </li>
-                    <li>
-                        <strong>Skill Tree:</strong>
-                        <span class="value">${selectedSkillTree}</span>
-                    </li>
-                </ul>
-                <div class="final-dps-placeholder">
-                    <h3>Final DPS</h3>
-                    <p>---</p>
+                <div class="upgrade-nav">
+                    <button id="prevUpgradeBtn" class="nav-btn">◄ Prev</button>
+                    <span class="upgrade-level-display">${upgradeLabel}</span>
+                    <button id="nextUpgradeBtn" class="nav-btn">Next ►</button>
                 </div>
+                <div class="final-dps-display">
+                    <h3>DPS</h3>
+                    <p>${dps.toLocaleString()}</p>
+                </div>
+                <ul class="output-stats-list-detailed">
+                    <li><strong>Damage:</strong><span class="value">${damage.toLocaleString()}</span></li>
+                    <li><strong>Range:</strong><span class="value">${range}</span></li>
+                    <li><strong>SPA:</strong><span class="value">${spa}s</span></li>
+                    <li><strong>AOE:</strong><span class="value">${aoe}</span></li>
+                    <li><strong>DoT:</strong><span class="value">${dot}</span></li>
+                    <li><strong>Next Upgrade Cost:</strong><span class="value">${nextUpgradeCost}</span></li>
+                    <li><strong>Placement Limit:</strong><span class="value">${placementLimit}</span></li>
+                </ul>
             `;
+
+            const prevBtn = document.getElementById('prevUpgradeBtn');
+            const nextBtn = document.getElementById('nextUpgradeBtn');
+            prevBtn.addEventListener('click', () => navigateUpgrade(-1));
+            nextBtn.addEventListener('click', () => navigateUpgrade(1));
+            prevBtn.disabled = currentUpgradeIndex === 0;
+            nextBtn.disabled = currentUpgradeIndex === maxIndex;
         }
         
         function createLevelSlider() {
@@ -197,7 +228,6 @@
             document.getElementById('unitLevelSlider').oninput = function() {
                 unitLevel = parseInt(this.value);
                 document.getElementById('unitLevelValue').textContent = unitLevel;
-                updateOutputDisplay(); // Update output on change
             };
         }
 
@@ -210,7 +240,6 @@
             
             document.getElementById('traitSelection').onchange = function() {
                 selectedTrait = this.value;
-                updateOutputDisplay(); // Update output on change
             };
         }
         
@@ -226,7 +255,6 @@
                 else if (value < min) { value = min; input.value = min; }
                 
                 statVarSetter(value);
-                updateOutputDisplay(); // Update output on change
             }
 
             document.getElementById('dmgRollInput').addEventListener('input', (e) => handleInput(e, val => dmgRoll = val));
@@ -244,27 +272,36 @@
             
             document.getElementById('skillTreeSelection').onchange = function() {
                 selectedSkillTree = this.value;
-                updateOutputDisplay(); // Update output on change
             };
         }
 
-        function createUnitCard(unit) {
-            const fallbackImg = `https://via.placeholder.com/100x100/666666/ffffff?text=${encodeURIComponent(unit.name.substring(0, 3).toUpperCase())}`;
-            return `<div class="unit-card" data-unit="${unit.name}"><img src="${unit.path}" alt="${unit.name}" onerror="this.src='${fallbackImg}'"><p>${unit.name.replace(/_/g, ' ')}</p></div>`;
+        function createUnitCard(unitName, unitData) {
+            const fallbackImg = `https://via.placeholder.com/100x100/666666/ffffff?text=${encodeURIComponent(unitName.substring(0, 3).toUpperCase())}`;
+            return `<div class="unit-card" data-unit="${unitName}"><img src="${unitData.Image}" alt="${unitName}" onerror="this.src='${fallbackImg}'"><p>${unitName.replace(/_/g, ' ')}</p></div>`;
         }
 
         function initializeUnits() {
-            document.getElementById('unitGrid').innerHTML = units.map(createUnitCard).join('');
+            const unitGrid = document.getElementById('unitGrid');
+            const sortedUnitNames = Object.keys(characterData).sort();
+            const unitCardsHTML = sortedUnitNames.map(unitName => createUnitCard(unitName, characterData[unitName])).join('');
+            unitGrid.innerHTML = unitCardsHTML;
         }
 
+        // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', function() {
-            initializeUnits();
+            if (typeof characterData !== 'undefined') {
+                initializeUnits();
+            } else {
+                console.error("unit_stats.js failed to load or characterData is not defined.");
+                document.getElementById('unitGrid').innerHTML = '<p style="color: red;">Error: Could not load unit data.</p>';
+            }
+
             createLevelSlider();
             populateTraitsDropdown();
             initializeStatRolls();
             populateSkillTreeDropdown();
             updateSelectedUnit();
-            updateOutputDisplay(); // Initial call to set placeholder
+            updateOutputDisplay();
 
             document.getElementById('unitGrid').addEventListener('click', (event) => {
                 const card = event.target.closest('.unit-card');
@@ -379,7 +416,6 @@
         .stat-roll-group input[type="number"]:focus { outline: none; border-color: var(--accent-blue); }
         .stat-roll-group .input-wrapper span { position: absolute; right: 1rem; color: var(--text-secondary); pointer-events: none; }
 
-        /* MODIFIED/NEW: Styles for the output section */
         .dps-output-section {
             background-color: var(--bg-light-dark); border-radius: 10px; padding: 1.5rem;
             border: 1px dashed var(--border-color); flex-grow: 1; 
@@ -396,48 +432,82 @@
             text-align: center;
         }
         .dps-output-section .placeholder-text { color: var(--text-secondary); font-style: italic; font-size: 0.9rem; }
-
-        .output-stats-list {
-            list-style: none; padding: 0; margin: 0;
-            display: flex; flex-direction: column; gap: 1rem;
-            width: 100%;
-        }
-        .output-stats-list li {
-            display: flex; justify-content: space-between; align-items: center;
-            padding-bottom: 1rem;
+        
+        .upgrade-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--border-color);
-            font-size: 1rem;
+            padding-bottom: 1rem;
         }
-        .output-stats-list li:last-child {
-            border-bottom: none;
-        }
-        .output-stats-list li strong {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-        .output-stats-list li .value {
-            color: var(--text-primary);
+        .upgrade-nav .nav-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-family: var(--font-montserrat);
             font-weight: 600;
-            text-align: right;
-            text-transform: capitalize;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
         }
-
-        .final-dps-placeholder {
-            margin-top: auto; /* Pushes to the bottom */
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
+        .upgrade-nav .nav-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .upgrade-nav .nav-btn:disabled {
+            background-color: #555;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .upgrade-level-display {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .final-dps-display {
             text-align: center;
+            margin-bottom: 1.5rem;
         }
-        .final-dps-placeholder h3 {
+        .final-dps-display h3 {
             font-family: var(--font-poppins);
-            color: var(--accent-blue);
+            color: var(--accent-green);
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
-        .final-dps-placeholder p {
-            font-size: 2.5rem;
+        .final-dps-display p {
+            font-size: 2.8rem;
             font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .output-stats-list-detailed {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 1rem;
+            width: 100%;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+        .output-stats-list-detailed li {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 1rem;
+        }
+        .output-stats-list-detailed li strong {
             color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .output-stats-list-detailed li .value {
+            color: var(--text-primary);
+            font-weight: 600;
+            text-align: right;
+            background-color: var(--input-bg);
+            padding: 0.25rem 0.6rem;
+            border-radius: 5px;
+            min-width: 80px;
+            text-align: center;
+            text-transform: capitalize;
         }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -449,6 +519,7 @@
             .app-header h1 { font-size: 2.5rem; }
             .calculator-card, .output-card { padding: 1.8rem; }
             .dps-output-section h2 { font-size: 1.6rem; }
+            .final-dps-display p { font-size: 2.4rem; }
         }
         @media (max-width: 480px) {
             main { margin: 1rem auto; }
@@ -457,9 +528,11 @@
             .unit-grid-container { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
             .dps-output-section h2 { font-size: 1.4rem; }
             .stat-roll-inputs { grid-template-columns: 1fr; gap: 0.75rem; }
-            .output-stats-list li { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
-            .output-stats-list li .value { text-align: left; }
-            .final-dps-placeholder p { font-size: 2rem; }
+            .output-stats-list-detailed li { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .output-stats-list-detailed li .value { width: 100%; text-align: left; }
+            .final-dps-display p { font-size: 2rem; }
+            .upgrade-nav .nav-btn { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+            .upgrade-level-display { font-size: 1rem; }
         }
     </style>
 </body>
