@@ -1,0 +1,22 @@
+{
+  "Damage Path": {
+    "Damage": "15.00%",
+    "Range": "5.00%",
+    "SPA": "5.00%"
+  },
+  "Range Path": {
+    "Damage": "5.00%",
+    "Range": "12.50%",
+    "SPA": "5.00%"
+  },
+  "Speed Path": {
+    "Damage": "5.00%",
+    "Range": "5.00%",
+    "SPA": "10.00%"
+  },
+  "Pathless": {
+    "Damage": "0.00%",
+    "Range": "0.00%",
+    "SPA": "0.00%"
+  }
+}

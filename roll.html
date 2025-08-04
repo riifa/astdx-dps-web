@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Chance Simulator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            padding: 30px 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-top: 0;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 25px 0;
+            align-items: center;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 250px;
+        }
+        .input-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+        #attemptsInput {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box; /* Important for padding and width */
+        }
+        #startButton {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        #startButton:hover {
+            background-color: #0056b3;
+        }
+        #startButton:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+        #progress {
+            width: 100%;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px 20px;
+            text-align: left;
+            font-size: 1.1rem;
+            margin: 25px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .stats .label {
+            font-weight: bold;
+            color: #333;
+            text-align: right;
+        }
+        .stats .value {
+            font-family: monospace;
+            color: #007bff;
+        }
+        #log {
+            font-size: 0.9rem;
+            font-family: monospace;
+            height: 150px;
+            width: 100%;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+            padding: 10px;
+            text-align: left;
+            box-sizing: border-box; /* Ensures padding is included in width */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Chance Simulator</h1>
+        <p>Set the number of attempts and run the simulation for a 0.2% chance.</p>
+
+        <div class="controls">
+            <div class="input-group">
+                <label for="attemptsInput">Number of Attempts:</label>
+                <input type="number" id="attemptsInput" value="100000" min="1">
+            </div>
+            <button id="startButton">Start Simulation</button>
+            <progress id="progressBar" value="0" max="100" style="visibility: hidden;"></progress>
+        </div>
+
+        <div class="stats">
+            <div class="label">Attempts:</div><div class="value" id="attempts">0</div>
+            <div class="label">Successes:</div><div class="value" id="successes">0</div>
+            <div class="label">Actual Rate:</div><div class="value" id="rate">0.0000%</div>
+        </div>
+        
+        <h4>Success Log:</h4>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const CHANCE = 0.002; // This is 0.2%
+        const CHUNK_SIZE = 50000; // Process 50,000 attempts at a time to prevent freezing
+
+        // --- DOM ELEMENTS ---
+        const startButton = document.getElementById('startButton');
+        const attemptsInput = document.getElementById('attemptsInput');
+        const progressBar = document.getElementById('progressBar');
+        
+        const attemptsSpan = document.getElementById('attempts');
+        const successesSpan = document.getElementById('successes');
+        const rateSpan = document.getElementById('rate');
+        const logDiv = document.getElementById('log');
+
+        // --- STATE VARIABLES ---
+        let totalAttempts = 0;
+        let currentAttempts = 0;
+        let successes = 0;
+        let isRunning = false;
+
+        // --- The core simulation function ---
+        function runSimulationChunk() {
+            if (currentAttempts >= totalAttempts || !isRunning) {
+                // Simulation is finished or stopped
+                finalizeSimulation();
+                return;
+            }
+
+            const attemptsInThisChunk = Math.min(CHUNK_SIZE, totalAttempts - currentAttempts);
+            for (let i = 0; i < attemptsInThisChunk; i++) {
+                if (Math.random() < CHANCE) {
+                    successes++;
+                    logSuccess(currentAttempts + i + 1);
+                }
+            }
+            currentAttempts += attemptsInThisChunk;
+            
+            updateDisplay();
+            
+            // Schedule the next chunk to run without blocking the UI
+            setTimeout(runSimulationChunk, 0);
+        }
+        
+        function finalizeSimulation() {
+            isRunning = false;
+            updateDisplay(); // Final update
+            startButton.disabled = false;
+            attemptsInput.disabled = false;
+            startButton.textContent = 'Start Simulation';
+            console.log("Simulation finished.");
+        }
+        
+        // --- Helper function to update the numbers on the screen ---
+        function updateDisplay() {
+            attemptsSpan.textContent = currentAttempts.toLocaleString();
+            successesSpan.textContent = successes.toLocaleString();
+            
+            const currentRate = currentAttempts > 0 ? (successes / currentAttempts) * 100 : 0;
+            rateSpan.textContent = currentRate.toFixed(4) + '%';
+            
+            progressBar.value = (currentAttempts / totalAttempts) * 100;
+        }
+
+        // --- Helper function to add a message to the log on success ---
+        function logSuccess(attemptNumber) {
+            const logEntry = document.createElement('div');
+            logEntry.textContent = `Success #${successes} at attempt ${attemptNumber.toLocaleString()}`;
+            logDiv.prepend(logEntry); // Add new log to the top
+        }
+        
+        // --- Event Listener for the button ---
+        startButton.addEventListener('click', () => {
+            const desiredAttempts = parseInt(attemptsInput.value, 10);
+            
+            if (isNaN(desiredAttempts) || desiredAttempts <= 0) {
+                alert("Please enter a valid number of attempts greater than 0.");
+                return;
+            }
+
+            // --- Reset state for a new simulation ---
+            totalAttempts = desiredAttempts;
+            currentAttempts = 0;
+            successes = 0;
+            isRunning = true;
+            logDiv.innerHTML = ''; // Clear previous log
+            
+            // --- Update UI for running state ---
+            startButton.disabled = true;
+            attemptsInput.disabled = true;
+            startButton.textContent = 'Running...';
+            progressBar.style.visibility = 'visible';
+            
+            updateDisplay();
+            
+            // --- Start the simulation ---
+            runSimulationChunk();
+        });
+    </script>
+
+</body>
+</html>

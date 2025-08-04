@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTDX DPS Calculator</title>
+    <!-- Google Fonts: Poppins for headings, Montserrat for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <header class="app-header">
+            <h1>ASTDX DPS Calculator</h1>
+            <p class="subtitle">Ver 1.3.0</p>
+        </header>
+
+        <div class="calculator-container">
+            <section class="calculator-card">
+                <div class="input-section">
+                    <label>Select a Unit</label>
+                    <div class="unit-grid-container" id="unitGrid">
+                        <!-- Units will be populated by JavaScript -->
+                    </div>
+
+                    <div class="current-unit-display placeholder" id="currentUnitDisplay">
+                        Select a unit by clicking its image.
+                    </div>
+
+                    <!-- Unit Level Slider -->
+                    <div id="unitLevelControl"></div>
+
+                    <!-- Traits Selection Dropdown -->
+                    <div id="traitSelectionControl" class="select-wrapper"></div>
+
+                    <!-- Stat Rolls Input Section -->
+                    <div id="statRollsControl">
+                        <label>Stat Rolls (%)</label>
+                        <div class="stat-roll-inputs">
+                            <div class="stat-roll-group">
+                                <label for="dmgRollInput">DMG</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="dmgRollInput" min="0" max="15" step="0.1" placeholder="0 - 15">
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="stat-roll-group">
+                                <label for="rngRollInput">RNG</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="rngRollInput" min="0" max="12.5" step="0.1" placeholder="0 - 12.5">
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="stat-roll-group">
+                                <label for="spaRollInput">SPA</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="spaRollInput" min="0" max="10" step="0.1" placeholder="0 - 10">
+                                    <span>%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Tree Selection Dropdown -->
+                    <div id="skillTreeControl" class="select-wrapper"></div>
+                </div>
+            </section>
+
+            <section class="output-card">
+                <div class="dps-output-section" id="dpsOutputSection">
+                    <!-- Output will be dynamically generated here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        let selectedUnit = '';
+        let unitLevel = 80;
+        let selectedTrait = 'Traitless';
+        let dmgRoll = 0;
+        let rngRoll = 0;
+        let spaRoll = 0;
+        let selectedSkillTree = 'None';
+
+        const units = [
+            { name: 'koishi1', path: './images/units/placeholder.png' }, { name: 'koishi2', path: './images/units/placeholder.png' },
+            { name: 'koishi3', path: './images/units/placeholder.png' }, { name: 'koishi4', path: './images/units/placeholder.png' },
+            { name: 'koishi5', path: './images/units/placeholder.png' }, { name: 'koishi6', path: './images/units/placeholder.png' },
+            { name: 'koishi7', path: './images/units/placeholder.png' }, { name: 'koishi8', path: './images/units/placeholder.png' },
+            { name: 'koishi9', path: './images/units/placeholder.png' }, { name: 'koishi10', path: './images/units/placeholder.png' },
+            { name: 'koishi11', path: './images/units/placeholder.png' }, { name: 'koishi12', path: './images/units/placeholder.png' },
+        ];
+
+        const traitsData = [
+            { "Traits": "Traitless", "Damage": 0, "Range": 0, "Spa": 0 }, 
+            { "Traits": "Tank", "Damage": 0, "Range": 0, "Spa": 0 },
+            { "Traits": "Perception 1", "Damage": 0, "Range": 0.03, "Spa": 0 }, 
+            { "Traits": "Perception 2", "Damage": 0, "Range": 0.05, "Spa": 0 },
+            { "Traits": "Perception 3", "Damage": 0, "Range": 0.07, "Spa": 0 }, 
+            { "Traits": "Dexterity 1", "Damage": 0, "Range": 0, "Spa": 0.03 },
+            { "Traits": "Dexterity 2", "Damage": 0, "Range": 0, "Spa": 0.05 }, 
+            { "Traits": "Dexterity 3", "Damage": 0, "Range": 0, "Spa": 0.07 },
+            { "Traits": "Prodigy", "Damage": 0, "Range": 0, "Spa": 0 }, 
+            { "Traits": "Zenkai 1", "Damage": 0.05, "Range": 0, "Spa": 0 },
+            { "Traits": "Zenkai 2", "Damage": 0.07, "Range": 0, "Spa": 0 }, 
+            { "Traits": "Zenkai 3", "Damage": 0.1, "Range": 0, "Spa": 0 },
+            { "Traits": "Midas", "Damage": 0, "Range": 0, "Spa": 0 }, 
+            { "Traits": "Sharpshooter", "Damage": 0, "Range": 0.15, "Spa": 0 },
+            { "Traits": "Tempest", "Damage": 0, "Range": 0, "Spa": 0.1 }, 
+            { "Traits": "Companion", "Damage": 0, "Range": 0, "Spa": 0 },
+            { "Traits": "Bloodlust", "Damage": 0.1, "Range": 0.1, "Spa": 0 }, 
+            { "Traits": "Bloodlust (Max)", "Damage": 0.2, "Range": 0.1, "Spa": 0.1 },
+            { "Traits": "Corrupted", "Damage": 0, "Range": 0.075, "Spa": 0.1 }, 
+            { "Traits": "Genesis", "Damage": 0.125, "Range": 0.085, "Spa": 0.085 },
+            { "Traits": "All Star", "Damage": 3, "Range": 0.1, "Spa": 0.1 }
+        ];
+
+        function selectUnit(unitName) {
+            selectedUnit = unitName;
+            updateSelectedUnit();
+            updateOutputDisplay(); // Update output on new selection
+            
+            document.querySelectorAll('.unit-card.selected').forEach(card => card.classList.remove('selected'));
+            const selectedCard = document.querySelector(`[data-unit="${unitName}"]`);
+            if (selectedCard) selectedCard.classList.add('selected');
+        }
+
+        function updateSelectedUnit() {
+            const displayElement = document.getElementById('currentUnitDisplay');
+            const hasSelection = !!selectedUnit;
+            displayElement.classList.toggle('placeholder', !hasSelection);
+            displayElement.innerHTML = hasSelection
+                ? `Current Unit: <span>${selectedUnit.replace(/_/g, ' ')}</span>`
+                : 'Select a unit by clicking its image.';
+        }
+        
+        // MODIFIED: This function now populates the output card with current inputs
+        function updateOutputDisplay() {
+            const outputSection = document.getElementById('dpsOutputSection');
+
+            if (!selectedUnit) {
+                outputSection.innerHTML = `
+                    <h2>Future DPS Output</h2>
+                    <p class="placeholder-text">
+                        (This is where calculated DPS, stats, and graphs will appear.)
+                    </p>`;
+                outputSection.classList.add('placeholder');
+                return;
+            }
+            
+            outputSection.classList.remove('placeholder');
+
+            outputSection.innerHTML = `
+                <h2>Calculation Inputs</h2>
+                <ul class="output-stats-list">
+                    <li>
+                        <strong>Unit:</strong>
+                        <span class="value">${selectedUnit.replace(/_/g, ' ')}</span>
+                    </li>
+                    <li>
+                        <strong>Level:</strong>
+                        <span class="value">${unitLevel}</span>
+                    </li>
+                    <li>
+                        <strong>Trait:</strong>
+                        <span class="value">${selectedTrait}</span>
+                    </li>
+                    <li>
+                        <strong>Stat Rolls:</strong>
+                        <span class="value">DMG: ${dmgRoll}% / RNG: ${rngRoll}% / SPA: ${spaRoll}%</span>
+                    </li>
+                    <li>
+                        <strong>Skill Tree:</strong>
+                        <span class="value">${selectedSkillTree}</span>
+                    </li>
+                </ul>
+                <div class="final-dps-placeholder">
+                    <h3>Final DPS</h3>
+                    <p>---</p>
+                </div>
+            `;
+        }
+        
+        function createLevelSlider() {
+            const controlDiv = document.getElementById('unitLevelControl');
+            controlDiv.innerHTML = `
+                <div class="level-slider-wrapper">
+                    <div class="level-info">
+                        <label for="unitLevelSlider">Unit Level: </label>
+                        <span id="unitLevelValue">${unitLevel}</span>
+                    </div>
+                    <input type="range" id="unitLevelSlider" min="1" max="80" value="${unitLevel}">
+                </div>`;
+            
+            document.getElementById('unitLevelSlider').oninput = function() {
+                unitLevel = parseInt(this.value);
+                document.getElementById('unitLevelValue').textContent = unitLevel;
+                updateOutputDisplay(); // Update output on change
+            };
+        }
+
+        function populateTraitsDropdown() {
+            const controlDiv = document.getElementById('traitSelectionControl');
+            const optionsHTML = traitsData.map(trait => `<option value="${trait.Traits}">${trait.Traits}</option>`).join('');
+            controlDiv.innerHTML = `
+                <label for="traitSelection">Select a Trait:</label>
+                <select id="traitSelection">${optionsHTML}</select>`;
+            
+            document.getElementById('traitSelection').onchange = function() {
+                selectedTrait = this.value;
+                updateOutputDisplay(); // Update output on change
+            };
+        }
+        
+        function initializeStatRolls() {
+            function handleInput(event, statVarSetter) {
+                const input = event.target;
+                const min = parseFloat(input.min);
+                const max = parseFloat(input.max);
+                let value = parseFloat(input.value);
+
+                if (isNaN(value)) { statVarSetter(0); return; }
+                if (value > max) { value = max; input.value = max; }
+                else if (value < min) { value = min; input.value = min; }
+                
+                statVarSetter(value);
+                updateOutputDisplay(); // Update output on change
+            }
+
+            document.getElementById('dmgRollInput').addEventListener('input', (e) => handleInput(e, val => dmgRoll = val));
+            document.getElementById('rngRollInput').addEventListener('input', (e) => handleInput(e, val => rngRoll = val));
+            document.getElementById('spaRollInput').addEventListener('input', (e) => handleInput(e, val => spaRoll = val));
+        }
+
+        function populateSkillTreeDropdown() {
+            const controlDiv = document.getElementById('skillTreeControl');
+            const options = ['None', 'Damage Tree', 'Range Tree', 'Speed Tree'];
+            const optionsHTML = options.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+            controlDiv.innerHTML = `
+                <label for="skillTreeSelection">Select Skill Tree:</label>
+                <select id="skillTreeSelection">${optionsHTML}</select>`;
+            
+            document.getElementById('skillTreeSelection').onchange = function() {
+                selectedSkillTree = this.value;
+                updateOutputDisplay(); // Update output on change
+            };
+        }
+
+        function createUnitCard(unit) {
+            const fallbackImg = `https://via.placeholder.com/100x100/666666/ffffff?text=${encodeURIComponent(unit.name.substring(0, 3).toUpperCase())}`;
+            return `<div class="unit-card" data-unit="${unit.name}"><img src="${unit.path}" alt="${unit.name}" onerror="this.src='${fallbackImg}'"><p>${unit.name.replace(/_/g, ' ')}</p></div>`;
+        }
+
+        function initializeUnits() {
+            document.getElementById('unitGrid').innerHTML = units.map(createUnitCard).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeUnits();
+            createLevelSlider();
+            populateTraitsDropdown();
+            initializeStatRolls();
+            populateSkillTreeDropdown();
+            updateSelectedUnit();
+            updateOutputDisplay(); // Initial call to set placeholder
+
+            document.getElementById('unitGrid').addEventListener('click', (event) => {
+                const card = event.target.closest('.unit-card');
+                if (card) { selectUnit(card.dataset.unit); }
+            });
+        });
+    </script>
+
+    <style>
+        :root {
+            --bg-dark: #121212; --bg-light-dark: #1e1e1e; --card-bg: #2a2a2a;
+            --text-primary: #e0e0e0; --text-secondary: #a0a0a0; --accent-blue: #007bff;
+            --accent-green: #28a745; --border-color: #444; --input-bg: #333;
+            --shadow-color: rgba(0, 0, 0, 0.4); --font-poppins: 'Poppins', sans-serif;
+            --font-montserrat: 'Montserrat', sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { height: 100%; }
+        body {
+            font-family: var(--font-montserrat); color: var(--text-primary);
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light-dark) 100%);
+            min-height: 100vh; overflow-y: scroll; -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        main {
+            display: flex; flex-direction: column; gap: 2.5rem; align-items: center;
+            padding: 2rem; max-width: 1500px;
+            width: 100%; margin: 2rem auto;
+            animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;
+        }
+        .app-header {
+            text-align: center; animation: slideInTop 0.8s ease-out 0.2s forwards; opacity: 0;
+        }
+        .app-header h1 {
+            font-family: var(--font-poppins); font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--accent-blue); margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px rgba(0, 123, 255, 0.4), 0 0 30px rgba(0, 123, 255, 0.2);
+        }
+        .app-header .subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.2rem); color: var(--text-secondary); font-weight: 300;
+        }
+        .calculator-container { display: flex; gap: 2rem; width: 100%; align-items: flex-start; }
+        .calculator-card, .output-card {
+            background-color: var(--card-bg); border-radius: 15px; padding: 2.5rem;
+            box-shadow: 0 10px 30px var(--shadow-color); border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex; flex-direction: column;
+        }
+        .calculator-card { flex: 2; }
+        .output-card { flex: 3; }
+        .calculator-card:hover, .output-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px var(--shadow-color); }
+        .input-section { display: flex; flex-direction: column; gap: 0.8rem; }
+        .input-section > label { font-size: 1.1rem; font-weight: 500; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .unit-grid-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem; padding: 1rem; max-height: 400px; overflow-y: auto;
+            border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--input-bg);
+        }
+        .unit-card {
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+            padding: 0.75rem; border: 2px solid transparent; border-radius: 10px;
+            background-color: var(--card-bg); cursor: pointer; transition: all 0.2s ease-in-out;
+            text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .unit-card:hover { border-color: var(--accent-blue); transform: translateY(-3px); }
+        .unit-card.selected { border-color: var(--accent-green); box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.4); }
+        .unit-card img { width: 90px; height: 90px; object-fit: cover; border-radius: 8px; }
+        .unit-card p { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); text-transform: capitalize; pointer-events: none; }
+        .unit-grid-container::-webkit-scrollbar { width: 8px; }
+        .unit-grid-container::-webkit-scrollbar-track { background: var(--bg-dark); }
+        .unit-grid-container::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 10px; }
+        .current-unit-display { font-size: 0.95rem; color: var(--text-secondary); margin-top: 0.5rem; }
+        .current-unit-display span { font-weight: 600; color: var(--accent-blue); text-transform: capitalize; }
+        .current-unit-display.placeholder { font-style: italic; }
+        
+        #unitLevelControl, #traitSelectionControl, #statRollsControl, #skillTreeControl {
+            margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-color);
+        }
+        .level-slider-wrapper, .select-wrapper, #statRollsControl {
+            display: flex; flex-direction: column; gap: 0.8rem; align-items: flex-start;
+        }
+        .level-info label, .select-wrapper > label, #statRollsControl > label { font-size: 1.1rem; font-weight: 500; }
+        .level-info { display: flex; align-items: center; gap: 0.5rem; }
+        .level-info #unitLevelValue { font-size: 1.1rem; font-weight: 600; color: var(--accent-green); }
+        #unitLevelSlider { width: 100%; -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; }
+        #unitLevelSlider::-webkit-slider-runnable-track { background: var(--input-bg); border-radius: 5px; height: 8px; }
+        #unitLevelSlider::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; background-color: var(--accent-blue); border: 1px solid var(--text-primary);
+            border-radius: 50%; width: 20px; height: 20px; margin-top: -6px;
+        }
+        .select-wrapper { position: relative; width: 100%; }
+        #traitSelection, #skillTreeSelection {
+            width: 100%; padding: 0.75rem 1rem; background-color: var(--input-bg); border: 1px solid var(--border-color);
+            border-radius: 8px; color: var(--text-primary); font-family: var(--font-montserrat); font-size: 1rem;
+            appearance: none; -webkit-appearance: none; cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a0a0a0'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.25rem;
+        }
+        #traitSelection:focus, #skillTreeSelection:focus { outline: none; border-color: var(--accent-blue); }
+
+        .stat-roll-inputs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; width: 100%; }
+        .stat-roll-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .stat-roll-group > label { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; }
+        .stat-roll-group .input-wrapper { position: relative; display: flex; align-items: center; }
+        .stat-roll-group input[type="number"] {
+            width: 100%; padding: 0.75rem 2.2rem 0.75rem 1rem; background-color: var(--input-bg);
+            border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);
+            font-size: 1rem; -moz-appearance: textfield;
+        }
+        .stat-roll-group input[type="number"]::-webkit-outer-spin-button,
+        .stat-roll-group input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .stat-roll-group input[type="number"]:focus { outline: none; border-color: var(--accent-blue); }
+        .stat-roll-group .input-wrapper span { position: absolute; right: 1rem; color: var(--text-secondary); pointer-events: none; }
+
+        /* MODIFIED/NEW: Styles for the output section */
+        .dps-output-section {
+            background-color: var(--bg-light-dark); border-radius: 10px; padding: 1.5rem;
+            border: 1px dashed var(--border-color); flex-grow: 1; 
+            display: flex; flex-direction: column; justify-content: flex-start;
+            text-align: left;
+        }
+        .dps-output-section.placeholder {
+            justify-content: center;
+            text-align: center;
+        }
+        .dps-output-section h2 {
+            font-family: var(--font-poppins); font-size: 1.8rem; color: var(--accent-green);
+            margin-bottom: 1.5rem; text-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
+            text-align: center;
+        }
+        .dps-output-section .placeholder-text { color: var(--text-secondary); font-style: italic; font-size: 0.9rem; }
+
+        .output-stats-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 1rem;
+            width: 100%;
+        }
+        .output-stats-list li {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1rem;
+        }
+        .output-stats-list li:last-child {
+            border-bottom: none;
+        }
+        .output-stats-list li strong {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .output-stats-list li .value {
+            color: var(--text-primary);
+            font-weight: 600;
+            text-align: right;
+            text-transform: capitalize;
+        }
+
+        .final-dps-placeholder {
+            margin-top: auto; /* Pushes to the bottom */
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .final-dps-placeholder h3 {
+            font-family: var(--font-poppins);
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .final-dps-placeholder p {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInTop { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        @media (max-width: 1024px) { .calculator-container { flex-direction: column; } }
+        @media (max-width: 768px) {
+            main { padding: 1rem; gap: 2rem; margin: 1.5rem auto; }
+            .app-header h1 { font-size: 2.5rem; }
+            .calculator-card, .output-card { padding: 1.8rem; }
+            .dps-output-section h2 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            main { margin: 1rem auto; }
+            .app-header h1 { font-size: 2rem; }
+            .calculator-card, .output-card { padding: 1.5rem; }
+            .unit-grid-container { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
+            .dps-output-section h2 { font-size: 1.4rem; }
+            .stat-roll-inputs { grid-template-columns: 1fr; gap: 0.75rem; }
+            .output-stats-list li { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+            .output-stats-list li .value { text-align: left; }
+            .final-dps-placeholder p { font-size: 2rem; }
+        }
+    </style>
+</body>
+</html>
