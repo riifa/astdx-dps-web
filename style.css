@@ -25,18 +25,16 @@ html {
     height: 100%;
 }
 
-/* MODIFIED: Body style updated */
 body {
     font-family: var(--font-montserrat);
     color: var(--text-primary);
-    background-color: var(--bg-dark); /* Set a solid base color */
+    background-color: var(--bg-dark);
     min-height: 100vh;
     overflow-y: scroll;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* NEW: Background Design Styles */
 .background-design {
     position: fixed;
     top: 0;
@@ -45,7 +43,6 @@ body {
     height: 100%;
     z-index: -1;
     background-color: var(--bg-dark);
-    /* Layered background: Grid on top, then glow, then gradient */
     background-image:
         repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255, 255, 255, 0.04) 50px),
         repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(255, 255, 255, 0.04) 50px),
@@ -252,6 +249,48 @@ main {
     border-color: var(--accent-blue);
 }
 
+/* Trait Roll UI */
+.trait-roll-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+.trait-roll-container .select-wrapper {
+    flex-grow: 1;
+}
+.roll-btn {
+    background-color: #9b59b6;
+    color: white;
+    border: 1px solid #8e44ad;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    font-family: var(--font-montserrat);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.roll-btn:hover {
+    background-color: #8e44ad;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(142, 68, 173, 0.4);
+}
+.roll-counter-wrapper {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+#rollCounter {
+    font-weight: 700;
+    color: var(--text-primary);
+    background-color: var(--input-bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 0.25rem;
+}
+
+
 /* Stat Roll Inputs */
 .stat-roll-inputs {
     display: grid;
@@ -394,7 +433,7 @@ main {
     height: 100%;
     width: 100%;
     z-index: 0;
-    opacity: 0.15;
+    opacity: 0.2;
 }
 .stat-bar-row.dmg-bar::before { background-color: #FF1F1F; }
 .stat-bar-row.rng-bar::before { background-color: #FFD900; }
@@ -431,7 +470,8 @@ main {
 .grade-A,
 .grade-B,
 .grade-C {
-  text-shadow: 0 0 3px currentColor, 0 0 5px currentColor;
+  text-shadow: 0 0 1px currentColor, 0 0 2px currentColor;
+  font-size: 150%;
 }
 
 .stat-label {
@@ -443,6 +483,7 @@ main {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-primary);
+    font-size: 120%;
 }
 
 /* DPS Summary Section */
@@ -548,7 +589,6 @@ main {
 /* --- Animations --- */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideInTop { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-/* NEW: Background scrolling animation */
 @keyframes scroll-background {
     from {
         background-position: 0 0, 0 0, 0 0, 0 0;
