@@ -5,7 +5,7 @@ const characterData = {
         MaxCost: 67000,
         PlacementCount: 3,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/unbound_units/kokushiboU_icon.png',
         Element: "Purple",
         Rarity: "Unbound",
         PlacementStatus: [
@@ -37,7 +37,7 @@ const characterData = {
         MaxCost: 62250,
         PlacementCount: 4,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/unbound_units/esdeathU_icon.png',
         Element: "Blue",
         Rarity: "Unbound",
         PlacementStatus: [
@@ -69,7 +69,7 @@ const characterData = {
         MaxCost: 52000,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/eren5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -101,7 +101,7 @@ const characterData = {
         MaxCost: 47900,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/eren5_icon.png',
         Element: "Green", 
         Rarity: "5 Star", 
         PlacementStatus: [
@@ -133,7 +133,7 @@ const characterData = {
         MaxCost: 31500,
         PlacementCount: 4,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/blackbeard5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -165,7 +165,7 @@ const characterData = {
         MaxCost: 46730,
         PlacementCount: 4,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/ulq5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -197,7 +197,7 @@ const characterData = {
         MaxCost: 35000,
         PlacementCount: 3,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/deidara5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -229,7 +229,7 @@ const characterData = {
         MaxCost: 47400,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/ichigo5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -261,7 +261,7 @@ const characterData = {
         MaxCost: 49750,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/sjw5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -325,7 +325,7 @@ const characterData = {
         MaxCost: 22500,
         PlacementCount: 4,
         MaxUpgrades: 5,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/kingkai5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -357,7 +357,7 @@ const characterData = {
         MaxCost: 33950,
         PlacementCount: 3,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/ginjo5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -389,7 +389,7 @@ const characterData = {
         MaxCost: 45150,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/gojo5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -421,7 +421,7 @@ const characterData = {
         MaxCost: 47000,
         PlacementCount: 4,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/sunny5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -453,7 +453,7 @@ const characterData = {
         MaxCost: 26500,
         PlacementCount: 4,
         MaxUpgrades: 5,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/erwin5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -485,7 +485,7 @@ const characterData = {
         MaxCost: 26500,
         PlacementCount: 4,
         MaxUpgrades: 5,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/erwin5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -517,7 +517,7 @@ const characterData = {
         MaxCost: 53000,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/frieren5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -549,7 +549,7 @@ const characterData = {
         MaxCost: 57500,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/broly5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -581,7 +581,7 @@ const characterData = {
         MaxCost: 39250,
         PlacementCount: 4,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/goku5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -613,7 +613,7 @@ const characterData = {
         MaxCost: 40325,
         PlacementCount: 3,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/sukuna5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -645,7 +645,7 @@ const characterData = {
         MaxCost: 72500,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/ishtar5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -677,7 +677,7 @@ const characterData = {
         MaxCost: 52500,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/aqua5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -709,7 +709,7 @@ const characterData = {
         MaxCost: 45000,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/whitebeard5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -741,7 +741,7 @@ const characterData = {
         MaxCost: 5000,
         PlacementCount: 4,
         MaxUpgrades: 4,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/lelouche5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -773,7 +773,7 @@ const characterData = {
         MaxCost: 45000,
         PlacementCount: 3,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/edward5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -805,7 +805,7 @@ const characterData = {
         MaxCost: 21500,
         PlacementCount: 4,
         MaxUpgrades: 4,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/yuno5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -837,7 +837,7 @@ const characterData = {
         MaxCost: 37400,
         PlacementCount: 4,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/naruto5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: [
@@ -869,7 +869,7 @@ const characterData = {
         MaxCost: 36750,
         PlacementCount: 4,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/mihawk5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: [

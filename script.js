@@ -1,4 +1,18 @@
-// Replace the entire contents of your script.js file with this
+// script.js
+
+const newlyAddedUnits = [
+    "Supreme Leader",
+    "Supreme Leader (2nd Form)",
+    "Supreme Leader (3rd Form)",
+    "Supreme Leader (Final Form)",
+    "Freezer (Final Form)",
+    "Future T",
+    "Zesty General",
+    "Sky God",
+    "BOX",
+    "Masochist Lady"
+];
+
 document.addEventListener('DOMContentLoaded', () => {
     // Check if data is loaded before initializing
     if (typeof characterData !== 'undefined' && typeof traitsData !== 'undefined' && typeof skillTreeData !== 'undefined') {
@@ -381,40 +395,65 @@ const calculatorApp = {
 
     // --- UI POPULATION HELPERS ---
     populateUnitGrid() {
-        // 1. Group units by Rarity
+        let finalHTML = '';
+        const remainingUnits = { ...characterData }; // Create a copy to avoid duplicates
+
+        // 1. Handle "Newly Added" section (if not empty)
+        if (newlyAddedUnits && newlyAddedUnits.length > 0) {
+            // Add the green header
+            finalHTML += `<h3 class="rarity-header rarity-header--newly-added">New Units!</h3>`;
+
+            // Generate unit cards for newly added units
+            const newUnitCardsHTML = newlyAddedUnits
+                .filter(unitName => characterData[unitName]) // Ensure unit exists in data
+                .sort((a, b) => a.localeCompare(b)) // Sort them alphabetically
+                .map(unitName => {
+                    const unitData = characterData[unitName];
+                    const fallbackImg = `https://via.placeholder.com/90x90/666/fff?text=${encodeURIComponent(unitName.substring(0, 3).toUpperCase())}`;
+                    
+                    // Remove this unit from the copy so it doesn't appear again
+                    delete remainingUnits[unitName];
+
+                    return `
+                        <div class="unit-card" data-unit="${unitName}">
+                            <img src="${unitData.Image}" alt="${unitName.replace(/_/g, ' ')}" onerror="this.onerror=null;this.src='${fallbackImg}';">
+                            <p>${unitName.replace(/_/g, ' ')}</p>
+                        </div>`;
+                }).join('');
+            
+            finalHTML += newUnitCardsHTML;
+        }
+
+        // 2. Group the REMAINING units by Rarity
         const groupedUnits = {};
-        for (const unitName in characterData) {
-            const unit = characterData[unitName];
-            const rarity = unit.Rarity || 'Uncategorized'; // Fallback for units without rarity
+        for (const unitName in remainingUnits) {
+            const unit = remainingUnits[unitName];
+            const rarity = unit.Rarity || 'Uncategorized';
             if (!groupedUnits[rarity]) {
                 groupedUnits[rarity] = [];
             }
             groupedUnits[rarity].push(unitName);
         }
 
-        // 2. Sort units within each group alphabetically
+        // 3. Sort units within each group
         for (const rarity in groupedUnits) {
             groupedUnits[rarity].sort((a, b) => a.localeCompare(b));
         }
 
+        // 4. Define the display order for the remaining rarities
         const rarityOrder = ['Unbound', '5 Star'];
-        
-        // Dynamically add any other rarities found in the data to the end of the order
         Object.keys(groupedUnits).forEach(rarity => {
             if (!rarityOrder.includes(rarity)) {
                 rarityOrder.push(rarity);
             }
         });
 
-        let finalHTML = '';
-
-        // 4. Generate HTML with headers based on the defined order
+        // 5. Generate HTML for the rarity sections
         rarityOrder.forEach(rarity => {
             if (groupedUnits[rarity]) {
-                // Add a header for the group
-                finalHTML += `<h3 class="rarity-header">${rarity}s</h3>`;
+                const rarityClass = `rarity-header--${rarity.toLowerCase().replace(/\s+/g, '-')}`;
+                finalHTML += `<h3 class="rarity-header ${rarityClass}">${rarity}s</h3>`;
 
-                // Generate unit cards for this group
                 const unitCardsHTML = groupedUnits[rarity].map(unitName => {
                     const unitData = characterData[unitName];
                     const fallbackImg = `https://via.placeholder.com/90x90/666/fff?text=${encodeURIComponent(unitName.substring(0, 3).toUpperCase())}`;
