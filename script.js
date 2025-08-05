@@ -109,121 +109,192 @@ const calculatorApp = {
             : 'Select a unit by clicking its image.';
     },
     
-    updateOutputDisplay() {
-        const { dpsOutputSection } = this.elements;
-        const { selectedUnit, currentUpgradeIndex, selectedTrait } = this.state;
+    getStatGrade(value, max) {
+    const percentage = (value / max) * 100;
+    if (percentage >= 98.9) return 'SSS';
+    if (percentage >= 76.9) return 'SS';
+    if (percentage >= 55) return 'S';
+    if (percentage >= 30.9) return 'A';
+    if (percentage >= 0.89) return 'B';
+    return 'C';
+},
 
-        if (!selectedUnit) {
-            dpsOutputSection.innerHTML = `<p class="placeholder-text">Select a unit to see its stats and calculated DPS.</p>`;
-            dpsOutputSection.classList.add('placeholder');
-            return;
-        }
+// Replace the entire updateOutputDisplay function with this one.
+updateOutputDisplay() {
+    const { dpsOutputSection } = this.elements;
+    const { selectedUnit, currentUpgradeIndex, selectedTrait, unitLevel, dmgRoll, rngRoll, spaRoll } = this.state;
 
-        dpsOutputSection.classList.remove('placeholder');
-        
-        const unitData = characterData[selectedUnit];
-        const stats = unitData.Stats;
-        
-        const calculated = this.calculateFinalStats(unitData);
-        
-        const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
-        const nextUpgradeCost = currentUpgradeIndex < stats.Cost.length
-            ? `$${Number(stats.Cost[currentUpgradeIndex]).toLocaleString()}`
-            : 'N/A';
-        
-        let displayPlacementLimit = unitData.PlacementCount;
-        if (selectedTrait === "All Star") displayPlacementLimit = 1;
-        if (selectedTrait === "Companion") displayPlacementLimit += 1;
-        
-        dpsOutputSection.innerHTML = `
-            <div class="upgrade-nav">
-                <button id="prevUpgradeBtn" class="nav-btn" ${currentUpgradeIndex === 0 ? 'disabled' : ''}>◄ Prev</button>
-                <span class="upgrade-level-display">${upgradeLabel}</span>
-                <button id="nextUpgradeBtn" class="nav-btn" ${currentUpgradeIndex === unitData.MaxUpgrades ? 'disabled' : ''}>Next ►</button>
+    if (!selectedUnit) {
+        dpsOutputSection.innerHTML = `<p class="placeholder-text">Select a unit to view its stats.</p>`;
+        dpsOutputSection.classList.add('placeholder');
+        return;
+    }
+
+    dpsOutputSection.classList.remove('placeholder');
+
+    const unitData = characterData[selectedUnit];
+    const stats = unitData.Stats;
+    const calculated = this.calculateFinalStats(unitData);
+
+    const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
+    
+    const nextUpgradeCost = (currentUpgradeIndex + 1) < stats.Cost.length
+        ? `$${Number(stats.Cost[currentUpgradeIndex + 1]).toLocaleString()}`
+        : 'N/A';
+    
+    const dmgGrade = this.getStatGrade(dmgRoll, 15);
+    const rngGrade = this.getStatGrade(rngRoll, 12.5);
+    const spaGrade = this.getStatGrade(spaRoll, 10);
+
+    dpsOutputSection.innerHTML = `
+        <div class="unit-card-header">
+            <h2 class="unit-title">${selectedUnit.replace(/_/g, ' ')}</h2>
+            <div class="unit-sub-info">
+                <span>${unitData.Rarity || '5 Star'}</span> • 
+                <span class="type-${(unitData.Type || 'HILL').toLowerCase()}">${unitData.Type || 'HILL'}</span>
             </div>
-            <div class="dps-grid">
-                <div class="dps-item">
-                    <h3>Total DPS (Unit)</h3>
-                    <p>${calculated.finalDps.toLocaleString()}</p>
+        </div>
+
+        <div class="unit-details-row">
+            <div class="level-display">Lv. ${unitLevel}</div>
+            <div class="trait-display">${selectedTrait}</div>
+        </div>
+
+        <div class="stats-display">
+            <div class="stat-bar-row dmg-bar">
+                <span class="stat-grade grade-${dmgGrade}">${dmgGrade}</span>
+                <span class="stat-roll-value">(${dmgRoll.toFixed(1)}%)</span>
+                <span class="stat-label">DMG:</span>
+                <span class="stat-value">${calculated.finalDamage.toLocaleString()}</span>
+            </div>
+            <div class="stat-bar-row rng-bar">
+                <span class="stat-grade grade-${rngGrade}">${rngGrade}</span>
+                <span class="stat-roll-value">(${rngRoll.toFixed(1)}%)</span>
+                <span class="stat-label">RNG:</span>
+                <span class="stat-value">${calculated.finalRange}</span>
+            </div>
+            <div class="stat-bar-row spa-bar">
+                <span class="stat-grade grade-${spaGrade}">${spaGrade}</span>
+                <span class="stat-roll-value">(${spaRoll.toFixed(1)}%)</span>
+                <span class="stat-label">SPD:</span>
+                <span class="stat-value">${calculated.finalSpa}s</span>
+            </div>
+        </div>
+        
+        <div class="dps-summary ${calculated.dotDps > 0 ? 'has-dot' : ''}">
+            <div class="dps-item">
+                <h3>Unit DPS</h3>
+                <p>${calculated.finalDps.toLocaleString()}</p>
+            </div>
+            ${calculated.dotDps > 0 ? `
+            <div class="dps-item">
+                <h3>DoT DPS</h3>
+                <p>${calculated.dotDps.toLocaleString()}</p>
+            </div>` : ''}
+            <div class="dps-item">
+                <h3>Group DPS</h3>
+                <p>${calculated.groupDps.toLocaleString()}</p>
+            </div>
+        </div>
+        
+        <!-- MODIFIED: "DoT Type" is now included here -->
+        <div class="additional-stats">
+            <h4>Stats for ${upgradeLabel}</h4>
+            <div class="additional-stats-grid">
+                <div class="stat-block">
+                    <span class="stat-block-label">AOE</span>
+                    <span class="stat-block-value">${stats.AOE[currentUpgradeIndex]}</span>
                 </div>
-                <div class="dps-item">
-                    <h3>Group DPS (Max)</h3>
-                    <p>${calculated.groupDps.toLocaleString()}</p>
+                <div class="stat-block">
+                    <span class="stat-block-label">DoT Type</span>
+                    <span class="stat-block-value">${stats.DoT[currentUpgradeIndex]}</span>
+                </div>
+                <div class="stat-block">
+                    <span class="stat-block-label">Total Cost</span>
+                    <span class="stat-block-value">$${calculated.totalCost.toLocaleString()}</span>
+                </div>
+                <div class="stat-block">
+                    <span class="stat-block-label">Next Cost</span>
+                    <span class="stat-block-value">${nextUpgradeCost}</span>
                 </div>
             </div>
-            <ul class="output-stats-list-detailed">
-                <li><strong>Base Damage:</strong><span class="value">${calculated.finalDamage.toLocaleString()}</span></li>
-                <li><strong>Range:</strong><span class="value">${calculated.finalRange}</span></li>
-                <li><strong>SPA:</strong><span class="value">${calculated.finalSpa}s</span></li>
-                <li><strong>AOE:</strong><span class="value">${stats.AOE[currentUpgradeIndex]}</span></li>
-                <li><strong>DoT Type:</strong><span class="value">${stats.DoT[currentUpgradeIndex]}</span></li>
-                ${calculated.dotDps > 0 ? `<li><strong>DoT DPS:</strong><span class="value">${calculated.dotDps.toLocaleString()}</span></li>` : ''}
-                <li><strong>Next Upgrade Cost:</strong><span class="value">${nextUpgradeCost}</span></li>
-                <li><strong>Placement Limit:</strong><span class="value">${displayPlacementLimit}</span></li>
-            </ul>
-        `;
+        </div>
 
-        dpsOutputSection.querySelector('#prevUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(-1));
-        dpsOutputSection.querySelector('#nextUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(1));
-    },
+        <div class="upgrade-nav bottom-nav">
+            <button id="prevUpgradeBtn" class="nav-btn" ${currentUpgradeIndex === 0 ? 'disabled' : ''}>◄ Prev</button>
+            <button id="nextUpgradeBtn" class="nav-btn" ${currentUpgradeIndex === unitData.MaxUpgrades ? 'disabled' : ''}>Next ►</button>
+        </div>
+    `;
+
+    // Re-bind events for the new buttons
+    dpsOutputSection.querySelector('#prevUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(-1));
+    dpsOutputSection.querySelector('#nextUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(1));
+},
 
     // --- CALCULATIONS ---
     calculateFinalStats(unitData) {
-        const { currentUpgradeIndex, unitLevel, dmgRoll, rngRoll, spaRoll, selectedTrait, selectedSkillTree } = this.state;
-        const { Stats: stats, PlacementCount } = unitData;
+    const { currentUpgradeIndex, unitLevel, dmgRoll, rngRoll, spaRoll, selectedTrait, selectedSkillTree } = this.state;
+    const { Stats: stats, PlacementCount } = unitData;
 
-        const baseDamage = parseFloat(stats.Damage[currentUpgradeIndex]);
-        const baseSpa = parseFloat(stats.SPA[currentUpgradeIndex]);
-        const baseRange = parseFloat(stats.Range[currentUpgradeIndex]);
-        const dotEffect = stats.DoT[currentUpgradeIndex];
+    // --- Base Stats for Current Level ---
+    const baseDamage = parseFloat(stats.Damage[currentUpgradeIndex]);
+    const baseSpa = parseFloat(stats.SPA[currentUpgradeIndex]);
+    const baseRange = parseFloat(stats.Range[currentUpgradeIndex]);
+    const dotEffect = stats.DoT[currentUpgradeIndex];
 
-        const traitBonus = traitsData.find(t => t.Traits === selectedTrait);
-        const skillTreeBonus = skillTreeData[selectedSkillTree];
+    // --- Bonuses ---
+    const traitBonus = traitsData.find(t => t.Traits === selectedTrait);
+    const skillTreeBonus = skillTreeData[selectedSkillTree];
 
-        // Level-based damage bonus
-        const levelAdjustedDamage = unitLevel > 1
-            ? Math.round(baseDamage + (unitLevel * (baseDamage / 70)))
-            : baseDamage;
+    // --- Calculations ---
+    const levelAdjustedDamage = unitLevel > 1
+        ? Math.round(baseDamage + (unitLevel * (baseDamage / 70)))
+        : baseDamage;
 
-        // Final Stat Calculations
-        const totalDamageMultiplier = 1 + (dmgRoll / 100) + traitBonus.Damage + skillTreeBonus.Damage;
-        const finalDamage = Math.round(levelAdjustedDamage * totalDamageMultiplier);
-        
-        const totalSpaMultiplier = 1 - ((spaRoll / 100) + traitBonus.Spa + skillTreeBonus.SPA);
-        const finalSpa = Math.max(0, baseSpa * totalSpaMultiplier);
-        
-        const totalRangeMultiplier = 1 + (rngRoll / 100) + traitBonus.Range + skillTreeBonus.Range;
-        const finalRange = Math.round(baseRange * totalRangeMultiplier * 10) / 10;
-        
-        // DoT DPS
-        let dotMultiplier = 0;
-        const effect = (dotEffect || '').toLowerCase();
-        if (effect.includes("burn")) dotMultiplier = 0.1;
-        else if (effect.includes("bleed")) dotMultiplier = 0.0833;
-        else if (effect.includes("poison")) dotMultiplier = 0.05;
-        else if (effect.includes("shock")) dotMultiplier = 0.025;
-        if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
-        const dotDps = (finalDamage * dotMultiplier) / 2;
+    const totalDamageMultiplier = 1 + (dmgRoll / 100) + traitBonus.Damage + skillTreeBonus.Damage;
+    const finalDamage = Math.round(levelAdjustedDamage * totalDamageMultiplier);
+    
+    const totalSpaMultiplier = 1 - ((spaRoll / 100) + traitBonus.Spa + skillTreeBonus.SPA);
+    const finalSpa = Math.max(0, baseSpa * totalSpaMultiplier);
+    
+    const totalRangeMultiplier = 1 + (rngRoll / 100) + traitBonus.Range + skillTreeBonus.Range;
+    const finalRange = Math.round(baseRange * totalRangeMultiplier * 10) / 10;
+    
+    let dotMultiplier = 0;
+    const effect = (dotEffect || '').toLowerCase();
+    if (effect.includes("burn")) dotMultiplier = 0.1;
+    else if (effect.includes("bleed")) dotMultiplier = 0.0833;
+    else if (effect.includes("poison")) dotMultiplier = 0.05;
+    else if (effect.includes("shock")) dotMultiplier = 0.025;
+    if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
+    const dotDps = (finalDamage * dotMultiplier) / 2;
 
-        // Final DPS
-        const baseDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
-        const finalDps = baseDps + dotDps;
+    const baseDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
+    const finalDps = baseDps + dotDps;
 
-        // Group DPS
-        let groupDps;
-        if (traitBonus.Traits === "All Star") groupDps = finalDps;
-        else if (traitBonus.Traits === "Companion") groupDps = finalDps * (PlacementCount + 1);
-        else groupDps = finalDps * PlacementCount;
-        
-        return {
-            finalDamage: finalDamage,
-            finalSpa: Math.round(finalSpa * 100) / 100,
-            finalRange: finalRange,
-            dotDps: Math.round(dotDps * 100) / 100,
-            finalDps: Math.round(finalDps * 100) / 100,
-            groupDps: Math.round(groupDps * 100) / 100
-        };
-    },
+    let groupDps;
+    if (traitBonus.Traits === "All Star") groupDps = finalDps;
+    else if (traitBonus.Traits === "Companion") groupDps = finalDps * (PlacementCount + 1);
+    else groupDps = finalDps * PlacementCount;
+    
+    // NEW: Calculate total cost up to the current upgrade
+    let totalCost = 0;
+    for (let i = 0; i <= currentUpgradeIndex; i++) {
+        if (stats.Cost[i] !== undefined) {
+            totalCost += parseFloat(stats.Cost[i]);
+        }
+    }
+
+    return {
+        finalDamage: finalDamage,
+        finalSpa: Math.round(finalSpa * 100) / 100,
+        finalRange: finalRange,
+        dotDps: Math.round(dotDps * 100) / 100,
+        finalDps: Math.round(finalDps * 100) / 100,
+        groupDps: Math.round(groupDps * 100) / 100,
+        totalCost: totalCost, // NEW: Export total cost
+    };
+},
 
     // --- ACTIONS ---
     selectUnit(unitName) {
