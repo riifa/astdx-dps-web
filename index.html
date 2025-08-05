@@ -13,7 +13,7 @@
     <main>
         <header class="app-header">
             <h1>ASTDX DPS Calculator</h1>
-            <p class="subtitle">Ver 1.4.1</p>
+            <p class="subtitle">Ver 1.4.1 - Fixed</p>
         </header>
 
         <div class="calculator-container">
@@ -75,13 +75,13 @@
         </div>
     </main>
     
-    <!-- External script with unit data -->
+    <!-- Mock unit data for demo - replace with your actual unit_stats.js -->
     <script src="unit_stats.js"></script>
 
     <script>
         // --- STATE VARIABLES ---
         let selectedUnit = '';
-        let unitLevel = 80;
+        let unitLevel = 1;
         let selectedTrait = 'Traitless';
         let dmgRoll = 0;
         let rngRoll = 0;
@@ -114,10 +114,17 @@
             { "Traits": "All Star", "Damage": 3, "Range": 0.1, "Spa": 0.1 }
         ];
 
+        const skillTreeData = {
+            "Damage Tree": { "Damage": 0.15, "Range": 0.05, "SPA": 0.05 },
+            "Range Tree": { "Damage": 0.05, "Range": 0.125, "SPA": 0.05 },
+            "Speed Tree": { "Damage": 0.05, "Range": 0.05, "SPA": 0.10 },
+            "None": { "Damage": 0, "Range": 0, "SPA": 0 }
+        };
+
         // --- CORE FUNCTIONS ---
         function selectUnit(unitName) {
             selectedUnit = unitName;
-            currentUpgradeIndex = 0; // Reset to placement level on new unit selection
+            currentUpgradeIndex = 0; 
             updateSelectedUnit();
             updateOutputDisplay();
             
@@ -138,6 +145,61 @@
             updateOutputDisplay();
         }
 
+        // --- Simulation Variables ---
+        function calculateFinalStats(baseDamage, baseSpa, baseRange, dotEffect, placementLimit) {
+            const traitBonus = traitsData.find(t => t.Traits === selectedTrait);
+            const skillTreeBonus = skillTreeData[selectedSkillTree];
+            
+            // CORRECTED: Restored the check to only apply level bonus if level > 1
+            let levelAdjustedDamage = baseDamage;
+            levelAdjustedDamage = Math.round(baseDamage + ((unitLevel) * (baseDamage / 70)));
+            
+            const totalDamageMultiplier = 1 + (dmgRoll / 100) + traitBonus.Damage + skillTreeBonus.Damage;
+            const finalDamage = Math.round(levelAdjustedDamage * totalDamageMultiplier);
+            
+            const totalSpaMultiplier = 1 - ((spaRoll / 100) + traitBonus.Spa + skillTreeBonus.SPA);
+            const finalSpa = baseSpa * totalSpaMultiplier;
+            
+            const totalRangeMultiplier = 1 + (rngRoll / 100) + traitBonus.Range + skillTreeBonus.Range;
+            const finalRange = Math.round(baseRange * totalRangeMultiplier * 10) / 10;
+            
+            // --- DoT Calculation ---
+            let dotMultiplier = 0;
+            if (dotEffect && dotEffect.toLowerCase() !== 'none') {
+                const effect = dotEffect.toLowerCase();
+                if (effect.includes("burn")) dotMultiplier = 0.1;
+                else if (effect.includes("bleed")) dotMultiplier = 0.0833;
+                else if (effect.includes("poison")) dotMultiplier = 0.05;
+                else if (effect.includes("shock")) dotMultiplier = 0.025;
+            }
+
+            if (traitBonus.Traits === "Tempest") {
+                dotMultiplier += 0.3; // Add the Tempest bonus to the existing multiplier
+            }
+            
+            let dotDps = (finalDamage * dotMultiplier) / 2;
+            const baseDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
+            const finalDps = baseDps + dotDps;
+
+            let groupDps;
+            if (traitBonus.Traits === "All Star") {
+                groupDps = finalDps; 
+            } else if (traitBonus.Traits === "Companion") {
+                groupDps = finalDps * (placementLimit + 1); 
+            } else {
+                groupDps = finalDps * placementLimit; 
+            }
+
+            return {
+                finalDamage: finalDamage,
+                finalSpa: Math.round(finalSpa * 100) / 100,
+                finalRange: finalRange,
+                dotDps: Math.round(dotDps * 100) / 100,
+                finalDps: Math.round(finalDps * 100) / 100,
+                groupDps: Math.round(groupDps * 100) / 100
+            };
+        }
+
         // --- UI UPDATE FUNCTIONS ---
         function updateSelectedUnit() {
             const displayElement = document.getElementById('currentUnitDisplay');
@@ -148,7 +210,7 @@
                 : 'Select a unit by clicking its image.';
         }
         
-        // MODIFIED: This function now displays DoT and Placement Limit.
+        // --- MODIFIED: Output Display with Group DPS ---
         function updateOutputDisplay() {
             const outputSection = document.getElementById('dpsOutputSection');
 
@@ -167,16 +229,16 @@
             const unitData = characterData[selectedUnit];
             const maxIndex = unitData.MaxUpgrades;
             const stats = unitData.Stats;
+            const placementLimit = unitData.PlacementCount;
 
-            // Get all stats for the current unit and upgrade index
-            const damage = parseFloat(stats.Damage[currentUpgradeIndex]);
-            const spa = parseFloat(stats.SPA[currentUpgradeIndex]);
-            const range = parseFloat(stats.Range[currentUpgradeIndex]);
+            const baseDamage = parseFloat(stats.Damage[currentUpgradeIndex]);
+            const baseSpa = parseFloat(stats.SPA[currentUpgradeIndex]);
+            const baseRange = parseFloat(stats.Range[currentUpgradeIndex]);
             const aoe = stats.AOE[currentUpgradeIndex];
-            const dot = stats.DoT[currentUpgradeIndex]; // NEW: Get DoT
-            const placementLimit = unitData.PlacementCount; // NEW: Get placement limit
+            const dot = stats.DoT[currentUpgradeIndex];
             
-            const dps = spa > 0 ? (damage / spa).toFixed(2) : 'N/A';
+            // Pass `placementLimit` to the calculation function
+            const calculated = calculateFinalStats(baseDamage, baseSpa, baseRange, dot, placementLimit);
             
             let nextUpgradeCost = 'N/A';
             if (currentUpgradeIndex < stats.Cost.length) {
@@ -185,22 +247,34 @@
 
             const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
 
+            let dotDpsDisplay = '';
+            if (dot.toLowerCase() !== 'none' && calculated.dotDps > 0) {
+                dotDpsDisplay = `<li><strong>DoT DPS:</strong><span class="value">${calculated.dotDps.toLocaleString()}</span></li>`;
+            }
+
             outputSection.innerHTML = `
                 <div class="upgrade-nav">
                     <button id="prevUpgradeBtn" class="nav-btn">◄ Prev</button>
                     <span class="upgrade-level-display">${upgradeLabel}</span>
                     <button id="nextUpgradeBtn" class="nav-btn">Next ►</button>
                 </div>
-                <div class="final-dps-display">
-                    <h3>DPS</h3>
-                    <p>${dps.toLocaleString()}</p>
+                <div class="dps-grid">
+                    <div class="dps-item">
+                        <h3>Total DPS (Unit)</h3>
+                        <p>${calculated.finalDps.toLocaleString()}</p>
+                    </div>
+                     <div class="dps-item">
+                        <h3>Group DPS (Max)</h3>
+                        <p>${calculated.groupDps.toLocaleString()}</p>
+                    </div>
                 </div>
                 <ul class="output-stats-list-detailed">
-                    <li><strong>Damage:</strong><span class="value">${damage.toLocaleString()}</span></li>
-                    <li><strong>Range:</strong><span class="value">${range}</span></li>
-                    <li><strong>SPA:</strong><span class="value">${spa}s</span></li>
+                    <li><strong>Base Damage:</strong><span class="value">${calculated.finalDamage.toLocaleString()}</span></li>
+                    <li><strong>Range:</strong><span class="value">${calculated.finalRange}</span></li>
+                    <li><strong>SPA:</strong><span class="value">${calculated.finalSpa}s</span></li>
                     <li><strong>AOE:</strong><span class="value">${aoe}</span></li>
-                    <li><strong>DoT:</strong><span class="value">${dot}</span></li>
+                    <li><strong>DoT Type:</strong><span class="value">${dot}</span></li>
+                    ${dotDpsDisplay}
                     <li><strong>Next Upgrade Cost:</strong><span class="value">${nextUpgradeCost}</span></li>
                     <li><strong>Placement Limit:</strong><span class="value">${placementLimit}</span></li>
                 </ul>
@@ -228,6 +302,7 @@
             document.getElementById('unitLevelSlider').oninput = function() {
                 unitLevel = parseInt(this.value);
                 document.getElementById('unitLevelValue').textContent = unitLevel;
+                updateOutputDisplay();
             };
         }
 
@@ -240,6 +315,7 @@
             
             document.getElementById('traitSelection').onchange = function() {
                 selectedTrait = this.value;
+                updateOutputDisplay();
             };
         }
         
@@ -250,11 +326,22 @@
                 const max = parseFloat(input.max);
                 let value = parseFloat(input.value);
 
-                if (isNaN(value)) { statVarSetter(0); return; }
-                if (value > max) { value = max; input.value = max; }
-                else if (value < min) { value = min; input.value = min; }
+                if (isNaN(value) || value === '') { 
+                    value = 0;
+                    statVarSetter(0); 
+                } else if (value > max) { 
+                    value = max; 
+                    input.value = max; 
+                    statVarSetter(max);
+                } else if (value < min) { 
+                    value = min; 
+                    input.value = min; 
+                    statVarSetter(min);
+                } else {
+                    statVarSetter(value);
+                }
                 
-                statVarSetter(value);
+                updateOutputDisplay();
             }
 
             document.getElementById('dmgRollInput').addEventListener('input', (e) => handleInput(e, val => dmgRoll = val));
@@ -272,6 +359,7 @@
             
             document.getElementById('skillTreeSelection').onchange = function() {
                 selectedSkillTree = this.value;
+                updateOutputDisplay();
             };
         }
 
@@ -434,80 +522,44 @@
         .dps-output-section .placeholder-text { color: var(--text-secondary); font-style: italic; font-size: 0.9rem; }
         
         .upgrade-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;
         }
         .upgrade-nav .nav-btn {
-            background-color: var(--accent-blue);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-family: var(--font-montserrat);
-            font-weight: 600;
-            cursor: pointer;
+            background-color: var(--accent-blue); color: white; border: none; padding: 0.5rem 1rem;
+            border-radius: 6px; font-family: var(--font-montserrat); font-weight: 600; cursor: pointer;
             transition: background-color 0.2s ease, transform 0.2s ease;
         }
-        .upgrade-nav .nav-btn:hover:not(:disabled) {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-        }
-        .upgrade-nav .nav-btn:disabled {
-            background-color: #555;
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .upgrade-level-display {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
+        .upgrade-nav .nav-btn:hover:not(:disabled) { background-color: #0056b3; transform: translateY(-2px); }
+        .upgrade-nav .nav-btn:disabled { background-color: #555; opacity: 0.6; cursor: not-allowed; }
+        .upgrade-level-display { font-size: 1.2rem; font-weight: 600; color: var(--text-primary); }
         
-        .final-dps-display {
-            text-align: center;
-            margin-bottom: 1.5rem;
+        /* --- NEW/MODIFIED CSS FOR DPS GRID --- */
+        .dps-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 1rem; text-align: center; margin-bottom: 1.5rem;
         }
-        .final-dps-display h3 {
-            font-family: var(--font-poppins);
-            color: var(--accent-green);
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+        .dps-item h3 {
+            font-family: var(--font-poppins); color: var(--accent-green);
+            font-size: 1.3rem; margin-bottom: 0.5rem;
         }
-        .final-dps-display p {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
+        .dps-item p {
+            font-size: 2.5rem; font-weight: 700; color: var(--text-primary);
         }
         
         .output-stats-list-detailed {
             list-style: none; padding: 0; margin: 0;
             display: flex; flex-direction: column; gap: 1rem;
-            width: 100%;
-            border-top: 1px solid var(--border-color);
-            padding-top: 1.5rem;
+            width: 100%; border-top: 1px solid var(--border-color); padding-top: 1.5rem;
         }
         .output-stats-list-detailed li {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 1rem;
+            display: flex; justify-content: space-between; align-items: center; font-size: 1rem;
         }
-        .output-stats-list-detailed li strong {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+        .output-stats-list-detailed li strong { color: var(--text-secondary); font-weight: 500; }
         .output-stats-list-detailed li .value {
-            color: var(--text-primary);
-            font-weight: 600;
-            text-align: right;
-            background-color: var(--input-bg);
-            padding: 0.25rem 0.6rem;
-            border-radius: 5px;
-            min-width: 80px;
-            text-align: center;
-            text-transform: capitalize;
+            color: var(--text-primary); font-weight: 600; text-align: right;
+            background-color: var(--input-bg); padding: 0.25rem 0.6rem; border-radius: 5px;
+            min-width: 80px; text-align: center; text-transform: capitalize;
         }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -519,7 +571,7 @@
             .app-header h1 { font-size: 2.5rem; }
             .calculator-card, .output-card { padding: 1.8rem; }
             .dps-output-section h2 { font-size: 1.6rem; }
-            .final-dps-display p { font-size: 2.4rem; }
+            .dps-item p { font-size: 2.2rem; }
         }
         @media (max-width: 480px) {
             main { margin: 1rem auto; }
@@ -530,7 +582,8 @@
             .stat-roll-inputs { grid-template-columns: 1fr; gap: 0.75rem; }
             .output-stats-list-detailed li { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
             .output-stats-list-detailed li .value { width: 100%; text-align: left; }
-            .final-dps-display p { font-size: 2rem; }
+            .dps-grid { grid-template-columns: 1fr; /* Stack DPS displays vertically */ }
+            .dps-item p { font-size: 2rem; }
             .upgrade-nav .nav-btn { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
             .upgrade-level-display { font-size: 1rem; }
         }
