@@ -5,19 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASTDX DPS Calculator</title>
 
-    <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Stylesheet -->
+
     <link rel="stylesheet" href="style.css">
 
-    <!-- Scripts (defer ensures they run after HTML parsing) -->
-    <!-- Assumed data files -->
     <script src="data.js" defer></script>
     <script src="unit_stats.js" defer></script>
-    <!-- Main application logic -->
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -29,25 +26,23 @@
         </header>
 
         <div class="calculator-container">
-            <!-- Left Card: Inputs and Selections -->
             <section class="calculator-card">
                 <div class="input-section">
                     <label>Select a Unit</label>
                     <div class="unit-grid-container" id="unitGrid">
-                        <!-- Units will be populated by JavaScript -->
+
                     </div>
 
                     <div class="current-unit-display placeholder" id="currentUnitDisplay">
                         Select a unit by clicking its image.
                     </div>
 
-                    <!-- Unit Level Slider -->
+
                     <div id="unitLevelControl" class="control-group"></div>
 
-                    <!-- Traits Selection Dropdown -->
                     <div id="traitSelectionControl" class="control-group"></div>
 
-                    <!-- Stat Rolls Input Section -->
+
                     <div id="statRollsControl" class="control-group">
                         <label>Stat Rolls (%)</label>
                         <div class="stat-roll-inputs">
@@ -75,15 +70,15 @@
                         </div>
                     </div>
 
-                    <!-- Skill Tree Selection Dropdown -->
+ 
                     <div id="skillTreeControl" class="control-group"></div>
                 </div>
             </section>
 
-            <!-- Right Card: Output Display -->
+
             <section class="output-card">
                 <div class="dps-output-section placeholder" id="dpsOutputSection">
-                    <!-- Output will be dynamically generated here -->
+
                 </div>
             </section>
         </div>

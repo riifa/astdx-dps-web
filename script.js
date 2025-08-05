@@ -82,7 +82,9 @@ const calculatorApp = {
         this.elements.spaRollInput.addEventListener('blur', (e) => this.handleStatRollBlur(e, 'spaRoll'));
         
         // Event listener for the roll button
-        this.elements.rollTraitBtn.addEventListener('click', () => this.rollForTrait());
+        if (this.elements.rollTraitBtn) {
+            this.elements.rollTraitBtn.addEventListener('click', () => this.rollForTrait());
+        }
     },
 
     // --- RENDER & UPDATE ---
@@ -130,7 +132,16 @@ const calculatorApp = {
 
         const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
         
-        const nextUpgradeCost = (currentUpgradeIndex + 1) < stats.Cost.length
+        // --- MODIFIED: Get dynamic data for Rarity, Placement, and Element ---
+        const placementStatus = (unitData.PlacementStatus && unitData.PlacementStatus[currentUpgradeIndex]) 
+            ? unitData.PlacementStatus[currentUpgradeIndex] 
+            : 'N/A';
+        const placementStatusClass = placementStatus.toLowerCase().split(' ')[0]; // handles 'Ground', 'Hill', 'Hybrid', etc.
+        const rarity = unitData.Rarity || 'N/A';
+        const element = unitData.Element || 'N/A';
+        const elementClass = element.toLowerCase();
+
+        const nextUpgradeCost = (currentUpgradeIndex < stats.Cost.length - 1)
             ? `$${Number(stats.Cost[currentUpgradeIndex + 1]).toLocaleString()}`
             : 'N/A';
         
@@ -142,13 +153,14 @@ const calculatorApp = {
             <div class="unit-card-header">
                 <h2 class="unit-title">${selectedUnit.replace(/_/g, ' ')}</h2>
                 <div class="unit-sub-info">
-                    <span>${unitData.Rarity || '5 Star'}</span> • 
-                    <span class="type-${(unitData.Type || 'HILL').toLowerCase()}">${unitData.Type || 'HILL'}</span>
+                    <span>${rarity}</span> • 
+                    <span class="type-${placementStatusClass}">${placementStatus}</span>
                 </div>
             </div>
 
             <div class="unit-details-row">
                 <div class="level-display">Lv. ${unitLevel}</div>
+                <div class="element-display element-${elementClass}">${element}</div>
                 <div class="trait-display">${selectedTrait}</div>
             </div>
 
@@ -213,7 +225,7 @@ const calculatorApp = {
 
             <div class="upgrade-nav bottom-nav">
                 <button id="prevUpgradeBtn" class="nav-btn" ${currentUpgradeIndex === 0 ? 'disabled' : ''}>◄ Prev</button>
-                <button id="nextUpgradeBtn" class="nav-btn" ${currentUpgradeIndex === unitData.MaxUpgrades ? 'disabled' : ''}>Next ►</button>
+                <button id="nextUpgradeBtn" class="nav-btn" ${currentUpgradeIndex >= unitData.MaxUpgrades ? 'disabled' : ''}>Next ►</button>
             </div>
         `;
 
@@ -282,11 +294,15 @@ const calculatorApp = {
         else groupDps = finalDps * PlacementCount;
         
         let totalCost = 0;
+        // Cost is cumulative for each upgrade step
         for (let i = 0; i <= currentUpgradeIndex; i++) {
             if (stats.Cost[i] !== undefined) {
                 totalCost += parseFloat(stats.Cost[i]);
+            } else if (i === 0 && stats.Cost[0] === undefined) { // Handle placement cost if it's the only one
+                totalCost += parseFloat(unitData.Cost[0]);
             }
         }
+
 
         return {
             finalDamage: finalDamage,
@@ -365,17 +381,55 @@ const calculatorApp = {
 
     // --- UI POPULATION HELPERS ---
     populateUnitGrid() {
-        const sortedUnitNames = Object.keys(characterData).sort();
-        const unitCardsHTML = sortedUnitNames.map(unitName => {
-            const unitData = characterData[unitName];
-            const fallbackImg = `https://via.placeholder.com/90x90/666/fff?text=${encodeURIComponent(unitName.substring(0, 3).toUpperCase())}`;
-            return `
-                <div class="unit-card" data-unit="${unitName}">
-                    <img src="${unitData.Image}" alt="${unitName.replace(/_/g, ' ')}" onerror="this.onerror=null;this.src='${fallbackImg}';">
-                    <p>${unitName.replace(/_/g, ' ')}</p>
-                </div>`;
-        }).join('');
-        this.elements.unitGrid.innerHTML = unitCardsHTML;
+        // 1. Group units by Rarity
+        const groupedUnits = {};
+        for (const unitName in characterData) {
+            const unit = characterData[unitName];
+            const rarity = unit.Rarity || 'Uncategorized'; // Fallback for units without rarity
+            if (!groupedUnits[rarity]) {
+                groupedUnits[rarity] = [];
+            }
+            groupedUnits[rarity].push(unitName);
+        }
+
+        // 2. Sort units within each group alphabetically
+        for (const rarity in groupedUnits) {
+            groupedUnits[rarity].sort((a, b) => a.localeCompare(b));
+        }
+
+        const rarityOrder = ['Unbound', '5 Star'];
+        
+        // Dynamically add any other rarities found in the data to the end of the order
+        Object.keys(groupedUnits).forEach(rarity => {
+            if (!rarityOrder.includes(rarity)) {
+                rarityOrder.push(rarity);
+            }
+        });
+
+        let finalHTML = '';
+
+        // 4. Generate HTML with headers based on the defined order
+        rarityOrder.forEach(rarity => {
+            if (groupedUnits[rarity]) {
+                // Add a header for the group
+                finalHTML += `<h3 class="rarity-header">${rarity}s</h3>`;
+
+                // Generate unit cards for this group
+                const unitCardsHTML = groupedUnits[rarity].map(unitName => {
+                    const unitData = characterData[unitName];
+                    const fallbackImg = `https://via.placeholder.com/90x90/666/fff?text=${encodeURIComponent(unitName.substring(0, 3).toUpperCase())}`;
+                    return `
+                        <div class="unit-card" data-unit="${unitName}">
+                            <img src="${unitData.Image}" alt="${unitName.replace(/_/g, ' ')}" onerror="this.onerror=null;this.src='${fallbackImg}';">
+                            <p>${unitName.replace(/_/g, ' ')}</p>
+                        </div>`;
+                }).join('');
+                
+                finalHTML += unitCardsHTML;
+            }
+        });
+
+        this.elements.unitGrid.innerHTML = finalHTML;
     },
 
     createLevelSlider() {
