@@ -1,0 +1,30 @@
+const traitsData = [
+    { "Traits": "Traitless", "Damage": 0, "Range": 0, "Spa": 0 }, 
+    { "Traits": "Tank", "Damage": 0, "Range": 0, "Spa": 0 },
+    { "Traits": "Perception 1", "Damage": 0, "Range": 0.03, "Spa": 0 }, 
+    { "Traits": "Perception 2", "Damage": 0, "Range": 0.05, "Spa": 0 },
+    { "Traits": "Perception 3", "Damage": 0, "Range": 0.07, "Spa": 0 }, 
+    { "Traits": "Dexterity 1", "Damage": 0, "Range": 0, "Spa": 0.03 },
+    { "Traits": "Dexterity 2", "Damage": 0, "Range": 0, "Spa": 0.05 }, 
+    { "Traits": "Dexterity 3", "Damage": 0, "Range": 0, "Spa": 0.07 },
+    { "Traits": "Prodigy", "Damage": 0, "Range": 0, "Spa": 0 }, 
+    { "Traits": "Zenkai 1", "Damage": 0.05, "Range": 0, "Spa": 0 },
+    { "Traits": "Zenkai 2", "Damage": 0.07, "Range": 0, "Spa": 0 }, 
+    { "Traits": "Zenkai 3", "Damage": 0.1, "Range": 0, "Spa": 0 },
+    { "Traits": "Midas", "Damage": 0, "Range": 0, "Spa": 0 }, 
+    { "Traits": "Sharpshooter", "Damage": 0, "Range": 0.15, "Spa": 0 },
+    { "Traits": "Tempest", "Damage": 0, "Range": 0, "Spa": 0.1 }, 
+    { "Traits": "Companion", "Damage": 0, "Range": 0, "Spa": 0 },
+    { "Traits": "Bloodlust", "Damage": 0.1, "Range": 0.1, "Spa": 0 }, 
+    { "Traits": "Bloodlust (Max)", "Damage": 0.2, "Range": 0.1, "Spa": 0.1 },
+    { "Traits": "Corrupted", "Damage": 0, "Range": 0.075, "Spa": 0.1 }, 
+    { "Traits": "Genesis", "Damage": 0.125, "Range": 0.085, "Spa": 0.085 },
+    { "Traits": "All Star", "Damage": 3, "Range": 0.1, "Spa": 0.1 }
+];
+
+const skillTreeData = {
+    "Damage Tree": { "Damage": 0.15, "Range": 0.05, "SPA": 0.05 },
+    "Range Tree": { "Damage": 0.05, "Range": 0.125, "SPA": 0.05 },
+    "Speed Tree": { "Damage": 0.05, "Range": 0.05, "SPA": 0.10 },
+    "None": { "Damage": 0, "Range": 0, "SPA": 0 }
+};
