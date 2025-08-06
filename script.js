@@ -229,6 +229,10 @@ const calculatorApp = {
                         <span class="stat-block-value">${stats.DoT[currentUpgradeIndex]}</span>
                     </div>
                     <div class="stat-block">
+                        <span class="stat-block-label">Placement</span>
+                        <span class="stat-block-value">${calculated.totalPlacementCount}</span>
+                    </div>
+                    <div class="stat-block">
                         <span class="stat-block-label">Total Cost</span>
                         <span class="stat-block-value">$${calculated.totalCost.toLocaleString()}</span>
                     </div>
@@ -294,27 +298,31 @@ const calculatorApp = {
         
         let dotMultiplier = 0;
         const effect = (dotEffect || '').toLowerCase();
-        if (effect.includes("burn")) dotMultiplier = 0.1;
-        else if (effect.includes("bleed")) dotMultiplier = 0.0833;
-        else if (effect.includes("poison")) dotMultiplier = 0.05;
-        else if (effect.includes("shock")) dotMultiplier = 0.025;
-        if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
+        if (effect !== "none") {
+            if (effect.includes("burn")) dotMultiplier = 0.1;
+            else if (effect.includes("bleed")) dotMultiplier = 0.0833;
+            else if (effect.includes("poison")) dotMultiplier = 0.05;
+            else if (effect.includes("shock")) dotMultiplier = 0.025;
+            if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
+        }
         const dotDps = (finalDamage * dotMultiplier) / 2;
 
         const baseDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
         const finalDps = baseDps + dotDps;
 
         let groupDps;
-        if (traitBonus.Traits === "All Star") groupDps = finalDps;
-        else if (traitBonus.Traits === "Companion") groupDps = finalDps * (PlacementCount + 1);
-        else groupDps = finalDps * PlacementCount;
-        
+        let newPlacementCount = PlacementCount; // Default to 1 if not defined
+        if (traitBonus.Traits === "All Star") newPlacementCount = 1;
+        else if (traitBonus.Traits === "Companion") newPlacementCount += 1; // Companion trait increases placement count by 1
+
+        groupDps = finalDps * newPlacementCount;
+
         let totalCost = 0;
-        // Cost is cumulative for each upgrade step
+        
         for (let i = 0; i <= currentUpgradeIndex; i++) {
             if (stats.Cost[i] !== undefined) {
                 totalCost += parseFloat(stats.Cost[i]);
-            } else if (i === 0 && stats.Cost[0] === undefined) { // Handle placement cost if it's the only one
+            } else if (i === 0 && stats.Cost[0] === undefined) { 
                 totalCost += parseFloat(unitData.Cost[0]);
             }
         }
@@ -328,6 +336,7 @@ const calculatorApp = {
             finalDps: Math.round(finalDps * 100) / 100,
             groupDps: Math.round(groupDps * 100) / 100,
             totalCost: totalCost,
+            totalPlacementCount: newPlacementCount,
         };
     },
 
