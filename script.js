@@ -128,9 +128,10 @@ const calculatorApp = {
         return 'C';
     },
 
-    updateOutputDisplay() {
+        updateOutputDisplay() {
         const { dpsOutputSection } = this.elements;
-        const { selectedUnit, currentUpgradeIndex, selectedTrait, unitLevel, dmgRoll, rngRoll, spaRoll } = this.state;
+        // Grab selectedSkillTree from the state
+        const { selectedUnit, currentUpgradeIndex, selectedTrait, unitLevel, dmgRoll, rngRoll, spaRoll, selectedSkillTree } = this.state;
 
         if (!selectedUnit) {
             dpsOutputSection.innerHTML = `<p class="placeholder-text">Select a unit to view its stats.</p>`;
@@ -146,11 +147,10 @@ const calculatorApp = {
 
         const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
         
-        // --- MODIFIED: Get dynamic data for Rarity, Placement, and Element ---
         const placementStatus = (unitData.PlacementStatus && unitData.PlacementStatus[currentUpgradeIndex]) 
             ? unitData.PlacementStatus[currentUpgradeIndex] 
             : 'N/A';
-        const placementStatusClass = placementStatus.toLowerCase().split(' ')[0]; // handles 'Ground', 'Hill', 'Hybrid', etc.
+        const placementStatusClass = placementStatus.toLowerCase().split(' ')[0];
         const rarity = unitData.Rarity || 'N/A';
         const element = unitData.Element || 'N/A';
         const elementClass = element.toLowerCase();
@@ -176,6 +176,8 @@ const calculatorApp = {
                 <div class="level-display">Lv. ${unitLevel}</div>
                 <div class="element-display element-${elementClass}">${element}</div>
                 <div class="trait-display">${selectedTrait}</div>
+                ${/* Conditionally add the skill tree display if one is selected */''}
+                ${selectedSkillTree !== 'None' ? `<div class="skill-tree-display">${selectedSkillTree}</div>` : ''}
             </div>
 
             <div class="stats-display">
@@ -518,6 +520,10 @@ const calculatorApp = {
             <div class="select-wrapper">
                 <select id="skillTreeSelection">${optionsHTML}</select>
             </div>`;
+        
+        const skillTreeSelect = this.elements.skillTreeControl.querySelector('#skillTreeSelection');
+        skillTreeSelect.value = this.state.selectedSkillTree;
+
         this.elements.skillTreeControl.querySelector('#skillTreeSelection').addEventListener('change', (e) => {
             this.state.selectedSkillTree = e.target.value;
             this.render();

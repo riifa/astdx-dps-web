@@ -682,13 +682,23 @@ main {
     animation: rainbow-flow 8s ease-in-out infinite;
 }
 
+.skill-tree-display {
+    background-color: var(--input-bg);
+    border: 1px solid #c9a449; /* A nice bronze/gold border */
+    color: #f7d885; /* A light gold text color */
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
 /* Keyframes for the rainbow animation */
 @keyframes rainbow-flow {
     0%   { background-position: 0% 50%; }
     50%  { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
- 
+
 
 /* --- Media Queries --- */
 @media (max-width: 1024px) {
