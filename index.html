@@ -31,7 +31,15 @@
         <div class="calculator-container">
             <section class="calculator-card">
                 <div class="input-section">
-                    <label>Select a Unit</label>
+                    <!-- START: MODIFIED SECTION -->
+                    <div class="unit-selection-header">
+                        <label>Select a Unit</label>
+                        <div class="search-bar-container">
+                            <input type="text" id="unitSearchInput" placeholder="Search for a unit...">
+                        </div>
+                    </div>
+                    <!-- END: MODIFIED SECTION -->
+
                     <div class="unit-grid-container" id="unitGrid">
 
                     </div>
@@ -75,6 +83,10 @@
 
  
                     <div id="skillTreeControl" class="control-group"></div>
+                    
+                    <!-- START: NEW DROPDOWN SECTION -->
+                    <div id="onFieldBuffsControl" class="control-group"></div>
+                    <!-- END: NEW DROPDOWN SECTION -->
                 </div>
             </section>
 
@@ -83,6 +95,7 @@
                 <div class="dps-output-section placeholder" id="dpsOutputSection">
 
                 </div>
+                <section id="special-controls"></section>
             </section>
         </div>
     </main>

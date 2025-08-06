@@ -33,6 +33,7 @@ const calculatorApp = {
         rngRoll: 0,
         spaRoll: 0,
         selectedSkillTree: 'None',
+        selectedBuff: 'None', // New state for on-field buffs
         currentUpgradeIndex: 0,
         rollCount: 0, // State for the roll counter
     },
@@ -45,12 +46,14 @@ const calculatorApp = {
         traitSelectionControl: null,
         statRollsControl: null,
         skillTreeControl: null,
+        onFieldBuffsControl: null, // New element for buffs dropdown
         dpsOutputSection: null,
         dmgRollInput: null,
         rngRollInput: null,
         spaRollInput: null,
         rollTraitBtn: null, // Roll button element
         rollCounter: null, // Roll counter display element
+        unitSearchInput: null, // Search bar element
     },
 
     // --- INITIALIZATION ---
@@ -68,10 +71,12 @@ const calculatorApp = {
         this.elements.traitSelectionControl = document.getElementById('traitSelectionControl');
         this.elements.statRollsControl = document.getElementById('statRollsControl');
         this.elements.skillTreeControl = document.getElementById('skillTreeControl');
+        this.elements.onFieldBuffsControl = document.getElementById('onFieldBuffsControl'); // Cache new element
         this.elements.dpsOutputSection = document.getElementById('dpsOutputSection');
         this.elements.dmgRollInput = document.getElementById('dmgRollInput');
         this.elements.rngRollInput = document.getElementById('rngRollInput');
         this.elements.spaRollInput = document.getElementById('spaRollInput');
+        this.elements.unitSearchInput = document.getElementById('unitSearchInput');
     },
 
     populateUI() {
@@ -79,6 +84,7 @@ const calculatorApp = {
         this.createLevelSlider();
         this.populateTraitsDropdown(); // This will now also create the button and counter
         this.populateSkillTreeDropdown();
+        this.populateOnFieldBuffsDropdown(); // Populate new dropdown
     },
 
     bindEvents() {
@@ -99,6 +105,9 @@ const calculatorApp = {
         if (this.elements.rollTraitBtn) {
             this.elements.rollTraitBtn.addEventListener('click', () => this.rollForTrait());
         }
+
+        // Event listener for the search bar
+        this.elements.unitSearchInput.addEventListener('input', () => this.filterUnits());
     },
 
     // --- RENDER & UPDATE ---
@@ -130,8 +139,8 @@ const calculatorApp = {
 
     updateOutputDisplay() {
         const { dpsOutputSection } = this.elements;
-        // Grab selectedSkillTree from the state
-        const { selectedUnit, currentUpgradeIndex, selectedTrait, unitLevel, dmgRoll, rngRoll, spaRoll, selectedSkillTree } = this.state;
+        // Grab new state values
+        const { selectedUnit, currentUpgradeIndex, selectedTrait, unitLevel, dmgRoll, rngRoll, spaRoll, selectedSkillTree, selectedBuff } = this.state;
 
         if (!selectedUnit) {
             dpsOutputSection.innerHTML = `<p class="placeholder-text">Select a unit to view its stats.</p>`;
@@ -198,6 +207,7 @@ const calculatorApp = {
                     <div class="element-display element-${elementClass}">${element}</div>
                     <div class="trait-display">${selectedTrait}</div>
                     ${selectedSkillTree !== 'None' ? `<div class="skill-tree-display">${selectedSkillTree}</div>` : ''}
+                    ${selectedBuff !== 'None' ? `<div class="buff-display">${selectedBuff}</div>` : ''}
                 </div>
 
                 <div class="stats-display">
@@ -266,11 +276,14 @@ const calculatorApp = {
                 <div class="upgrade-nav bottom-nav">
                     <button id="prevUpgradeBtn" class="nav-btn" ${currentUpgradeIndex === 0 ? 'disabled' : ''}>◄ Prev</button>
                     <button id="nextUpgradeBtn" class="nav-btn" ${currentUpgradeIndex >= unitData.MaxUpgrades ? 'disabled' : ''}>Next ►</button>
+                    <button id="maxUpgradeBtn" class="nav-btn max-btn" ${currentUpgradeIndex >= unitData.MaxUpgrades ? 'disabled' : ''}>Max Upgrade</button>
                 </div>
             </div>
         `;
-
+        
+        // --- EVENT LISTENERS ---
         dpsOutputSection.querySelector('#prevUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(-1));
+        dpsOutputSection.querySelector('#maxUpgradeBtn').addEventListener('click', () => this.goToMaxUpgrade());
         dpsOutputSection.querySelector('#nextUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(1));
     },
 
@@ -295,8 +308,8 @@ const calculatorApp = {
     },
 
     calculateFinalStats(unitData) {
-        const { currentUpgradeIndex, unitLevel, dmgRoll, rngRoll, spaRoll, selectedTrait, selectedSkillTree } = this.state;
-        const { Stats: stats, PlacementCount } = unitData;
+        const { currentUpgradeIndex, unitLevel, dmgRoll, rngRoll, spaRoll, selectedTrait, selectedSkillTree, selectedBuff } = this.state;
+        const { Stats: stats, PlacementCount, Element: unitElement } = unitData;
 
         const baseDamage = parseFloat(stats.Damage[currentUpgradeIndex]);
         const baseSpa = parseFloat(stats.SPA[currentUpgradeIndex]);
@@ -308,9 +321,29 @@ const calculatorApp = {
 
         const levelAdjustedDamage = unitLevel > 1 ? Math.round(baseDamage + (unitLevel * (baseDamage / 70))) : baseDamage;
 
+        // Calculate damage from rolls, traits, and skill trees first
         const totalDamageMultiplier = 1 + (dmgRoll / 100) + traitBonus.Damage + skillTreeBonus.Damage;
-        const finalDamage = Math.round(levelAdjustedDamage * totalDamageMultiplier);
+        let finalDamage = Math.round(levelAdjustedDamage * totalDamageMultiplier);
         
+        // --- START: Apply On-Field Buff Multiplier ---
+        let buffMultiplier = 1.0;
+        switch (selectedBuff) {
+            case 'Shinzou Wo Sasageyo':
+                buffMultiplier = (unitElement === 'Green') ? 1.50 : 1.40;
+                break;
+            case 'Xero Requiem':
+                buffMultiplier = (unitElement === 'Purple') ? 1.50 : 1.40;
+                break;
+            case 'Red Spirit':
+                buffMultiplier = (unitElement === 'Red') ? 1.50 : 1.40;
+                break;
+            case 'Red Spirit x4':
+                buffMultiplier = 1.75;
+                break;
+        }
+        finalDamage = Math.round(finalDamage * buffMultiplier);
+        // --- END: Apply On-Field Buff Multiplier ---
+
         const totalSpaMultiplier = 1 - ((spaRoll / 100) + traitBonus.Spa + skillTreeBonus.SPA);
         const finalSpa = Math.max(0, baseSpa * totalSpaMultiplier);
         
@@ -389,18 +422,66 @@ const calculatorApp = {
         this.state.currentUpgradeIndex = newIndex;
         this.render();
     },
+
+    // --- START: NEW FUNCTION ---
+    goToMaxUpgrade() {
+        if (!this.state.selectedUnit) return;
+        const unitData = characterData[this.state.selectedUnit];
+        this.state.currentUpgradeIndex = unitData.MaxUpgrades;
+        this.render();
+    },
+    // --- END: NEW FUNCTION ---
+
+    filterUnits() {
+        const searchTerm = this.elements.unitSearchInput.value.toLowerCase().trim();
+        const unitCards = this.elements.unitGrid.querySelectorAll('.unit-card');
+        const rarityHeaders = this.elements.unitGrid.querySelectorAll('.rarity-header');
+
+        // Filter individual unit cards
+        unitCards.forEach(card => {
+            const unitName = card.dataset.unit.replace(/_/g, ' ').toLowerCase();
+            const isVisible = unitName.includes(searchTerm);
+            card.style.display = isVisible ? 'flex' : 'none';
+        });
+
+        // Show/hide rarity headers based on visible children
+        rarityHeaders.forEach(header => {
+            let nextElement = header.nextElementSibling;
+            let sectionHasVisibleUnits = false;
+
+            while (nextElement && !nextElement.classList.contains('rarity-header')) {
+                // Check if the element is a unit card and is visible
+                if (nextElement.classList.contains('unit-card') && nextElement.style.display !== 'none') {
+                    sectionHasVisibleUnits = true;
+                    break; // Found a visible unit, no need to check further in this section
+                }
+                nextElement = nextElement.nextElementSibling;
+            }
+
+            header.style.display = sectionHasVisibleUnits ? 'block' : 'none';
+        });
+    },
     
     rollForTrait() {
         const traitOdds = [
-            { name: 'Tank', odds: 12 }, { name: 'Perception 1', odds: 11.5 },
-            { name: 'Perception 2', odds: 9 }, { name: 'Perception 3', odds: 7 },
-            { name: 'Dexterity 1', odds: 10 }, { name: 'Dexterity 2', odds: 7.5 },
-            { name: 'Dexterity 3', odds: 6 }, { name: 'Prodigy', odds: 10 },
-            { name: 'Zenkai 1', odds: 5 }, { name: 'Zenkai 2', odds: 7 },
-            { name: 'Zenkai 3', odds: 10 }, { name: 'Midas', odds: 5 },
-            { name: 'Sharpshooter', odds: 4 }, { name: 'Tempest', odds: 3 },
-            { name: 'Companion', odds: 2 }, { name: 'Bloodlust', odds: 0.8 },
-            { name: 'Corrupted', odds: 0.8 }, { name: 'Genesis', odds: 0.7 },
+            { name: 'Tank', odds: 12 }, 
+            { name: 'Perception 1', odds: 11.5 },
+            { name: 'Perception 2', odds: 9 }, 
+            { name: 'Perception 3', odds: 7 },
+            { name: 'Dexterity 1', odds: 10 }, 
+            { name: 'Dexterity 2', odds: 7.5 },
+            { name: 'Dexterity 3', odds: 6 }, 
+            { name: 'Prodigy', odds: 10 },
+            { name: 'Zenkai 1', odds: 5 }, 
+            { name: 'Zenkai 2', odds: 7 },
+            { name: 'Zenkai 3', odds: 10 }, 
+            { name: 'Midas', odds: 5 },
+            { name: 'Sharpshooter', odds: 4 }, 
+            { name: 'Tempest', odds: 3 },
+            { name: 'Companion', odds: 2 }, 
+            { name: 'Bloodlust', odds: 0.8 },
+            { name: 'Corrupted', odds: 0.8 }, 
+            { name: 'Genesis', odds: 0.7 },
             { name: 'All Star', odds: 0.2 },
         ];
 
@@ -556,6 +637,30 @@ const calculatorApp = {
 
         this.elements.skillTreeControl.querySelector('#skillTreeSelection').addEventListener('change', (e) => {
             this.state.selectedSkillTree = e.target.value;
+            this.render();
+        });
+    },
+
+    populateOnFieldBuffsDropdown() {
+        const buffs = [
+            'None',
+            'Shinzou Wo Sasageyo',
+            'Xero Requiem',
+            'Red Spirit',
+            'Red Spirit x4'
+        ];
+        const optionsHTML = buffs.map(buff => `<option value="${buff}">${buff}</option>`).join('');
+        this.elements.onFieldBuffsControl.innerHTML = `
+            <label for="onFieldBuffsSelection">On Field Buffs:</label>
+            <div class="select-wrapper">
+                <select id="onFieldBuffsSelection">${optionsHTML}</select>
+            </div>`;
+
+        const buffSelect = this.elements.onFieldBuffsControl.querySelector('#onFieldBuffsSelection');
+        buffSelect.value = this.state.selectedBuff;
+
+        buffSelect.addEventListener('change', (e) => {
+            this.state.selectedBuff = e.target.value;
             this.render();
         });
     }
