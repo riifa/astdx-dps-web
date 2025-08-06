@@ -199,7 +199,7 @@ main {
 }
 
 .calculator-card::-webkit-scrollbar {
-    width: 0px;
+    width: 5px;
 }
 
 .unit-grid-container::-webkit-scrollbar-track,
@@ -213,7 +213,7 @@ main {
 }
 
 .calculator-card::-webkit-scrollbar-thumb {
-    background: #333;
+    background: #575757;
     border-radius: 10px;
 }
 
@@ -551,7 +551,7 @@ main {
     font-family: var(--font-poppins);
     font-weight: 500;
     color: var(--text-secondary);
-    font-size: 1rem;
+    font-size: 1.3rem;
 }
 .additional-stats-grid {
     display: grid;
