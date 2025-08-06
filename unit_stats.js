@@ -321,7 +321,7 @@ const characterData = {
             AttackCount: []
         }
     },
-    "King Kae": { // Corrected spelling from "Kaoe" to "Kae" based on common units
+    "King Kaoe": {
         MaxCost: 22500,
         PlacementCount: 4,
         MaxUpgrades: 5,
