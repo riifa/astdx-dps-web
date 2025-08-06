@@ -1,151 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sci-Fi Background</title>
-<style>
-    /* Basic setup to remove default margins and hide overflow */
-    html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden; /* Prevents scrollbars from oversized elements */
-        font-family: sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacked Animated Hiragana Background</title>
+    <!-- Import a "fat" Japanese font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a;
+        }
 
-    body {
-        position: relative;
-        /* LAYER 1 & 3: Background Gradient and Diagonal Lines */
-        /* The first image (lines) is drawn on top of the second (gradient) */
-        background-color: #0a0c0a; /* Fallback color */
-        background-image:
-            /* Layer 3: Black 45-degree divisions */
-            repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 5px,
-                rgba(0, 0, 0, 0.5) 5px,
-                rgba(0, 0, 0, 0.5) 6px
-            ),
-            /* Layer 1: Black-gray gradient with a subtle green tint */
-            linear-gradient(
+        .replicated-background {
+            width: 500px;
+            height: 790px;
+            border-radius: 12px;
+            border: 3px solid #111;
+            
+            position: relative;
+            overflow: hidden;
+
+            background: linear-gradient(to right, #0a0a0a, #000000);
+        }
+
+        .replicated-background::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 2;
+            
+            --stripe-opacity: 0.6;
+
+            background: repeating-linear-gradient(
                 135deg,
-                #1a1d1a,
-                #080a08
+                transparent, transparent 7px,
+                rgba(0, 0, 0, var(--stripe-opacity)) 7px,
+                rgba(0, 0, 0, var(--stripe-opacity)) 12px
             );
-    }
-
-    /* LAYER 2: Container for the moving Kanji */
-    .kanji-background {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        /* Make the container larger than the screen to cover edges when rotated */
-        width: 150vw;
-        height: 150vh;
-        /* Tilt the entire container of text sideways */
-        transform: translate(-50%, -50%) rotate(-25deg);
-        z-index: 1; /* Place it above the body background but below content */
-        user-select: none; /* Make text non-selectable */
-        opacity: 0.6;
-    }
-
-    .kanji-row {
-        /* Use a very dark color so it's subtle, like a watermark */
-        color: #1f221f;
-        font-size: 2.5vw; /* Responsive font size */
-        font-weight: 600;
-        white-space: nowrap; /* Keep all characters on one long line */
-        width: 200%; /* Make rows extra wide to scroll across the screen */
-        margin-bottom: 1.5vw;
-        /* Animation: name duration timing-function iteration-count direction */
-        animation: scroll-left-right 60s linear infinite alternate;
-    }
-
-    /* --- Animation Variations for a layered, dynamic effect --- */
-
-    /* Row 2: Moves faster, different starting point */
-    .kanji-row:nth-child(2) {
-        animation-duration: 45s;
-        transform: translateX(-15%); /* Start at a different position */
-    }
-
-    /* Row 3: Moves slower */
-    .kanji-row:nth-child(3) {
-        animation-duration: 75s;
-    }
-
-    /* Row 4: Different font size and speed */
-    .kanji-row:nth-child(4) {
-        font-size: 2vw;
-        animation-duration: 55s;
-        transform: translateX(-25%);
-    }
-
-    /* Row 5: Even slower */
-     .kanji-row:nth-child(5) {
-        animation-duration: 90s;
-        transform: translateX(-5%);
-    }
-
-    /* Row 6: Faster and smaller */
-    .kanji-row:nth-child(6) {
-        font-size: 1.8vw;
-        animation-duration: 40s;
-        transform: translateX(-30%);
-    }
-
-    /* Keyframes for the "left right left right" scrolling animation */
-    @keyframes scroll-left-right {
-        0% {
-            transform: translateX(0);
         }
-        100% {
-            /* Move one full screen width (half the element's total width) */
-            transform: translateX(-50%);
+
+        .text-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+
+            display: flex;
+            flex-direction: column;
+            /* --- The main fix is here --- */
+            /* 'center' groups items together in the middle */
+            justify-content: center; 
         }
-    }
+        
+        .text-layer {
+            width: 200%;
+            display: flex;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 900;
+            white-space: nowrap;
+            user-select: none;
+            /* --- Added for tighter spacing between lines --- */
+            line-height: 0.9; /* Adjust this value to bring lines closer or further */
+            rotate: -10deg;
+        }
 
+        .text-layer span {
+            display: block;
+            width: 50%;
+            padding: 0 20px;
+        }
 
-    /* --- Example Content to show the background in action --- */
-    .content {
-        position: relative;
-        z-index: 2; /* Ensure content is on top of the kanji layer */
-        color: white;
-        text-align: center;
-        padding-top: 30vh;
-        text-shadow: 0 0 10px black;
-    }
+        .layer-1 {
+            animation: scroll-right 35s linear infinite;
+        }
+        .layer-2 {
+            animation: scroll-left 35s linear infinite;
+        }
+        .layer-3 {
+            animation: scroll-right 35s linear infinite;
+        }
+        .layer-4 {
+            animation: scroll-left 35s linear infinite;
+        }
 
-    .content h1 {
-        font-size: 3rem;
-        letter-spacing: 2px;
-    }
+        .layer-1, .layer-2, .layer-3, .layer-4 {
+            font-size: 13rem;
+            background: linear-gradient(45deg, #5c5c5c, #000000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.12;
+        }
 
-    .content p {
-        font-size: 1.2rem;
-    }
+        @keyframes scroll-right {
+            from { transform: translateX(-50%); }
+            to   { transform: translateX(0); }
+        }
 
-</style>
+        @keyframes scroll-left {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+    </style>
 </head>
 <body>
 
-    <!-- Layer 2: The container for the moving kanji text -->
-    <div class="kanji-background">
-        <div class="kanji-row">特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性 特性</div>
-        <div class="kanji-row">ロール ロール ロール ロール ロール ロール ロール ロール ロール ロール ロール ロール ロール ロール ロール ロール</div>
-        <div class="kanji-row">ユニット ユニット ユニット ユニット ユニット ユニット ユニット ユニット ユニット ユニット ユニット ユニット</div>
-        <div class="kanji-row">置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換 置換</div>
-        <div class="kanji-row">現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在 現在</div>
-        <div class="kanji-row">インデックス インデックス インデックス インデックス インデックス インデックス インデックス インデックス インデックス</div>
-    </div>
-
-    <!-- Example content area -->
-    <div class="content">
-        <h1>BACKGROUND READY</h1>
-        <p>This is the foreground content.</p>
+    <div class="replicated-background">
+        <div class="text-container">
+            <!-- IMPORTANT: Duplicate the span inside each layer for a seamless loop -->
+            <div class="text-layer layer-1">
+                <span>あいうえおかきくけこさしすせそ</span>
+                <span>あいうえおかきくけこさしすせそ</span>
+            </div>
+            <div class="text-layer layer-2">
+                <span>タチツテトナニヌネノハヒフヘホ</span>
+                <span>タチツテトナニヌネノハヒフヘホ</span>
+            </div>
+            <div class="text-layer layer-3">
+                <span>マミムメモヤユヨラリルレロ</span>
+                <span>マミムメモヤユヨラリルレロ</span>
+            </div>
+            <div class="text-layer layer-4">
+                <span>ワヲンアイウエオカキクケコサ</span>
+                <span>ワヲンアイウエオカキクケコサ</span>
+            </div>
+        </div>
     </div>
 
 </body>

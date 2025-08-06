@@ -363,22 +363,106 @@ main {
 
 /* --- Output Section --- */
 .dps-output-section {
-    background: #1a1a1a;
     border: 2px solid #333;
-    padding: 1.5rem;
-    display: flex;
+    position: relative; /* Crucial for absolute positioning of children */
+    overflow: hidden;   /* Clips the scrolling text */
+    background: none;   /* Remove the old static background */
+    padding: 0;         /* Padding will be moved to the content wrapper */
+    display: flex; /* Kept for structure, but children will manage layout */
     flex-direction: column;
-    gap: 1.25rem;
+    border-radius: 10px;
 }
 .dps-output-section.placeholder {
     justify-content: center;
     text-align: center;
+    padding: 1.5rem; /* Add padding back for placeholder */
+    background: #1a1a1a;
 }
 .dps-output-section .placeholder-text {
     color: var(--text-secondary);
     font-style: italic;
     font-size: 1.1rem;
 }
+
+/* --- START: New Hiragana Background Styles --- */
+.hiragana-background {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1; /* Sits at the bottom */
+    background: linear-gradient(to right, #1d1d1d, #000000);
+}
+
+.hiragana-background::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 2; /* Sits on top of the bg gradient */
+    --stripe-opacity: 0.6;
+    background: repeating-linear-gradient(
+        135deg,
+        transparent, transparent 7px,
+        rgba(0, 0, 0, var(--stripe-opacity)) 7px,
+        rgba(0, 0, 0, var(--stripe-opacity)) 12px
+    );
+}
+
+.hiragana-background .text-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 3; /* Sits on top of the stripes */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hiragana-background .text-layer {
+    width: 200%;
+    display: flex;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    white-space: nowrap;
+    user-select: none;
+    line-height: 0.9;
+    rotate: -10deg;
+    font-size: 20rem; /* Adjusted for better fit */
+    background: linear-gradient(45deg, #8b8b8b, #303030);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.08; /* Made less obtrusive */
+}
+
+.hiragana-background .text-layer span {
+    display: block;
+    width: 50%;
+    padding: 0 20px;
+}
+
+.hiragana-background .layer-1 { animation: scroll-right 40s linear infinite; }
+.hiragana-background .layer-2 { animation: scroll-left 40s linear infinite; }
+.hiragana-background .layer-3 { animation: scroll-right 40s linear infinite; }
+.hiragana-background .layer-4 { animation: scroll-left 40s linear infinite; }
+
+.output-content-wrapper {
+    position: relative;
+    z-index: 5; /* Sits on top of the background */
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow-y: auto; /* Allows content to scroll if it overflows */
+}
+
+.output-content-wrapper::-webkit-scrollbar { width: 5px; }
+.output-content-wrapper::-webkit-scrollbar-track { background: transparent; }
+.output-content-wrapper::-webkit-scrollbar-thumb { background: #575757; border-radius: 10px; }
+/* --- END: New Hiragana Background Styles --- */
+
 
 /* Header Section */
 .unit-card-header {
@@ -630,6 +714,14 @@ main {
     to {
         background-position: -50px -50px, -50px -50px, 0 0, 0 0;
     }
+}
+@keyframes scroll-right {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+}
+@keyframes scroll-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
 }
 
 

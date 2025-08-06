@@ -105,7 +105,7 @@ const characterData = {
         Element: "Green", 
         Rarity: "5 Star", 
         PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
+            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
         ],
         Stats: {
             Damage: [

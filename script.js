@@ -128,18 +128,18 @@ const calculatorApp = {
         return 'C';
     },
 
-        updateOutputDisplay() {
+    updateOutputDisplay() {
         const { dpsOutputSection } = this.elements;
         // Grab selectedSkillTree from the state
         const { selectedUnit, currentUpgradeIndex, selectedTrait, unitLevel, dmgRoll, rngRoll, spaRoll, selectedSkillTree } = this.state;
 
         if (!selectedUnit) {
             dpsOutputSection.innerHTML = `<p class="placeholder-text">Select a unit to view its stats.</p>`;
-            dpsOutputSection.classList.add('placeholder');
+            dpsOutputSection.className = 'dps-output-section placeholder'; // Reset classes
             return;
         }
 
-        dpsOutputSection.classList.remove('placeholder');
+        dpsOutputSection.className = 'dps-output-section'; // Reset classes
 
         const unitData = characterData[selectedUnit];
         const stats = unitData.Stats;
@@ -164,88 +164,109 @@ const calculatorApp = {
         const spaGrade = this.getStatGrade(spaRoll, 10);
 
         dpsOutputSection.innerHTML = `
-            <div class="unit-card-header">
-                <h2 class="unit-title">${selectedUnit.replace(/_/g, ' ')}</h2>
-                <div class="unit-sub-info">
-                    <span>${rarity}</span> • 
-                    <span class="type-${placementStatusClass}">${placementStatus}</span>
+            <div class="hiragana-background">
+                <div class="text-container">
+                    <div class="text-layer layer-1">
+                        <span>あいうえおかきくけこさしすせそ</span>
+                        <span>あいうえおかきくけこさしすせそ</span>
+                    </div>
+                    <div class="text-layer layer-2">
+                        <span>タチツテトナニヌネノハヒフヘホ</span>
+                        <span>タチツテトナニヌネノハヒフヘホ</span>
+                    </div>
+                    <div class="text-layer layer-3">
+                        <span>マミムメモヤユヨラリルレロ</span>
+                        <span>マミムメモヤユヨラリルレロ</span>
+                    </div>
+                    <div class="text-layer layer-4">
+                        <span>ワヲンアイウエオカキクケコサ</span>
+                        <span>ワヲンアイウエオカキクケコサ</span>
+                    </div>
                 </div>
             </div>
+            <div class="output-content-wrapper">
+                <div class="unit-card-header">
+                    <h2 class="unit-title">${selectedUnit.replace(/_/g, ' ')}</h2>
+                    <div class="unit-sub-info">
+                        <span>${rarity}</span> • 
+                        <span class="type-${placementStatusClass}">${placementStatus}</span>
+                    </div>
+                </div>
 
-            <div class="unit-details-row">
-                <div class="level-display">Lv. ${unitLevel}</div>
-                <div class="element-display element-${elementClass}">${element}</div>
-                <div class="trait-display">${selectedTrait}</div>
-                ${/* Conditionally add the skill tree display if one is selected */''}
-                ${selectedSkillTree !== 'None' ? `<div class="skill-tree-display">${selectedSkillTree}</div>` : ''}
-            </div>
+                <div class="unit-details-row">
+                    <div class="level-display">Lv. ${unitLevel}</div>
+                    <div class="element-display element-${elementClass}">${element}</div>
+                    <div class="trait-display">${selectedTrait}</div>
+                    ${selectedSkillTree !== 'None' ? `<div class="skill-tree-display">${selectedSkillTree}</div>` : ''}
+                </div>
 
-            <div class="stats-display">
-                <div class="stat-bar-row dmg-bar">
-                    <span class="stat-grade grade-${dmgGrade}">${dmgGrade}</span>
-                    <span class="stat-roll-value">(${dmgRoll.toFixed(2)}%)</span>
-                    <span class="stat-label">DMG:</span>
-                    <span class="stat-value">${calculated.finalDamage.toLocaleString()}</span>
-                </div>
-                <div class="stat-bar-row rng-bar">
-                    <span class="stat-grade grade-${rngGrade}">${rngGrade}</span>
-                    <span class="stat-roll-value">(${rngRoll.toFixed(2)}%)</span>
-                    <span class="stat-label">RNG:</span>
-                    <span class="stat-value">${calculated.finalRange}</span>
-                </div>
-                <div class="stat-bar-row spa-bar">
-                    <span class="stat-grade grade-${spaGrade}">${spaGrade}</span>
-                    <span class="stat-roll-value">(${spaRoll.toFixed(2)}%)</span>
-                    <span class="stat-label">SPD:</span>
-                    <span class="stat-value">${calculated.finalSpa}s</span>
-                </div>
-            </div>
-            
-            <div class="dps-summary ${calculated.dotDps > 0 ? 'has-dot' : ''}">
-                <div class="dps-item">
-                    <h3>Unit DPS</h3>
-                    <p>${calculated.finalDps.toLocaleString()}</p>
-                </div>
-                ${calculated.dotDps > 0 ? `
-                <div class="dps-item">
-                    <h3>DoT DPS</h3>
-                    <p>${calculated.dotDps.toLocaleString()}</p>
-                </div>` : ''}
-                <div class="dps-item">
-                    <h3>Group DPS</h3>
-                    <p>${calculated.groupDps.toLocaleString()}</p>
-                </div>
-            </div>
-            
-            <div class="additional-stats">
-                <h4>Stats for ${upgradeLabel}</h4>
-                <div class="additional-stats-grid">
-                    <div class="stat-block">
-                        <span class="stat-block-label">AOE</span>
-                        <span class="stat-block-value">${stats.AOE[currentUpgradeIndex]}</span>
+                <div class="stats-display">
+                    <div class="stat-bar-row dmg-bar">
+                        <span class="stat-grade grade-${dmgGrade}">${dmgGrade}</span>
+                        <span class="stat-roll-value">(${dmgRoll.toFixed(2)}%)</span>
+                        <span class="stat-label">DMG:</span>
+                        <span class="stat-value">${calculated.finalDamage.toLocaleString()}</span>
                     </div>
-                    <div class="stat-block">
-                        <span class="stat-block-label">DoT Type</span>
-                        <span class="stat-block-value">${stats.DoT[currentUpgradeIndex]}</span>
+                    <div class="stat-bar-row rng-bar">
+                        <span class="stat-grade grade-${rngGrade}">${rngGrade}</span>
+                        <span class="stat-roll-value">(${rngRoll.toFixed(2)}%)</span>
+                        <span class="stat-label">RNG:</span>
+                        <span class="stat-value">${calculated.finalRange}</span>
                     </div>
-                    <div class="stat-block">
-                        <span class="stat-block-label">Placement</span>
-                        <span class="stat-block-value">${calculated.totalPlacementCount}</span>
-                    </div>
-                    <div class="stat-block">
-                        <span class="stat-block-label">Total Cost</span>
-                        <span class="stat-block-value">$${calculated.totalCost.toLocaleString()}</span>
-                    </div>
-                    <div class="stat-block">
-                        <span class="stat-block-label">Next Cost</span>
-                        <span class="stat-block-value">${nextUpgradeCost}</span>
+                    <div class="stat-bar-row spa-bar">
+                        <span class="stat-grade grade-${spaGrade}">${spaGrade}</span>
+                        <span class="stat-roll-value">(${spaRoll.toFixed(2)}%)</span>
+                        <span class="stat-label">SPD:</span>
+                        <span class="stat-value">${calculated.finalSpa}s</span>
                     </div>
                 </div>
-            </div>
+                
+                <div class="dps-summary ${calculated.dotDps > 0 ? 'has-dot' : ''}">
+                    <div class="dps-item">
+                        <h3>Unit DPS</h3>
+                        <p>${calculated.finalDps.toLocaleString()}</p>
+                    </div>
+                    ${calculated.dotDps > 0 ? `
+                    <div class="dps-item">
+                        <h3>DoT DPS</h3>
+                        <p>${calculated.dotDps.toLocaleString()}</p>
+                    </div>` : ''}
+                    <div class="dps-item">
+                        <h3>Group DPS</h3>
+                        <p>${calculated.groupDps.toLocaleString()}</p>
+                    </div>
+                </div>
+                
+                <div class="additional-stats">
+                    <h4>Stats for ${upgradeLabel}</h4>
+                    <div class="additional-stats-grid">
+                        <div class="stat-block">
+                            <span class="stat-block-label">AOE</span>
+                            <span class="stat-block-value">${stats.AOE[currentUpgradeIndex]}</span>
+                        </div>
+                        <div class="stat-block">
+                            <span class="stat-block-label">DoT Type</span>
+                            <span class="stat-block-value">${stats.DoT[currentUpgradeIndex]}</span>
+                        </div>
+                        <div class="stat-block">
+                            <span class="stat-block-label">Placement</span>
+                            <span class="stat-block-value">${calculated.totalPlacementCount}</span>
+                        </div>
+                        <div class="stat-block">
+                            <span class="stat-block-label">Total Cost</span>
+                            <span class="stat-block-value">$${calculated.totalCost.toLocaleString()}</span>
+                        </div>
+                        <div class="stat-block">
+                            <span class="stat-block-label">Next Cost</span>
+                            <span class="stat-block-value">${nextUpgradeCost}</span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="upgrade-nav bottom-nav">
-                <button id="prevUpgradeBtn" class="nav-btn" ${currentUpgradeIndex === 0 ? 'disabled' : ''}>◄ Prev</button>
-                <button id="nextUpgradeBtn" class="nav-btn" ${currentUpgradeIndex >= unitData.MaxUpgrades ? 'disabled' : ''}>Next ►</button>
+                <div class="upgrade-nav bottom-nav">
+                    <button id="prevUpgradeBtn" class="nav-btn" ${currentUpgradeIndex === 0 ? 'disabled' : ''}>◄ Prev</button>
+                    <button id="nextUpgradeBtn" class="nav-btn" ${currentUpgradeIndex >= unitData.MaxUpgrades ? 'disabled' : ''}>Next ►</button>
+                </div>
             </div>
         `;
 
