@@ -164,9 +164,18 @@ const calculatorApp = {
         const element = unitData.Element || 'N/A';
         const elementClass = element.toLowerCase();
 
-        const nextUpgradeCost = (currentUpgradeIndex < stats.Cost.length - 1)
-            ? `$${Number(stats.Cost[currentUpgradeIndex + 1]).toLocaleString()}`
-            : 'N/A';
+        // --- START: MODIFICATION - Update Next Cost calculation ---
+        let nextUpgradeCost;
+        if (currentUpgradeIndex < stats.Cost.length - 1) {
+            let cost = Number(stats.Cost[currentUpgradeIndex + 1]);
+            if (selectedTrait === 'All Star') {
+                cost = Math.round(cost * 1.75); // Apply multiplier
+            }
+            nextUpgradeCost = `$${cost.toLocaleString()}`;
+        } else {
+            nextUpgradeCost = 'N/A';
+        }
+        // --- END: MODIFICATION ---
         
         const dmgGrade = this.getStatGrade(dmgRoll, 15);
         const rngGrade = this.getStatGrade(rngRoll, 12.5);
@@ -380,7 +389,11 @@ const calculatorApp = {
                 totalCost += parseFloat(unitData.Cost[0]);
             }
         }
-
+        
+        // --- Apply All Star cost multiplier ---
+        if (traitBonus.Traits === "All Star") {
+            totalCost = Math.round(totalCost * 1.75);
+        }
 
         return {
             finalDamage: finalDamage,
@@ -423,14 +436,12 @@ const calculatorApp = {
         this.render();
     },
 
-    // --- START: NEW FUNCTION ---
     goToMaxUpgrade() {
         if (!this.state.selectedUnit) return;
         const unitData = characterData[this.state.selectedUnit];
         this.state.currentUpgradeIndex = unitData.MaxUpgrades;
         this.render();
     },
-    // --- END: NEW FUNCTION ---
 
     filterUnits() {
         const searchTerm = this.elements.unitSearchInput.value.toLowerCase().trim();
