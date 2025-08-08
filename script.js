@@ -48,6 +48,8 @@ const calculatorApp = {
     // --- STATE ---
     state: {
         selectedUnit: null,
+        activeOutputUnit: null, 
+        spawnedUnits: [],
         unitLevel: 1,
         selectedTrait: 'Traitless',
         dmgRoll: 0,
@@ -55,9 +57,8 @@ const calculatorApp = {
         spaRoll: 0,
         selectedSkillTree: 'None',
         selectedBuff: 'None',
-        currentUpgradeIndex: 0,
+        currentUpgradeIndexes: {}, 
         rollCount: 0,
-        // MODIFIED: Added state for Michishibo's abilities
         specialAbilities: {
             boxDeterminationActive: false,
             michishiboTransparentWorldActive: false,
@@ -74,6 +75,7 @@ const calculatorApp = {
         statRollsControl: null,
         skillTreeControl: null,
         onFieldBuffsControl: null,
+        outputTabsContainer: null,
         dpsOutputSection: null,
         dmgRollInput: null,
         rngRollInput: null,
@@ -100,6 +102,7 @@ const calculatorApp = {
         this.elements.statRollsControl = document.getElementById('statRollsControl');
         this.elements.skillTreeControl = document.getElementById('skillTreeControl');
         this.elements.onFieldBuffsControl = document.getElementById('onFieldBuffsControl');
+        this.elements.outputTabsContainer = document.getElementById('outputTabsContainer');
         this.elements.dpsOutputSection = document.getElementById('dpsOutputSection');
         this.elements.dmgRollInput = document.getElementById('dmgRollInput');
         this.elements.rngRollInput = document.getElementById('rngRollInput');
@@ -135,11 +138,21 @@ const calculatorApp = {
         }
 
         this.elements.unitSearchInput.addEventListener('input', () => this.filterUnits());
+        
+        this.elements.outputTabsContainer.addEventListener('click', (event) => {
+            const tab = event.target.closest('.tab-btn');
+            if (tab && !tab.classList.contains('active')) {
+                this.state.activeOutputUnit = tab.dataset.unit;
+                this.render();
+            }
+        });
     },
 
     // --- RENDER & UPDATE ---
     render() {
         this.updateCurrentUnitDisplay();
+        this.updateSpawnedState();
+        this.renderOutputTabs();
         this.updateOutputDisplay();
     },
 
@@ -164,25 +177,33 @@ const calculatorApp = {
         return 'C';
     },
 
-updateOutputDisplay() {
+    updateOutputDisplay() {
         const { dpsOutputSection } = this.elements;
-        const { selectedUnit, currentUpgradeIndex, selectedTrait, unitLevel, dmgRoll, rngRoll, spaRoll, selectedSkillTree, selectedBuff, specialAbilities } = this.state;
+        const { selectedUnit, activeOutputUnit, unitLevel, dmgRoll, rngRoll, spaRoll, selectedTrait, selectedSkillTree, selectedBuff } = this.state;
 
-        if (!selectedUnit) {
+        const displayUnitName = activeOutputUnit || selectedUnit;
+    
+        if (!displayUnitName) {
             dpsOutputSection.innerHTML = `<p class="placeholder-text">Select a unit to view its stats.</p>`;
             dpsOutputSection.className = 'dps-output-section placeholder';
             this.elements.specialControls.innerHTML = '';
             return;
         }
-
+    
         dpsOutputSection.className = 'dps-output-section';
-
-        const unitData = characterData[selectedUnit];
-        const stats = unitData.Stats;
-        const calculated = this.calculateFinalStats(unitData);
-
-        const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
+    
+        const unitData = characterData[displayUnitName];
+        if (!unitData) {
+            console.error(`Data not found for unit: ${displayUnitName}`);
+            dpsOutputSection.innerHTML = `<p style="color: red; text-align: center;">Error: Could not find data for ${displayUnitName}.</p>`;
+            return;
+        }
         
+        const currentUpgradeIndex = this.state.currentUpgradeIndexes[displayUnitName] || 0;
+        const calculated = this.calculateFinalStats(displayUnitName);
+        const stats = unitData.Stats;
+    
+        const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
         const placementStatus = (unitData.PlacementStatus && unitData.PlacementStatus[currentUpgradeIndex]) 
             ? unitData.PlacementStatus[currentUpgradeIndex] 
             : 'N/A';
@@ -191,18 +212,17 @@ updateOutputDisplay() {
         const element = unitData.Element || 'N/A';
         const elementClass = element.toLowerCase();
 
-        // --- START: MODIFICATION ---
-        // Determine the DoT type to display based on ability status
         let displayDotType = stats.DoT[currentUpgradeIndex];
-        if (selectedUnit === 'Michishibo' && currentUpgradeIndex >= 8 && specialAbilities.michishiboTransparentWorldActive) {
+        if (selectedUnit === 'Michishibo' && (this.state.currentUpgradeIndexes[selectedUnit] || 0) >= 8 && this.state.specialAbilities.michishiboTransparentWorldActive) {
             displayDotType = 'Bleed';
         }
-        // --- END: MODIFICATION ---
-
+    
         let nextUpgradeCost;
         if (currentUpgradeIndex < stats.Cost.length - 1) {
             let cost = Number(stats.Cost[currentUpgradeIndex + 1]);
-            if (selectedTrait === 'All Star') cost = Math.round(cost * 1.75);
+            if (displayUnitName === selectedUnit && selectedTrait === 'All Star') {
+                cost = Math.round(cost * 1.75);
+            }
             nextUpgradeCost = `$${cost.toLocaleString()}`;
         } else {
             nextUpgradeCost = 'N/A';
@@ -211,7 +231,7 @@ updateOutputDisplay() {
         const dmgGrade = this.getStatGrade(dmgRoll, 15);
         const rngGrade = this.getStatGrade(rngRoll, 12.5);
         const spaGrade = this.getStatGrade(spaRoll, 10);
-
+    
         dpsOutputSection.innerHTML = `
             <div class="hiragana-background">
                 <div class="text-container">
@@ -223,23 +243,32 @@ updateOutputDisplay() {
             </div>
             <div class="output-content-wrapper">
                 <div class="unit-card-header">
-                    <h2 class="unit-title">${selectedUnit.replace(/_/g, ' ')}</h2>
+                    <h2 class="unit-title">${displayUnitName.replace(/_/g, ' ')}</h2>
                     <div class="unit-sub-info"><span>${rarity}</span> • <span class="type-${placementStatusClass}">${placementStatus}</span></div>
                 </div>
                 <div class="unit-details-row">
                     <div class="level-display">Lv. ${unitLevel}</div>
                     <div class="element-display element-${elementClass}">${element}</div>
                     <div class="trait-display">${selectedTrait}</div>
-                    ${(selectedUnit === 'BOX' && currentUpgradeIndex >= 2 && specialAbilities.boxDeterminationActive) ? `<div class="ability-display">Determination</div>` : ''}
-                    ${(selectedUnit === 'Michishibo' && currentUpgradeIndex >= 8 && specialAbilities.michishiboTransparentWorldActive) ? `<div class="ability-display">Transparent World</div>` : ''}
-                    ${(selectedUnit === 'Michishibo' && specialAbilities.michishiboLunarBlessingActive) ? `<div class="ability-display">Lunar Blessing</div>` : ''}
+                    ${(selectedUnit === 'BOX' && (this.state.currentUpgradeIndexes[selectedUnit] || 0) >= 2 && this.state.specialAbilities.boxDeterminationActive) ? `<div class="ability-display">Determination</div>` : ''}
+                    ${(selectedUnit === 'Michishibo' && (this.state.currentUpgradeIndexes[selectedUnit] || 0) >= 8 && this.state.specialAbilities.michishiboTransparentWorldActive) ? `<div class="ability-display">Transparent World</div>` : ''}
+                    ${(selectedUnit === 'Michishibo' && this.state.specialAbilities.michishiboLunarBlessingActive) ? `<div class="ability-display">Lunar Blessing</div>` : ''}
                     ${selectedSkillTree !== 'None' ? `<div class="skill-tree-display">${selectedSkillTree}</div>` : ''}
                     ${selectedBuff !== 'None' ? `<div class="buff-display">${selectedBuff}</div>` : ''}
                 </div>
                 <div class="stats-display">
-                    <div class="stat-bar-row dmg-bar"><span class="stat-grade grade-${dmgGrade}">${dmgGrade}</span><span class="stat-roll-value">(${dmgRoll.toFixed(2)}%)</span><span class="stat-label">DMG:</span><span class="stat-value">${calculated.finalDamage.toLocaleString()}</span></div>
-                    <div class="stat-bar-row rng-bar"><span class="stat-grade grade-${rngGrade}">${rngGrade}</span><span class="stat-roll-value">(${rngRoll.toFixed(2)}%)</span><span class="stat-label">RNG:</span><span class="stat-value">${calculated.finalRange}</span></div>
-                    <div class="stat-bar-row spa-bar"><span class="stat-grade grade-${spaGrade}">${spaGrade}</span><span class="stat-roll-value">(${spaRoll.toFixed(2)}%)</span><span class="stat-label">SPD:</span><span class="stat-value">${calculated.finalSpa}s</span></div>
+                    <div class="stat-bar-row dmg-bar">
+                        <span class="stat-grade grade-${dmgGrade}">${dmgGrade}</span><span class="stat-roll-value">(${dmgRoll.toFixed(2)}%)</span>
+                        <span class="stat-label">DMG:</span><span class="stat-value">${calculated.finalDamage.toLocaleString()}</span>
+                    </div>
+                    <div class="stat-bar-row rng-bar">
+                        <span class="stat-grade grade-${rngGrade}">${rngGrade}</span><span class="stat-roll-value">(${rngRoll.toFixed(2)}%)</span>
+                        <span class="stat-label">RNG:</span><span class="stat-value">${calculated.finalRange}</span>
+                    </div>
+                    <div class="stat-bar-row spa-bar">
+                        <span class="stat-grade grade-${spaGrade}">${spaGrade}</span><span class="stat-roll-value">(${spaRoll.toFixed(2)}%)</span>
+                        <span class="stat-label">SPD:</span><span class="stat-value">${calculated.finalSpa}s</span>
+                    </div>
                 </div>
                 <div class="dps-summary ${calculated.dotDps > 0 ? 'has-dot' : ''}">
                     <div class="dps-item"><h3>Unit DPS</h3><p>${calculated.finalDps.toLocaleString()}</p></div>
@@ -250,7 +279,6 @@ updateOutputDisplay() {
                     <h4>Stats for ${upgradeLabel}</h4>
                     <div class="additional-stats-grid">
                         <div class="stat-block"><span class="stat-block-label">AOE</span><span class="stat-block-value">${stats.AOE[currentUpgradeIndex]}</span></div>
-
                         <div class="stat-block"><span class="stat-block-label">DoT Type</span><span class="stat-block-value">${displayDotType}</span></div>
                         <div class="stat-block"><span class="stat-block-label">Placement</span><span class="stat-block-value">${calculated.totalPlacementCount}</span></div>
                         <div class="stat-block"><span class="stat-block-label">Total Cost</span><span class="stat-block-value">$${calculated.totalCost.toLocaleString()}</span></div>
@@ -272,13 +300,67 @@ updateOutputDisplay() {
         dpsOutputSection.querySelector('#nextUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(1));
     },
 
+    updateSpawnedState() {
+        const { selectedUnit } = this.state;
+        const mainUnitUpgradeIndex = this.state.currentUpgradeIndexes[selectedUnit] || 0;
+        const unitData = selectedUnit ? characterData[selectedUnit] : null;
+
+        if (!unitData || !unitData.Spawns) {
+            this.state.spawnedUnits = [];
+            if (this.state.activeOutputUnit !== this.state.selectedUnit) {
+                this.state.activeOutputUnit = this.state.selectedUnit;
+            }
+            return;
+        }
+
+        const currentlySpawned = unitData.Spawns
+            .filter(spawn => mainUnitUpgradeIndex >= spawn.spawnAtUpgrade)
+            .map(spawn => spawn.unitName);
+        
+        currentlySpawned.forEach(spawnName => {
+            if (!this.state.currentUpgradeIndexes.hasOwnProperty(spawnName)) {
+                this.state.currentUpgradeIndexes[spawnName] = 0;
+            }
+        });
+
+        this.state.spawnedUnits = currentlySpawned;
+        
+        if (this.state.activeOutputUnit !== selectedUnit && !currentlySpawned.includes(this.state.activeOutputUnit)) {
+            this.state.activeOutputUnit = selectedUnit;
+        }
+    },
+    
+    renderOutputTabs() {
+        const { outputTabsContainer } = this.elements;
+        const { selectedUnit, spawnedUnits, activeOutputUnit } = this.state;
+
+        if (!selectedUnit || spawnedUnits.length === 0) {
+            outputTabsContainer.innerHTML = '';
+            outputTabsContainer.style.display = 'none';
+            return;
+        }
+
+        outputTabsContainer.style.display = 'flex';
+        
+        let tabsHTML = `<button class="tab-btn ${activeOutputUnit === selectedUnit ? 'active' : ''}" data-unit="${selectedUnit}">${selectedUnit.replace(/_/g, ' ')}</button>`;
+        
+        spawnedUnits.forEach(spawnedName => {
+            tabsHTML += `<button class="tab-btn ${activeOutputUnit === spawnedName ? 'active' : ''}" data-unit="${spawnedName}">${spawnedName.replace(/_/g, ' ')}</button>`;
+        });
+
+        outputTabsContainer.innerHTML = tabsHTML;
+    },
+
     renderSpecialControls() {
         const { specialControls } = this.elements;
-        const { selectedUnit, currentUpgradeIndex, specialAbilities } = this.state;
+        const { activeOutputUnit, selectedUnit, specialAbilities } = this.state;
+        
+        const mainUnitUpgradeIndex = this.state.currentUpgradeIndexes[selectedUnit] || 0;
+        const unitForControls = activeOutputUnit === selectedUnit ? selectedUnit : null;
         
         specialControls.innerHTML = ''; 
 
-        if (selectedUnit === 'BOX' && currentUpgradeIndex >= 2) {
+        if (unitForControls === 'BOX' && mainUnitUpgradeIndex >= 2) {
             const isActive = specialAbilities.boxDeterminationActive;
             specialControls.innerHTML = `
                 <div class="special-ability-control">
@@ -292,11 +374,8 @@ updateOutputDisplay() {
                 this.render();
             });
         }
-        // NEW: Added logic for Michishibo's abilities
-        else if (selectedUnit === 'Michishibo') {
+        else if (unitForControls === 'Michishibo') {
             let htmlContent = '';
-
-            // Ability 2: Lunar Blessing (available from placement)
             const lbIsActive = specialAbilities.michishiboLunarBlessingActive;
             htmlContent += `
                 <div class="special-ability-control">
@@ -306,8 +385,7 @@ updateOutputDisplay() {
                 </div>
             `;
 
-            // Ability 1: Transparent World (available from upgrade 8)
-            if (currentUpgradeIndex >= 8) {
+            if (mainUnitUpgradeIndex >= 8) {
                 const twIsActive = specialAbilities.michishiboTransparentWorldActive;
                 htmlContent += `
                     <div class="special-ability-control" style="margin-top: 1rem;">
@@ -320,7 +398,6 @@ updateOutputDisplay() {
 
             specialControls.innerHTML = htmlContent;
 
-            // Add event listeners
             const lbBtn = document.getElementById('michishiboLbBtn');
             if(lbBtn) {
                 lbBtn.addEventListener('click', () => {
@@ -359,8 +436,14 @@ updateOutputDisplay() {
         this.render();
     },
 
-    calculateFinalStats(unitData) {
-        const { currentUpgradeIndex, unitLevel, dmgRoll, rngRoll, spaRoll, selectedTrait, selectedSkillTree, selectedBuff, specialAbilities } = this.state;
+    // MODIFIED: This function is the core of the new logic.
+    calculateFinalStats(unitNameToCalc) {
+        // Inherit these from the main unit's state
+        const { unitLevel, dmgRoll, rngRoll, spaRoll, selectedTrait, selectedSkillTree, selectedBuff, selectedUnit } = this.state;
+        
+        // Use stats specific to the unit being calculated
+        const unitData = characterData[unitNameToCalc];
+        const currentUpgradeIndex = this.state.currentUpgradeIndexes[unitNameToCalc] || 0;
         const { Stats: stats, PlacementCount, Element: unitElement } = unitData;
 
         const baseDamage = parseFloat(stats.Damage[currentUpgradeIndex]);
@@ -369,7 +452,6 @@ updateOutputDisplay() {
 
         const traitBonus = traitsData.find(t => t.Traits === selectedTrait);
         const skillTreeBonus = skillTreeData[selectedSkillTree];
-
         const levelAdjustedDamage = unitLevel > 1 ? Math.round(baseDamage + (unitLevel * (baseDamage / 70))) : baseDamage;
 
         const totalDamageMultiplier = 1 + (dmgRoll / 100) + traitBonus.Damage + skillTreeBonus.Damage;
@@ -390,17 +472,17 @@ updateOutputDisplay() {
         const totalRangeMultiplier = 1 + (rngRoll / 100) + traitBonus.Range + skillTreeBonus.Range;
         let finalRange = baseRange * totalRangeMultiplier;
         
-        // --- Apply Special Ability Modifiers ---
-        if (this.state.selectedUnit === 'BOX' && specialAbilities.boxDeterminationActive && currentUpgradeIndex >= 2) {
+        const mainUnitUpgradeIndex = this.state.currentUpgradeIndexes[selectedUnit] || 0;
+        if (this.state.selectedUnit === 'BOX' && this.state.specialAbilities.boxDeterminationActive && mainUnitUpgradeIndex >= 2) {
             finalSpa *= 0.75;
         }
         if (this.state.selectedUnit === 'Michishibo') {
-            if (specialAbilities.michishiboLunarBlessingActive) {
-                finalSpa *= 0.96; // -4% SPA
-                finalRange *= 1.04; // +4% Range
+            if (this.state.specialAbilities.michishiboLunarBlessingActive) {
+                finalSpa *= 0.96;
+                finalRange *= 1.04;
             }
-            if (specialAbilities.michishiboTransparentWorldActive && currentUpgradeIndex >= 8) {
-                finalSpa *= 0.80; // -20% SPA
+            if (this.state.specialAbilities.michishiboTransparentWorldActive && mainUnitUpgradeIndex >= 8) {
+                finalSpa *= 0.80;
             }
         }
         
@@ -412,8 +494,8 @@ updateOutputDisplay() {
             else if (effect.includes("poison")) dotMultiplier = 0.05;
             else if (effect.includes("shock")) dotMultiplier = 0.025;
         }
-        // Override/add DoT for Michishibo's ability
-        if (this.state.selectedUnit === 'Michishibo' && specialAbilities.michishiboTransparentWorldActive && currentUpgradeIndex >= 8) {
+        
+        if (this.state.selectedUnit === 'Michishibo' && this.state.specialAbilities.michishiboTransparentWorldActive && mainUnitUpgradeIndex >= 8) {
             dotMultiplier = 0.0833; // Bleed
         }
         if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
@@ -422,17 +504,26 @@ updateOutputDisplay() {
         const baseDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
         const finalDps = baseDps + dotDps;
 
-        let newPlacementCount = PlacementCount;
+        // --- START: MODIFIED LOGIC FOR PLACEMENT COUNT ---
+        // Placement count starts with the unit's own default, then is modified by the main unit's trait.
+        let newPlacementCount = unitData.PlacementCount;
         if (traitBonus.Traits === "All Star") newPlacementCount = 1;
         else if (traitBonus.Traits === "Companion") newPlacementCount += 1;
+        // --- END: MODIFIED LOGIC FOR PLACEMENT COUNT ---
 
         let groupDps = finalDps * newPlacementCount;
 
+        // --- START: MODIFIED LOGIC FOR TOTAL COST ---
+        // Total cost is now calculated for the specific unit being displayed.
         let totalCost = 0;
         for (let i = 0; i <= currentUpgradeIndex; i++) {
-            totalCost += parseFloat(stats.Cost[i] || (i === 0 ? unitData.Cost[0] : 0));
+            totalCost += parseFloat(stats.Cost[i] || 0);
         }
-        if (traitBonus.Traits === "All Star") totalCost = Math.round(totalCost * 1.75);
+        // The All Star cost multiplier only applies to the main unit that holds the trait.
+        if (unitNameToCalc === selectedUnit && traitBonus.Traits === "All Star") {
+            totalCost = Math.round(totalCost * 1.75);
+        }
+        // --- END: MODIFIED LOGIC FOR TOTAL COST ---
 
         return {
             finalDamage: finalDamage,
@@ -449,13 +540,14 @@ updateOutputDisplay() {
     // --- ACTIONS ---
     selectUnit(unitName) {
         this.state.selectedUnit = unitName;
-        this.state.currentUpgradeIndex = 0;
+        this.state.activeOutputUnit = unitName;
+        this.state.spawnedUnits = [];
+        this.state.currentUpgradeIndexes = { [unitName]: 0 };
         
         document.querySelectorAll('.unit-card.selected').forEach(card => card.classList.remove('selected'));
         const selectedCard = this.elements.unitGrid.querySelector(`[data-unit="${unitName}"]`);
         if (selectedCard) selectedCard.classList.add('selected');
 
-        // MODIFIED: Reset all special ability flags
         Object.keys(this.state.specialAbilities).forEach(key => {
             this.state.specialAbilities[key] = false;
         });
@@ -469,20 +561,23 @@ updateOutputDisplay() {
     },
 
     navigateUpgrade(direction) {
-        if (!this.state.selectedUnit) return;
-        const unitData = characterData[this.state.selectedUnit];
+        const activeUnitName = this.state.activeOutputUnit;
+        if (!activeUnitName) return;
         
-        let newIndex = this.state.currentUpgradeIndex + direction;
+        const unitData = characterData[activeUnitName];
+        let newIndex = (this.state.currentUpgradeIndexes[activeUnitName] || 0) + direction;
         newIndex = Math.max(0, Math.min(newIndex, unitData.MaxUpgrades));
         
-        this.state.currentUpgradeIndex = newIndex;
+        this.state.currentUpgradeIndexes[activeUnitName] = newIndex;
         this.render();
     },
 
     goToMaxUpgrade() {
-        if (!this.state.selectedUnit) return;
-        const unitData = characterData[this.state.selectedUnit];
-        this.state.currentUpgradeIndex = unitData.MaxUpgrades;
+        const activeUnitName = this.state.activeOutputUnit;
+        if (!activeUnitName) return;
+
+        const unitData = characterData[activeUnitName];
+        this.state.currentUpgradeIndexes[activeUnitName] = unitData.MaxUpgrades;
         this.render();
     },
 
@@ -565,6 +660,7 @@ updateOutputDisplay() {
         const groupedUnits = {};
         for (const unitName in remainingUnits) {
             const unit = remainingUnits[unitName];
+            if (unit.IsSpawnedOnly) continue;
             const rarity = unit.Rarity || 'Uncategorized';
             if (!groupedUnits[rarity]) { groupedUnits[rarity] = []; }
             groupedUnits[rarity].push(unitName);

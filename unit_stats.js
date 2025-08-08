@@ -264,6 +264,11 @@ const characterData = {
         Image: './images/units/5_star_units/sjw5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
+        "Spawns": [
+        {
+            "unitName": "Blood Commander", // The key of the spawned unit in characterData
+            "spawnAtUpgrade": 5 // The upgrade level at which it appears
+        }],
         PlacementStatus: [
             "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
         ],

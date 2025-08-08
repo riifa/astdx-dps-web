@@ -432,6 +432,43 @@ main {
     pointer-events: none;
 }
 
+/* --- START: New Tab styling for spawned units --- */
+#outputTabsContainer {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 1.5rem; /* Aligns with output-content-wrapper padding */
+    position: relative;
+    z-index: 0; /* Sits above the main content's z-index */
+    margin-bottom: -2px; /* Pulls the content section up to overlap borders */
+}
+
+.tab-btn {
+    padding: 0.75rem 1.25rem;
+    border: 2px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-secondary);
+    font-family: var(--font-montserrat);
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: none; /* No bottom border for inactive tabs */
+}
+
+.tab-btn:hover {
+    background-color: #3f3f3f;
+    color: var(--text-primary);
+}
+
+.tab-btn.active {
+    background-color: var(--bg-dark); /* Match content background */
+    color: var(--accent-green);
+    border-bottom-color: var(--bg-dark); /* Makes it look like it merges with the content area */
+    transform: translateY(2px);
+}
+/* --- END: New Tab styling for spawned units --- */
+
 /* --- Output Section --- */
 .dps-output-section {
     border: 2px solid #333;
