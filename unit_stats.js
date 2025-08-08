@@ -72,6 +72,12 @@ const characterData = {
         Image: './images/units/5_star_units/eren5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
+        "Spawns": [
+        {
+            "unitName": "Airren (Titan)", 
+            "spawnAtUpgrade": 0,
+            "SeperateUnit": false,
+        }],
         PlacementStatus: [
             "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
         ],
@@ -266,8 +272,9 @@ const characterData = {
         Rarity: "5 Star",
         "Spawns": [
         {
-            "unitName": "Blood Commander", // The key of the spawned unit in characterData
-            "spawnAtUpgrade": 5 // The upgrade level at which it appears
+            "unitName": "Blood Commander",
+            "spawnAtUpgrade": 5,
+            "SeperateUnit": true
         }],
         PlacementStatus: [
             "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"

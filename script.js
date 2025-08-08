@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeDisclaimerBtn.addEventListener('click', () => {
         disclaimerPopup.style.display = 'none';
-        // Set a flag in sessionStorage to prevent showing it again in this session
         sessionStorage.setItem('disclaimerShown', 'true');
     });
 
@@ -77,6 +76,8 @@ const calculatorApp = {
         onFieldBuffsControl: null,
         outputTabsContainer: null,
         dpsOutputSection: null,
+        // MODIFIED: Add new element
+        combinedDpsSection: null,
         dmgRollInput: null,
         rngRollInput: null,
         spaRollInput: null,
@@ -104,6 +105,8 @@ const calculatorApp = {
         this.elements.onFieldBuffsControl = document.getElementById('onFieldBuffsControl');
         this.elements.outputTabsContainer = document.getElementById('outputTabsContainer');
         this.elements.dpsOutputSection = document.getElementById('dpsOutputSection');
+        // MODIFIED: Cache new element
+        this.elements.combinedDpsSection = document.getElementById('combined-dps-section');
         this.elements.dmgRollInput = document.getElementById('dmgRollInput');
         this.elements.rngRollInput = document.getElementById('rngRollInput');
         this.elements.spaRollInput = document.getElementById('spaRollInput');
@@ -154,6 +157,8 @@ const calculatorApp = {
         this.updateSpawnedState();
         this.renderOutputTabs();
         this.updateOutputDisplay();
+        // MODIFIED: Add call to render the new section
+        this.renderCombinedDpsSection();
     },
 
     updateCurrentUnitDisplay() {
@@ -232,6 +237,7 @@ const calculatorApp = {
         const rngGrade = this.getStatGrade(rngRoll, 12.5);
         const spaGrade = this.getStatGrade(spaRoll, 10);
     
+        // MODIFIED: Updated DPS summary HTML to use new calculation properties
         dpsOutputSection.innerHTML = `
             <div class="hiragana-background">
                 <div class="text-container">
@@ -271,7 +277,7 @@ const calculatorApp = {
                     </div>
                 </div>
                 <div class="dps-summary ${calculated.dotDps > 0 ? 'has-dot' : ''}">
-                    <div class="dps-item"><h3>Unit DPS</h3><p>${calculated.finalDps.toLocaleString()}</p></div>
+                    <div class="dps-item"><h3>Unit DPS</h3><p>${calculated.unitDps.toLocaleString()}</p></div>
                     ${calculated.dotDps > 0 ? `<div class="dps-item"><h3>DoT DPS</h3><p>${calculated.dotDps.toLocaleString()}</p></div>` : ''}
                     <div class="dps-item"><h3>Group DPS</h3><p>${calculated.groupDps.toLocaleString()}</p></div>
                 </div>
@@ -349,6 +355,56 @@ const calculatorApp = {
         });
 
         outputTabsContainer.innerHTML = tabsHTML;
+    },
+
+    // NEW FUNCTION
+    renderCombinedDpsSection() {
+        const { combinedDpsSection } = this.elements;
+        const { selectedUnit, spawnedUnits } = this.state;
+
+        if (!selectedUnit) {
+            combinedDpsSection.style.display = 'none';
+            return;
+        }
+
+        const mainUnitData = characterData[selectedUnit];
+        const activeSeparateSpawns = spawnedUnits.filter(spawnName => {
+            const spawnInfo = mainUnitData.Spawns?.find(s => s.unitName === spawnName);
+            return spawnInfo?.SeperateUnit;
+        });
+
+        if (activeSeparateSpawns.length === 0) {
+            combinedDpsSection.style.display = 'none';
+            return;
+        }
+
+        combinedDpsSection.style.display = 'block';
+
+        let combinedTotalDps = 0;
+        let combinedGroupDps = 0;
+
+        const mainUnitCalcs = this.calculateFinalStats(selectedUnit);
+        combinedTotalDps += mainUnitCalcs.totalIndividualDps;
+        combinedGroupDps += mainUnitCalcs.groupDps;
+
+        activeSeparateSpawns.forEach(spawnName => {
+            const spawnCalcs = this.calculateFinalStats(spawnName);
+            combinedTotalDps += spawnCalcs.totalIndividualDps * spawnCalcs.totalPlacementCount;
+            combinedGroupDps += spawnCalcs.groupDps;
+        });
+
+        combinedDpsSection.innerHTML = `
+            <div class="dps-summary">
+                <div class="dps-item">
+                    <h3>Combined Individual DPS</h3>
+                    <p>${combinedTotalDps.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
+                </div>
+                <div class="dps-item">
+                    <h3>Combined Group DPS</h3>
+                    <p>${combinedGroupDps.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
+                </div>
+            </div>
+        `;
     },
 
     renderSpecialControls() {
@@ -436,12 +492,10 @@ const calculatorApp = {
         this.render();
     },
 
-    // MODIFIED: This function is the core of the new logic.
+    // MODIFIED: Function updated to handle new DPS and Cost logic.
     calculateFinalStats(unitNameToCalc) {
-        // Inherit these from the main unit's state
         const { unitLevel, dmgRoll, rngRoll, spaRoll, selectedTrait, selectedSkillTree, selectedBuff, selectedUnit } = this.state;
         
-        // Use stats specific to the unit being calculated
         const unitData = characterData[unitNameToCalc];
         const currentUpgradeIndex = this.state.currentUpgradeIndexes[unitNameToCalc] || 0;
         const { Stats: stats, PlacementCount, Element: unitElement } = unitData;
@@ -500,37 +554,50 @@ const calculatorApp = {
         }
         if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
 
+        // --- START: MODIFIED DPS CALCULATIONS ---
         const dotDps = (finalDamage * dotMultiplier) / 2;
-        const baseDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
-        const finalDps = baseDps + dotDps;
+        const unitDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
+        const totalIndividualDps = unitDps + dotDps;
+        // --- END: MODIFIED DPS CALCULATIONS ---
 
-        // --- START: MODIFIED LOGIC FOR PLACEMENT COUNT ---
-        // Placement count starts with the unit's own default, then is modified by the main unit's trait.
         let newPlacementCount = unitData.PlacementCount;
         if (traitBonus.Traits === "All Star") newPlacementCount = 1;
         else if (traitBonus.Traits === "Companion") newPlacementCount += 1;
-        // --- END: MODIFIED LOGIC FOR PLACEMENT COUNT ---
 
-        let groupDps = finalDps * newPlacementCount;
+        // --- MODIFIED: GROUP DPS USES TOTAL INDIVIDUAL DPS ---
+        let groupDps = totalIndividualDps * newPlacementCount;
 
-        // --- START: MODIFIED LOGIC FOR TOTAL COST ---
-        // Total cost is now calculated for the specific unit being displayed.
+        // --- START: MODIFIED COST CALCULATION ---
+        let isSeparateUnit = false;
+        if (unitNameToCalc !== selectedUnit) {
+            const mainUnitData = characterData[selectedUnit];
+            const spawnInfo = mainUnitData.Spawns?.find(s => s.unitName === unitNameToCalc);
+            if (spawnInfo?.SeperateUnit) {
+                isSeparateUnit = true;
+            }
+        }
+
         let totalCost = 0;
         for (let i = 0; i <= currentUpgradeIndex; i++) {
-            totalCost += parseFloat(stats.Cost[i] || 0);
+            let costOfUpgrade = parseFloat(stats.Cost[i] || 0);
+            if (i === 0 && isSeparateUnit) {
+                costOfUpgrade = 0;
+            }
+            totalCost += costOfUpgrade;
         }
-        // The All Star cost multiplier only applies to the main unit that holds the trait.
+        
         if (unitNameToCalc === selectedUnit && traitBonus.Traits === "All Star") {
             totalCost = Math.round(totalCost * 1.75);
         }
-        // --- END: MODIFIED LOGIC FOR TOTAL COST ---
+        // --- END: MODIFIED COST CALCULATION ---
 
         return {
             finalDamage: finalDamage,
             finalSpa: Math.round(finalSpa * 100) / 100,
             finalRange: Math.round(finalRange * 10) / 10,
+            unitDps: Math.round(unitDps * 100) / 100,
             dotDps: Math.round(dotDps * 100) / 100,
-            finalDps: Math.round(finalDps * 100) / 100,
+            totalIndividualDps: Math.round(totalIndividualDps * 100) / 100,
             groupDps: Math.round(groupDps * 100) / 100,
             totalCost: totalCost,
             totalPlacementCount: newPlacementCount,

@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- ADDED FONT FOR THE NEW BACKGROUND -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
@@ -37,28 +36,21 @@
         <div class="calculator-container">
             <section class="calculator-card">
                 <div class="input-section">
-                    <!-- START: MODIFIED SECTION -->
                     <div class="unit-selection-header">
                         <label>Select a Unit</label>
                         <div class="search-bar-container">
                             <input type="text" id="unitSearchInput" placeholder="Search for a unit...">
                         </div>
                     </div>
-                    <!-- END: MODIFIED SECTION -->
 
-                    <div class="unit-grid-container" id="unitGrid">
-
-                    </div>
+                    <div class="unit-grid-container" id="unitGrid"></div>
 
                     <div class="current-unit-display placeholder" id="currentUnitDisplay">
                         Select a unit by clicking its image.
                     </div>
 
-
                     <div id="unitLevelControl" class="control-group"></div>
-
                     <div id="traitSelectionControl" class="control-group"></div>
-
 
                     <div id="statRollsControl" class="control-group">
                         <label>Stat Rolls (%)</label>
@@ -87,23 +79,17 @@
                         </div>
                     </div>
 
-
                     <div id="skillTreeControl" class="control-group"></div>
-                    
-                    <!-- START: NEW DROPDOWN SECTION -->
                     <div id="onFieldBuffsControl" class="control-group"></div>
-                    <!-- END: NEW DROPDOWN SECTION -->
                 </div>
             </section>
 
-
             <section class="output-card">
-                <!-- START: NEW TABS CONTAINER -->
                 <div id="outputTabsContainer"></div>
-                <!-- END: NEW TABS CONTAINER -->
-                <div class="dps-output-section placeholder" id="dpsOutputSection">
-
-                </div>
+                <div class="dps-output-section placeholder" id="dpsOutputSection"></div>
+                <!-- START: NEW SECTION FOR COMBINED DPS -->
+                <section id="combined-dps-section"></section>
+                <!-- END: NEW SECTION FOR COMBINED DPS -->
                 <section id="special-controls"></section>
             </section>
         </div>
