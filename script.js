@@ -76,7 +76,6 @@ const calculatorApp = {
         onFieldBuffsControl: null,
         outputTabsContainer: null,
         dpsOutputSection: null,
-        // MODIFIED: Add new element
         combinedDpsSection: null,
         dmgRollInput: null,
         rngRollInput: null,
@@ -105,7 +104,6 @@ const calculatorApp = {
         this.elements.onFieldBuffsControl = document.getElementById('onFieldBuffsControl');
         this.elements.outputTabsContainer = document.getElementById('outputTabsContainer');
         this.elements.dpsOutputSection = document.getElementById('dpsOutputSection');
-        // MODIFIED: Cache new element
         this.elements.combinedDpsSection = document.getElementById('combined-dps-section');
         this.elements.dmgRollInput = document.getElementById('dmgRollInput');
         this.elements.rngRollInput = document.getElementById('rngRollInput');
@@ -157,7 +155,6 @@ const calculatorApp = {
         this.updateSpawnedState();
         this.renderOutputTabs();
         this.updateOutputDisplay();
-        // MODIFIED: Add call to render the new section
         this.renderCombinedDpsSection();
     },
 
@@ -222,22 +219,24 @@ const calculatorApp = {
             displayDotType = 'Bleed';
         }
     
+        // --- START: MODIFIED NEXT COST LOGIC ---
         let nextUpgradeCost;
         if (currentUpgradeIndex < stats.Cost.length - 1) {
             let cost = Number(stats.Cost[currentUpgradeIndex + 1]);
-            if (displayUnitName === selectedUnit && selectedTrait === 'All Star') {
+            // All Star applies to all units if the main unit has the trait.
+            if (selectedTrait === 'All Star') {
                 cost = Math.round(cost * 1.75);
             }
             nextUpgradeCost = `$${cost.toLocaleString()}`;
         } else {
             nextUpgradeCost = 'N/A';
         }
+        // --- END: MODIFIED NEXT COST LOGIC ---
         
         const dmgGrade = this.getStatGrade(dmgRoll, 15);
         const rngGrade = this.getStatGrade(rngRoll, 12.5);
         const spaGrade = this.getStatGrade(spaRoll, 10);
     
-        // MODIFIED: Updated DPS summary HTML to use new calculation properties
         dpsOutputSection.innerHTML = `
             <div class="hiragana-background">
                 <div class="text-container">
@@ -357,7 +356,6 @@ const calculatorApp = {
         outputTabsContainer.innerHTML = tabsHTML;
     },
 
-    // NEW FUNCTION
     renderCombinedDpsSection() {
         const { combinedDpsSection } = this.elements;
         const { selectedUnit, spawnedUnits } = this.state;
@@ -384,7 +382,7 @@ const calculatorApp = {
         let combinedGroupDps = 0;
 
         const mainUnitCalcs = this.calculateFinalStats(selectedUnit);
-        combinedTotalDps += mainUnitCalcs.totalIndividualDps;
+        combinedTotalDps += mainUnitCalcs.totalIndividualDps * mainUnitCalcs.totalPlacementCount;
         combinedGroupDps += mainUnitCalcs.groupDps;
 
         activeSeparateSpawns.forEach(spawnName => {
@@ -396,11 +394,11 @@ const calculatorApp = {
         combinedDpsSection.innerHTML = `
             <div class="dps-summary">
                 <div class="dps-item">
-                    <h3>Combined Individual DPS</h3>
+                    <h3>Total Individual DPS</h3>
                     <p>${combinedTotalDps.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
                 </div>
                 <div class="dps-item">
-                    <h3>Combined Group DPS</h3>
+                    <h3>Total Group DPS</h3>
                     <p>${combinedGroupDps.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
                 </div>
             </div>
@@ -492,7 +490,6 @@ const calculatorApp = {
         this.render();
     },
 
-    // MODIFIED: Function updated to handle new DPS and Cost logic.
     calculateFinalStats(unitNameToCalc) {
         const { unitLevel, dmgRoll, rngRoll, spaRoll, selectedTrait, selectedSkillTree, selectedBuff, selectedUnit } = this.state;
         
@@ -554,20 +551,16 @@ const calculatorApp = {
         }
         if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
 
-        // --- START: MODIFIED DPS CALCULATIONS ---
         const dotDps = (finalDamage * dotMultiplier) / 2;
         const unitDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
         const totalIndividualDps = unitDps + dotDps;
-        // --- END: MODIFIED DPS CALCULATIONS ---
 
         let newPlacementCount = unitData.PlacementCount;
         if (traitBonus.Traits === "All Star") newPlacementCount = 1;
         else if (traitBonus.Traits === "Companion") newPlacementCount += 1;
 
-        // --- MODIFIED: GROUP DPS USES TOTAL INDIVIDUAL DPS ---
         let groupDps = totalIndividualDps * newPlacementCount;
 
-        // --- START: MODIFIED COST CALCULATION ---
         let isSeparateUnit = false;
         if (unitNameToCalc !== selectedUnit) {
             const mainUnitData = characterData[selectedUnit];
@@ -586,10 +579,12 @@ const calculatorApp = {
             totalCost += costOfUpgrade;
         }
         
-        if (unitNameToCalc === selectedUnit && traitBonus.Traits === "All Star") {
+        // --- START: MODIFIED TOTAL COST LOGIC ---
+        // All Star applies to all units if the main unit has the trait.
+        if (traitBonus.Traits === "All Star") {
             totalCost = Math.round(totalCost * 1.75);
         }
-        // --- END: MODIFIED COST CALCULATION ---
+        // --- END: MODIFIED TOTAL COST LOGIC ---
 
         return {
             finalDamage: finalDamage,
