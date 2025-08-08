@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASTDX DPS Calculator</title>
 
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- ADDED FONT FOR THE NEW BACKGROUND -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap" rel="stylesheet">
-
 
     <link rel="stylesheet" href="style.css">
 
@@ -20,6 +18,14 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+    <div id="disclaimerPopup" class="popup">
+        <div class="popup-content">
+            <h2>Disclaimer</h2>
+            <p>This website is in testing. Information included may be inaccurate. Contact @riifa_ on Discord if issues arise.</p>
+            <button id="closeDisclaimerBtn">Okay</button>
+        </div>
+    </div>
+
     <div class="background-design"></div>
     <main>
         <header class="app-header">
@@ -81,7 +87,7 @@
                         </div>
                     </div>
 
- 
+
                     <div id="skillTreeControl" class="control-group"></div>
                     
                     <!-- START: NEW DROPDOWN SECTION -->

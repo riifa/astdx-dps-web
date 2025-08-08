@@ -499,7 +499,7 @@ main {
     line-height: 0.9;
     rotate: -10deg;
     font-size: 20rem; /* Adjusted for better fit */
-    background: linear-gradient(45deg, #8b8b8b, #303030);
+    background: linear-gradient(45deg, #ffffff, #303030);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -519,7 +519,7 @@ main {
 
 .output-content-wrapper {
     position: relative;
-    z-index: 5; /* Sits on top of the background */
+    z-index: 5; 
     width: 100%;
     height: 100%;
     padding: 1.5rem;
@@ -892,7 +892,67 @@ main {
     animation: rainbow-flow 8s ease-in-out infinite;
 }
 
+.special-ability-control {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
 
+.special-ability-control h4 {
+    font-family: var(--font-poppins);
+    color: var(--accent-green);
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.special-ability-control .ability-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.special-ability-control .ability-desc strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.special-ability-control .ability-btn {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 6px;
+    font-family: var(--font-montserrat);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 60%;
+    margin: 0.5rem auto 0;
+    display: block;
+}
+
+.special-ability-control .ability-btn:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.special-ability-control .ability-btn.active {
+    background-color: var(--accent-green);
+    color: black;
+    font-weight: 700;
+}
+
+.special-ability-control .ability-btn.active:hover {
+    background-color: #00d68b;
+}
 
 /* Keyframes for the rainbow animation */
 @keyframes rainbow-flow {
@@ -901,6 +961,80 @@ main {
     100% { background-position: 0% 50%; }
 }
 
+.ability-display {
+    background-color: var(--input-bg);
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.popup-content {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.popup-content h2 {
+    color: var(--accent-green);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.popup-content p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.popup-content button {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-family: var(--font-montserrat);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.popup-content button:hover {
+    background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
 
 /* --- Media Queries --- */
 
