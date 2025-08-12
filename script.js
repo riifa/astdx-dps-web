@@ -569,14 +569,35 @@ const calculatorApp = {
         let totalDamageMultiplier = 1 + (dmgRoll / 100) + traitBonus.Damage + skillTreeBonus.Damage;
 
         const mainUnitUpgradeIndexForCalc = this.state.currentUpgradeIndexes[selectedUnit] || 0;
+        
+        let finalDamage = Math.round(levelAdjustedDamage * totalDamageMultiplier);
+
+        //UNIT PASSIVES
+        let passiveMultiplier = 0;
+        const mainUnitUpgradeIndex = this.state.currentUpgradeIndexes[selectedUnit] || 0;
+        //box determination
+        if (this.state.selectedUnit === 'BOX' && this.state.specialAbilities.boxDeterminationActive && mainUnitUpgradeIndex >= 2) {
+            finalSpa *= 0.75;
+        }
+        //stw koku
+        if (this.state.selectedUnit === 'Michishibo') {
+            if (this.state.specialAbilities.michishiboLunarBlessingActive) {
+                finalSpa *= 0.96;
+                finalRange *= 1.04;
+            }
+            if (this.state.specialAbilities.michishiboTransparentWorldActive && mainUnitUpgradeIndex >= 8) {
+                finalSpa *= 0.80;
+            }
+        }
+        //toji heavenly restriction
         if (unitNameToCalc === 'Toji' && mainUnitUpgradeIndexForCalc >= 7) {
             const stacks = this.state.specialAbilities.tojiHeavenlyRestrictionStacks || 0;
             const tojiBonus = stacks * 0.0666;
-            totalDamageMultiplier += tojiBonus;
+            passiveMultiplier += tojiBonus;
         }
-        
-        let finalDamage = Math.round(levelAdjustedDamage * totalDamageMultiplier);
-        
+        finalDamage *= (1 + passiveMultiplier);
+
+        //ON FIELD BUFFS
         let buffMultiplier = 1.0;
         switch (selectedBuff) {
             case 'Shinzou Wo Sasageyo': buffMultiplier = (unitElement === 'Green') ? 1.50 : 1.40; break;
@@ -592,20 +613,6 @@ const calculatorApp = {
         const totalRangeMultiplier = 1 + (rngRoll / 100) + traitBonus.Range + skillTreeBonus.Range;
         let finalRange = baseRange * totalRangeMultiplier;
         
-        const mainUnitUpgradeIndex = this.state.currentUpgradeIndexes[selectedUnit] || 0;
-        if (this.state.selectedUnit === 'BOX' && this.state.specialAbilities.boxDeterminationActive && mainUnitUpgradeIndex >= 2) {
-            finalSpa *= 0.75;
-        }
-        if (this.state.selectedUnit === 'Michishibo') {
-            if (this.state.specialAbilities.michishiboLunarBlessingActive) {
-                finalSpa *= 0.96;
-                finalRange *= 1.04;
-            }
-            if (this.state.specialAbilities.michishiboTransparentWorldActive && mainUnitUpgradeIndex >= 8) {
-                finalSpa *= 0.80;
-            }
-        }
-        
         let dotMultiplier = 0;
         const effect = (stats.DoT[currentUpgradeIndex] || '').toLowerCase();
         if (effect !== "none") {
@@ -617,7 +624,7 @@ const calculatorApp = {
         }
         
         if (this.state.selectedUnit === 'Michishibo' && this.state.specialAbilities.michishiboTransparentWorldActive && mainUnitUpgradeIndex >= 8) {
-            dotMultiplier = 0.0833; // Bleed
+            dotMultiplier = 0.0833; 
         }
         if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
 

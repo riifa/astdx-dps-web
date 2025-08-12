@@ -1753,9 +1753,9 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         Stats: {
-            Damage: ["195", "408", "639", "1421", "1883", "2528", "3354", "4903"],
+            Damage: ["195","410","639","1424","1890","2534","3360","4989"],
             Range: ["20", "22", "25", "30", "30", "32", "36", "40"],
-            SPA: ["1.9", "1.9", "1.9", "3", "3", "3", "3", "3.5"],
+            SPA: ["2","2","2","2.75","2.75","2.75","2.75","3.25"],
             AOE: ["Line", "Line", "Line", "Line", "EAOE", "EAOE", "EAOE", "EAOE"],
             Cost: ["950", "1400", "2800", "3500", "4350", "6500", "8000", "12500"],
             DoT: ["Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "None"],
