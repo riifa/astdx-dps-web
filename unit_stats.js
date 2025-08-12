@@ -1735,7 +1735,7 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         Stats: {
-            Damage: ["448", "980", "1568", "2213", "4855", "7190", "2567", "3081"],
+            Damage: ["448", "980", "1568", "2213", "4855", "7190", "9757", "12838"],
             Range: ["23", "24", "25", "27", "32", "35", "40", "45"],
             SPA: ["3", "3", "3", "3", "5", "5", "5", "5"],
             AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
