@@ -1758,7 +1758,7 @@ const characterData = {
             SPA: ["1.9", "1.9", "1.9", "3", "3", "3", "3", "3.5"],
             AOE: ["Line", "Line", "Line", "Line", "EAOE", "EAOE", "EAOE", "EAOE"],
             Cost: ["950", "1400", "2800", "3500", "4350", "6500", "8000", "12500"],
-            DoT: ["Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed"],
+            DoT: ["Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "None"],
             AttackCount: []
         }
     },

@@ -4,6 +4,14 @@ const newlyAddedUnits = [
     "Yami","Toji","Reigen","Tobi","Starrk","Inumaki","Kuroma","Benimaru"
 ];
 
+// --- START: NEW BANLIST ---
+// Add the exact names of any units you want to hide from the selection grid here.
+const banlist = [
+    "Inumaki (Stop)", "Inumaki (Cut)", "Inumaki (Explode)", "Kuroma (Hybrid Form)", "Kuroma (Full AOE Form)", "Airren (Titan)"
+];
+// --- END: NEW BANLIST ---
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // Check if data is loaded before initializing
     if (typeof characterData !== 'undefined' && typeof traitsData !== 'undefined' && typeof skillTreeData !== 'undefined') {
@@ -53,6 +61,7 @@ const calculatorApp = {
             boxDeterminationActive: false,
             michishiboTransparentWorldActive: false,
             michishiboLunarBlessingActive: false,
+            tojiHeavenlyRestrictionStacks: 0,
         },
     },
 
@@ -147,6 +156,7 @@ const calculatorApp = {
         this.renderOutputTabs();
         this.updateOutputDisplay();
         this.renderCombinedDpsSection();
+        this.renderSpecialControls(); // Moved here to be called last
     },
 
     updateCurrentUnitDisplay() {
@@ -289,7 +299,7 @@ const calculatorApp = {
             </div>
         `;
         
-        this.renderSpecialControls();
+        // this.renderSpecialControls(); // REMOVED FROM HERE
         
         dpsOutputSection.querySelector('#prevUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(-1));
         dpsOutputSection.querySelector('#maxUpgradeBtn').addEventListener('click', () => this.goToMaxUpgrade());
@@ -459,7 +469,67 @@ const calculatorApp = {
                 });
             }
         }
+        else if (unitForControls === 'Toji' && mainUnitUpgradeIndex >= 7) {
+            const stacks = specialAbilities.tojiHeavenlyRestrictionStacks || 0;
+            const currentBonus = (stacks * 6.66).toFixed(2);
+            specialControls.innerHTML = `
+                <div class="special-ability-control">
+                    <h4>Passive Ability</h4>
+                    <p class="ability-desc"><strong>Heavenly Restriction:</strong> Sacrifices up to 10 5-Star units (Upg. 3+) in range to gain a 6.66% stat boost per unit, capping at 66.6%.</p>
+                    <div class="slider-control-group">
+                        <label for="tojiStacksSlider" id="tojiStacksLabel">Sacrificed Units: <span>${stacks}</span> (${currentBonus}% Dmg)</label>
+                        <input type="range" id="tojiStacksSlider" min="0" max="10" value="${stacks}" step="1">
+                    </div>
+                </div>
+            `;
+            document.getElementById('tojiStacksSlider').addEventListener('input', (e) => {
+                this.state.specialAbilities.tojiHeavenlyRestrictionStacks = parseInt(e.target.value, 10);
+                this.updateDynamicStats(); // <-- Call the new lightweight update function
+            });
+        }
     },
+
+    // --- START: NEW LIGHTWEIGHT UPDATE FUNCTION ---
+    updateDynamicStats() {
+        // This function only updates values, it does not redraw controls
+        const { activeOutputUnit, selectedUnit } = this.state;
+        const displayUnitName = activeOutputUnit || selectedUnit;
+
+        if (!displayUnitName) return;
+
+        // 1. Update Toji's slider label in real-time
+        const tojiLabel = document.getElementById('tojiStacksLabel');
+        if (tojiLabel) {
+            const stacks = this.state.specialAbilities.tojiHeavenlyRestrictionStacks;
+            const currentBonus = (stacks * 6.66).toFixed(2);
+            tojiLabel.innerHTML = `Sacrificed Units: <span>${stacks}</span> (${currentBonus}% Dmg)`;
+        }
+
+        // 2. Recalculate stats
+        const calculated = this.calculateFinalStats(displayUnitName);
+        
+        // 3. Manually update all relevant stat fields in the DOM
+        const dpsOutputSection = this.elements.dpsOutputSection;
+
+        const dmgValue = dpsOutputSection.querySelector('.dmg-bar .stat-value');
+        if (dmgValue) dmgValue.textContent = calculated.finalDamage.toLocaleString();
+
+        const rngValue = dpsOutputSection.querySelector('.rng-bar .stat-value');
+        if (rngValue) rngValue.textContent = calculated.finalRange;
+
+        const spaValue = dpsOutputSection.querySelector('.spa-bar .stat-value');
+        if (spaValue) spaValue.textContent = `${calculated.finalSpa}s`;
+
+        const unitDpsValue = dpsOutputSection.querySelector('.dps-summary .dps-item:nth-child(1) p');
+        if(unitDpsValue) unitDpsValue.textContent = calculated.unitDps.toLocaleString();
+
+        const groupDpsValue = dpsOutputSection.querySelector('.dps-summary .dps-item:last-child p');
+        if(groupDpsValue) groupDpsValue.textContent = calculated.groupDps.toLocaleString();
+        
+        // This function is safe to call as it only reads state and redraws its own section
+        this.renderCombinedDpsSection();
+    },
+    // --- END: NEW LIGHTWEIGHT UPDATE FUNCTION ---
 
     handleStatRollInput(e, statKey) {
         const value = parseFloat(e.target.value);
@@ -496,7 +566,15 @@ const calculatorApp = {
         const skillTreeBonus = skillTreeData[selectedSkillTree];
         const levelAdjustedDamage = unitLevel > 1 ? Math.round(baseDamage + (unitLevel * (baseDamage / 70))) : baseDamage;
 
-        const totalDamageMultiplier = 1 + (dmgRoll / 100) + traitBonus.Damage + skillTreeBonus.Damage;
+        let totalDamageMultiplier = 1 + (dmgRoll / 100) + traitBonus.Damage + skillTreeBonus.Damage;
+
+        const mainUnitUpgradeIndexForCalc = this.state.currentUpgradeIndexes[selectedUnit] || 0;
+        if (unitNameToCalc === 'Toji' && mainUnitUpgradeIndexForCalc >= 7) {
+            const stacks = this.state.specialAbilities.tojiHeavenlyRestrictionStacks || 0;
+            const tojiBonus = stacks * 0.0666;
+            totalDamageMultiplier += tojiBonus;
+        }
+        
         let finalDamage = Math.round(levelAdjustedDamage * totalDamageMultiplier);
         
         let buffMultiplier = 1.0;
@@ -535,7 +613,7 @@ const calculatorApp = {
             else if (effect.includes("bleed")) dotMultiplier = 0.0833;
             else if (effect.includes("poison")) dotMultiplier = 0.05;
             else if (effect.includes("shock")) dotMultiplier = 0.025;
-            else if (effect.includes("blackflames")) dotMultiplier = 0.025;
+            else if (effect.includes("blackflames")) dotMultiplier = 0.125;
         }
         
         if (this.state.selectedUnit === 'Michishibo' && this.state.specialAbilities.michishiboTransparentWorldActive && mainUnitUpgradeIndex >= 8) {
@@ -602,9 +680,12 @@ const calculatorApp = {
         const selectedCard = this.elements.unitGrid.querySelector(`[data-unit="${unitName}"]`);
         if (selectedCard) selectedCard.classList.add('selected');
 
-        Object.keys(this.state.specialAbilities).forEach(key => {
-            this.state.specialAbilities[key] = false;
-        });
+        this.state.specialAbilities = {
+            boxDeterminationActive: false,
+            michishiboTransparentWorldActive: false,
+            michishiboLunarBlessingActive: false,
+            tojiHeavenlyRestrictionStacks: 0,
+        };
 
         this.state.rollCount = 0;
         if (this.elements.rollCounter) {
@@ -700,7 +781,7 @@ const calculatorApp = {
         if (newlyAddedUnits && newlyAddedUnits.length > 0) {
             finalHTML += `<h3 class="rarity-header rarity-header--newly-added">New Units!</h3>`;
             const newUnitCardsHTML = newlyAddedUnits
-                .filter(unitName => characterData[unitName])
+                .filter(unitName => characterData[unitName] && !banlist.includes(unitName)) // Check banlist here
                 .sort((a, b) => a.localeCompare(b))
                 .map(unitName => {
                     const unitData = characterData[unitName];
@@ -713,6 +794,7 @@ const calculatorApp = {
 
         const groupedUnits = {};
         for (const unitName in remainingUnits) {
+            if (banlist.includes(unitName)) continue; // Check banlist here
             const unit = remainingUnits[unitName];
             if (unit.IsSpawnedOnly) continue;
             const rarity = unit.Rarity || 'Uncategorized';

@@ -990,6 +990,72 @@ main {
     background-color: #00d68b;
 }
 
+.special-ability-control .slider-control-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.special-ability-control .slider-control-group label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.special-ability-control .slider-control-group span {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+/* --- START: UPDATED SLIDER STYLES --- */
+.special-ability-control .slider-control-group input[type="range"] {
+    width: 80%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Styles for Webkit (Chrome, Safari) */
+.special-ability-control .slider-control-group input[type="range"]::-webkit-slider-runnable-track {
+    background: var(--bg-dark); /* Darker than the container for contrast */
+    border: 1px solid var(--border-color); /* Add a border to define it */
+    border-radius: 5px;
+    height: 8px;
+}
+
+.special-ability-control .slider-control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--accent-blue);
+    border: 2px solid var(--text-primary);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -7px; /* Recalculate based on track height and border */
+}
+
+/* Styles for Firefox */
+.special-ability-control .slider-control-group input[type="range"]::-moz-range-track {
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    height: 8px;
+}
+
+.special-ability-control .slider-control-group input[type="range"]::-moz-range-thumb {
+    background-color: var(--accent-blue);
+    border: 2px solid var(--text-primary);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+/* --- END: UPDATED SLIDER STYLES --- */
+
+
 /* Keyframes for the rainbow animation */
 @keyframes rainbow-flow {
     0%   { background-position: 0% 50%; }
