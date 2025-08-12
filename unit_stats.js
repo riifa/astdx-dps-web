@@ -1516,5 +1516,268 @@ const characterData = {
             ],
             AttackCount: []
         }
+    },
+        "Benimaru": {
+        MaxCost: 63000,
+        PlacementCount: 4,
+        MaxUpgrades: 7,
+        Image: './images/units/placeholder.png',
+        Element: "Orange",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["233", "481", "742", "2579", "3373", "6583", "8347", "9841"],
+            Range: ["15", "15", "15", "20", "20", "40", "40", "40"],
+            SPA: ["2", "2", "2", "5", "5", "8", "8", "8"],
+            AOE: ["EAOE", "EAOE", "EAOE", "Cone", "Cone", "EAOE", "EAOE", "EAOE"],
+            Cost: ["1400", "2000", "3500", "5500", "8600", "10000", "13000", "19000"],
+            DoT: ["Burn", "Burn", "Burn", "Burn", "Burn", "Burn", "Burn", "Burn"],
+            AttackCount: []
+        }
+    },
+    "Kuroma": {
+        MaxCost: 75000,
+        PlacementCount: 3,
+        MaxUpgrades: 7,
+        Image: './images/units/placeholder.png',
+        Element: "Green",
+        Rarity: "5 Star",
+        "Spawns": [
+        {
+            "unitName": "Kuroma (Hybrid Form)", 
+            "spawnAtUpgrade": 2,
+            "SeperateUnit": false,
+        },
+        {
+            "unitName": "Kuroma (Full AOE Form)", 
+            "spawnAtUpgrade": 2,
+            "SeperateUnit": false,
+        }
+        ],
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["420", "875", "1386", "1954", "2577", "3340", "4341", "5602"],
+            Range: ["12", "12", "14", "16", "16", "18", "18", "19"],
+            SPA: ["3", "3", "3", "3", "3", "3", "3", "3"],
+            AOE: ["Cone", "Cone", "Cone", "Cone", "Cone", "Cone", "Cone", "Cone"],
+            Cost: ["800", "1200", "2500", "4500", "9000", "12000", "15000", "30000"],
+            DoT: ["None", "None", "None", "None", "None", "None", "None", "None"],
+            AttackCount: []
+        }
+    },
+    "Kuroma (Hybrid Form)": {
+        MaxCost: 75000,
+        PlacementCount: 3,
+        MaxUpgrades: 5,
+        Image: './images/units/placeholder.png',
+        Element: "Green",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["1538", "2169", "2860", "3707", "4819", "6218"],
+            Range: ["31.5", "31.5", "36", "36", "40.5", "42.75"],
+            SPA: ["3", "3", "3", "3", "3", "3"],
+            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
+            Cost: ["800", "4500", "4500", "9000", "12000", "15000"],
+            DoT: ["None", "None", "None", "None", "None", "None"],
+            AttackCount: []
+        }
+    },
+    "Kuroma (Full AOE Form)": {
+        MaxCost: 75000,
+        PlacementCount: 3,
+        MaxUpgrades: 5,
+        Image: './images/units/placeholder.png',
+        Element: "Green",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["4435", "6253", "8246", "10688", "13891", "17926"],
+            Range: ["23.52", "23.52", "26.88", "26.88", "30.24", "31.92"],
+            SPA: ["9", "9", "9", "9", "9", "9"],
+            AOE: ["AOE", "AOE", "AOE", "AOE", "AOE", "AOE"],
+            Cost: ["800", "4500", "4500", "9000", "12000", "15000"],
+            DoT: ["None", "None", "None", "None", "None", "None"],
+            AttackCount: []
+        }
+    },
+    "Inumaki": {
+        MaxCost: 60000,
+        PlacementCount: 4,
+        MaxUpgrades: 7,
+        Image: './images/units/placeholder.png',
+        Element: "Purple",
+        Rarity: "5 Star",
+        "Spawns": [
+        {
+            "unitName": "Inumaki (Stop)", 
+            "spawnAtUpgrade": 2,
+            "SeperateUnit": false,
+        },
+        {
+            "unitName": "Inumaki (Cut)", 
+            "spawnAtUpgrade": 2,
+            "SeperateUnit": false,
+        },
+        {
+            "unitName": "Inumaki (Explode)", 
+            "spawnAtUpgrade": 2,
+            "SeperateUnit": false,
+        }
+        ],
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["243", "523", "831", "1186", "1587", "2082", "2670", "3501"],
+            Range: ["10", "11", "12", "14", "15", "17", "18", "20"],
+            SPA: ["2", "2", "2", "2", "2", "2", "2", "2"],
+            AOE: ["Cone", "Cone", "Cone", "Cone", "Cone", "Cone", "Cone", "Cone"],
+            Cost: ["725", "1300", "2500", "7500", "7225", "9750", "14000", "17000"],
+            DoT: ["None", "None", "None", "None", "None", "None", "None", "None"],
+            AttackCount: []
+        }
+    },
+    "Inumaki (Stop)": {
+        MaxCost: 60000,
+        PlacementCount: 4,
+        MaxUpgrades: 5,
+        Image: './images/units/placeholder.png',
+        Element: "Purple",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["997", "1423", "1904", "2498", "3204", "4201"],
+            Range: ["30", "35", "37.5", "42.5", "45", "50"],
+            SPA: ["3", "3", "3", "3", "3", "3"],
+            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
+            Cost: ["4525", "7500", "7225", "9750", "14000","17000"],
+            DoT: ["None", "None", "None", "None", "None", "None"],
+            AttackCount: []
+        }
+    },
+    "Inumaki (Cut)": {
+        MaxCost: 60000,
+        PlacementCount: 4,
+        MaxUpgrades: 5,
+        Image: './images/units/placeholder.png',
+        Element: "Purple",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["998", "1424", "1906", "2500", "3207", "4205"],
+            Range: ["27", "31.5", "33.75", "38.25", "40.5", "45"],
+            SPA: ["2", "2", "2", "2", "2", "2"],
+            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
+            Cost: ["4525", "7500", "7225", "9750", "14000","17000"],
+            DoT: ["Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed"],
+            AttackCount: []
+        }
+    },
+    "Inumaki (Explode)": {
+        MaxCost: 60000,
+        PlacementCount: 4,
+        MaxUpgrades: 5,
+        Image: './images/units/placeholder.png',
+        Element: "Purple",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["1903", "2716", "3634", "4768", "6114", "8017"],
+            Range: ["24", "28", "30", "34", "36", "40"],
+            SPA: ["4", "4", "4", "4", "4", "4"],
+            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
+            Cost: ["4525", "7500", "7225", "9750", "14000","17000"],
+            DoT: ["None", "None", "None", "None", "None", "None"],
+            AttackCount: []
+        }
+    },
+    "Reigen": {
+        MaxCost: 49000,
+        PlacementCount: 4,
+        MaxUpgrades: 7,
+        Image: './images/units/placeholder.png',
+        Element: "Orange",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["567", "945", "1342", "1606", "2054", "2987", "5134", "7081"],
+            Range: ["20", "24", "28", "32", "36", "40", "40", "40"],
+            SPA: ["4.5", "4.5", "4.5", "4", "4", "4", "5", "5"],
+            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
+            Cost: ["1111", "1350", "1859", "3680", "4500", "8800", "10000", "17700"],
+            DoT: ["None", "None", "None", "None", "None", "None", "None", "None"],
+            AttackCount: []
+        }
+    },
+    "Starrk": {
+        MaxCost: 59000,
+        PlacementCount: 4,
+        MaxUpgrades: 8,
+        Image: './images/units/placeholder.png',
+        Element: "Blue",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["496", "788", "1167", "4097", "5234", "6524", "6303", "8053", "10307"],
+            Range: ["17", "20", "23", "18", "20", "22", "32", "38", "45"],
+            SPA: ["2.5", "2.5", "2.5", "6.5", "6.5", "6.5", "5", "5", "5"],
+            AOE: ["Cone", "Cone", "Cone", "Line", "Line", "Line", "Line", "Line", "Line"],
+            Cost: ["1075", "1300", "1875", "3450", "5250", "6800", "9250", "12750", "17250"],
+            DoT: ["None", "None", "None", "None", "None", "None", "None", "None", "None"],
+            AttackCount: []
+        }
+    },
+    "Tobi": {
+        MaxCost: 65000,
+        PlacementCount: 3,
+        MaxUpgrades: 7,
+        Image: './images/units/placeholder.png',
+        Element: "Red",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["448", "980", "1568", "2213", "4855", "7190", "2567", "3081"],
+            Range: ["23", "24", "25", "27", "32", "35", "40", "45"],
+            SPA: ["3", "3", "3", "3", "5", "5", "5", "5"],
+            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
+            Cost: ["950", "1550", "2600", "3900", "8000", "12000", "15000", "21000"],
+            DoT: ["None", "None", "None", "None", "None", "None", "None", "None"],
+            AttackCount: []
+        }
+    },
+    "Toji": {
+        MaxCost: 40000,
+        PlacementCount: 3,
+        MaxUpgrades: 7,
+        Image: './images/units/placeholder.png',
+        Element: "Red",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["195", "408", "639", "1421", "1883", "2528", "3354", "4903"],
+            Range: ["20", "22", "25", "30", "30", "32", "36", "40"],
+            SPA: ["1.9", "1.9", "1.9", "3", "3", "3", "3", "3.5"],
+            AOE: ["Line", "Line", "Line", "Line", "EAOE", "EAOE", "EAOE", "EAOE"],
+            Cost: ["950", "1400", "2800", "3500", "4350", "6500", "8000", "12500"],
+            DoT: ["Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed"],
+            AttackCount: []
+        }
+    },
+    "Yami": {
+        MaxCost: 60000,
+        PlacementCount: 3,
+        MaxUpgrades: 8,
+        Image: './images/units/placeholder.png',
+        Element: "Purple",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        Stats: {
+            Damage: ["116", "270", "452", "686", "947", "1227", "4172", "5071", "6098"],
+            Range: ["10", "12", "15", "22", "27", "32", "38", "38", "38"],
+            SPA: ["2", "2", "2", "2", "2", "2", "5.5", "5.5", "5.5"],
+            AOE: ["Single", "Single", "Single", "EAOE", "EAOE", "EAOE", "Line", "Line", "Line"],
+            Cost: ["1000", "1300", "2200", "3235", "4400", "5875", "9475", "12750", "19765"],
+            DoT: ["BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames"],
+            AttackCount: []
+        }
     }
 };

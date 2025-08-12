@@ -1,16 +1,7 @@
 // script.js
 
 const newlyAddedUnits = [
-    "Supreme Leader",
-    "Supreme Leader (2nd Form)",
-    "Supreme Leader (3rd Form)",
-    "Supreme Leader (Final Form)",
-    "Freezer (Final Form)",
-    "Future T",
-    "Zesty General",
-    "Sky God",
-    "BOX",
-    "Masochist Lady"
+    "Yami","Toji","Reigen","Tobi","Starrk","Inumaki","Kuroma","Benimaru"
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -544,6 +535,7 @@ const calculatorApp = {
             else if (effect.includes("bleed")) dotMultiplier = 0.0833;
             else if (effect.includes("poison")) dotMultiplier = 0.05;
             else if (effect.includes("shock")) dotMultiplier = 0.025;
+            else if (effect.includes("blackflames")) dotMultiplier = 0.025;
         }
         
         if (this.state.selectedUnit === 'Michishibo' && this.state.specialAbilities.michishiboTransparentWorldActive && mainUnitUpgradeIndex >= 8) {
