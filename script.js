@@ -84,6 +84,7 @@ const calculatorApp = {
         rollCounter: null,
         unitSearchInput: null,
         specialControls: null,
+        resetSelectionBtn: null
     },
 
     // --- INITIALIZATION ---
@@ -110,6 +111,7 @@ const calculatorApp = {
         this.elements.spaRollInput = document.getElementById('spaRollInput');
         this.elements.unitSearchInput = document.getElementById('unitSearchInput');
         this.elements.specialControls = document.getElementById('special-controls');
+        this.elements.resetSelectionBtn = document.getElementById('resetSelectionBtn');
     },
 
     populateUI() {
@@ -138,6 +140,10 @@ const calculatorApp = {
             this.elements.rollTraitBtn.addEventListener('click', () => this.rollForTrait());
         }
 
+        if (this.elements.resetSelectionBtn) {
+            this.elements.resetSelectionBtn.addEventListener('click', () => this.resetSelection());
+        }
+
         this.elements.unitSearchInput.addEventListener('input', () => this.filterUnits());
         
         this.elements.outputTabsContainer.addEventListener('click', (event) => {
@@ -160,9 +166,15 @@ const calculatorApp = {
     },
 
     updateCurrentUnitDisplay() {
-        const { currentUnitDisplay } = this.elements;
+        const { currentUnitDisplay, resetSelectionBtn } = this.elements; // <-- MODIFIED
         const { selectedUnit } = this.state;
         const hasSelection = !!selectedUnit;
+
+        // --- START: ADDED VISIBILITY TOGGLE ---
+        if (resetSelectionBtn) {
+            resetSelectionBtn.classList.toggle('visible', hasSelection);
+        }
+        // --- END: ADDED VISIBILITY TOGGLE ---
 
         currentUnitDisplay.classList.toggle('placeholder', !hasSelection);
         currentUnitDisplay.innerHTML = hasSelection
@@ -656,12 +668,9 @@ const calculatorApp = {
             totalCost += costOfUpgrade;
         }
         
-        // --- START: MODIFIED TOTAL COST LOGIC ---
-        // All Star applies to all units if the main unit has the trait.
         if (traitBonus.Traits === "All Star") {
             totalCost = Math.round(totalCost * 1.75);
         }
-        // --- END: MODIFIED TOTAL COST LOGIC ---
 
         return {
             finalDamage: finalDamage,
@@ -699,6 +708,50 @@ const calculatorApp = {
             this.elements.rollCounter.textContent = '0';
         }
 
+        this.render();
+    },
+
+    resetSelection() {
+        this.state.activeOutputUnit = null;
+        this.state.spawnedUnits = [];
+        this.state.unitLevel = 1;
+        this.state.selectedTrait = 'Traitless';
+        this.state.dmgRoll = 0;
+        this.state.rngRoll = 0;
+        this.state.spaRoll = 0;
+        this.state.selectedSkillTree = 'None';
+        this.state.selectedBuff = 'None';
+        this.state.currentUpgradeIndexes = {};
+        this.state.rollCount = 0;
+        this.state.specialAbilities = {
+            boxDeterminationActive: false,
+            michishiboTransparentWorldActive: false,
+            michishiboLunarBlessingActive: false,
+            tojiHeavenlyRestrictionStacks: 0,
+        };
+        
+        const levelSlider = this.elements.unitLevelControl.querySelector('#unitLevelSlider');
+        if (levelSlider) levelSlider.value = 1;
+        
+        const levelValue = this.elements.unitLevelControl.querySelector('#unitLevelValue');
+        if (levelValue) levelValue.textContent = '1';
+  
+        const traitDropdown = this.elements.traitSelectionControl.querySelector('#traitSelection');
+        if (traitDropdown) traitDropdown.value = 'Traitless';
+  
+        this.elements.dmgRollInput.value = '';
+        this.elements.rngRollInput.value = '';
+        this.elements.spaRollInput.value = '';
+  
+        if (this.elements.rollCounter) this.elements.rollCounter.textContent = '0';
+  
+        const skillTreeDropdown = this.elements.skillTreeControl.querySelector('#skillTreeSelection');
+        if(skillTreeDropdown) skillTreeDropdown.value = 'None';
+  
+        const buffDropdown = this.elements.onFieldBuffsControl.querySelector('#onFieldBuffsSelection');
+        if (buffDropdown) buffDropdown.value = 'None';
+        
+        // Re-render the app to reflect the cleared state
         this.render();
     },
 

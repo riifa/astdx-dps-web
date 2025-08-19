@@ -196,6 +196,32 @@ main {
 }
 .current-unit-display.placeholder { font-style: italic; }
 
+.reset-btn {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: var(--font-montserrat);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.reset-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.reset-btn.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
 .control-group {
     margin-top: 1rem;
     padding-top: 1rem;

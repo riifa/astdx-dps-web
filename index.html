@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +30,7 @@
     <main>
         <header class="app-header">
             <h1>ASTDX DPS Calculator</h1>
-            <p class="subtitle">Ver 1.4.1 - Fixed</p>
+            <p class="subtitle">Ver 2.4.3 - Fixed</p>
             <p class="subtitle">Made by: @riifa_ (@Tr4pC14p on Roblox)</p>
         </header>
 
@@ -45,9 +46,14 @@
 
                     <div class="unit-grid-container" id="unitGrid"></div>
 
-                    <div class="current-unit-display placeholder" id="currentUnitDisplay">
-                        Select a unit by clicking its image.
+                    <!-- START: MODIFIED SECTION -->
+                    <div class="selection-info-bar">
+                        <div class="current-unit-display placeholder" id="currentUnitDisplay">
+                            Select a unit by clicking its image.
+                        </div>
+                        <button id="resetSelectionBtn" class="reset-btn">Reset Stat Selection</button>
                     </div>
+                    <!-- END: MODIFIED SECTION -->
 
                     <div id="unitLevelControl" class="control-group"></div>
                     <div id="traitSelectionControl" class="control-group"></div>

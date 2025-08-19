@@ -1517,7 +1517,7 @@ const characterData = {
             AttackCount: []
         }
     },
-        "Benimaru": {
+    "Benimaru": {
         MaxCost: 63000,
         PlacementCount: 4,
         MaxUpgrades: 7,
