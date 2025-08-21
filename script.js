@@ -40,6 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Data files (unit_stats.js, data.js) failed to load or are not defined.");
         document.getElementById('unitGrid').innerHTML = '<p style="color: red; text-align: center;">Error: Could not load unit data.</p>';
     }
+
+     const testerBtn = document.getElementById('testerBtn');
+    if (testerBtn) {
+        testerBtn.addEventListener('click', () => {
+            const password = prompt("Enter password:");
+            if (password === "koishi") {
+                window.location.href = "unitVisualizer/test.html";
+            } else if (password !== null) {
+                alert("Incorrect password!");
+            }
+        });
+    }
 });
 
 const calculatorApp = {

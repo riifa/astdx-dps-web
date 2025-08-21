@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stacked Animated Hiragana Background</title>
-    <!-- Import a "fat" Japanese font from Google Fonts -->
+    <title>background thing</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap" rel="stylesheet">
@@ -56,8 +55,6 @@
 
             display: flex;
             flex-direction: column;
-            /* --- The main fix is here --- */
-            /* 'center' groups items together in the middle */
             justify-content: center; 
         }
         
@@ -68,8 +65,7 @@
             font-weight: 900;
             white-space: nowrap;
             user-select: none;
-            /* --- Added for tighter spacing between lines --- */
-            line-height: 0.9; /* Adjust this value to bring lines closer or further */
+            line-height: 0.9; 
             rotate: -10deg;
         }
 
@@ -117,7 +113,6 @@
 
     <div class="replicated-background">
         <div class="text-container">
-            <!-- IMPORTANT: Duplicate the span inside each layer for a seamless loop -->
             <div class="text-layer layer-1">
                 <span>あいうえおかきくけこさしすせそ</span>
                 <span>あいうえおかきくけこさしすせそ</span>

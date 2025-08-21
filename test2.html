@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime.js Interactive Particle Web</title>
+    <style>
+        /* Basic CSS Reset & Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0c0c1e; /* Dark blue background */
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Hide scrollbars */
+        }
+
+        /* Canvas will be our animation background */
+        #particle-web {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        /* Centered content on top of the canvas */
+        .content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(100, 200, 255, 0.7);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-top: -10px;
+            color: #a0c0e0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <h1>Anime.js Visual Web</h1>
+        <p>Move your mouse to interact. Click for a surprise!</p>
+    </div>
+
+    <canvas id="particle-web"></canvas>
+
+    <!-- Get anime.js from a CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <script>
+        // --- SETUP ---
+        const canvas = document.getElementById('particle-web');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        // Set canvas to full screen
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // --- CONFIGURATION ---
+        const config = {
+            particleCount: 100,
+            particleColor: 'rgba(100, 200, 255, 0.7)',
+            lineColor: 'rgba(100, 200, 255, 0.2)',
+            particleRadius: 2,
+            connectionDistance: 120, // Max distance to draw a line between particles
+            mouseRepelDistance: 100, // Distance from mouse to start repelling particles
+        };
+
+        // --- MOUSE TRACKING ---
+        const mouse = {
+            x: undefined,
+            y: undefined,
+        };
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+        
+        // --- PARTICLE CLASS ---
+        class Particle {
+            constructor(x, y, speedX, speedY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.speedX = speedX;
+                this.speedY = speedY;
+                this.size = size;
+                this.color = color;
+                
+                // Store original speed for resetting after interaction
+                this.baseSpeedX = speedX;
+                this.baseSpeedY = speedY;
+            }
+
+            // Draw the particle on the canvas
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            // Update particle position and handle interactions
+            update() {
+                // Bounce off screen edges
+                if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                    this.speedX = -this.speedX;
+                }
+                if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+                    this.speedY = -this.speedY;
+                }
+                
+                // Mouse interaction - Repel
+                if (mouse.x && mouse.y) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < config.mouseRepelDistance) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (config.mouseRepelDistance - distance) / config.mouseRepelDistance;
+                        
+                        // Push particle away from mouse
+                        this.x -= forceDirectionX * force * 3;
+                        this.y -= forceDirectionY * force * 3;
+                    }
+                }
+                
+                // Move the particle
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                this.draw();
+            }
+        }
+
+        // --- INITIALIZATION ---
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < config.particleCount; i++) {
+                const size = Math.random() * 1.5 + config.particleRadius;
+                const x = Math.random() * (canvas.width - size * 2) + size;
+                const y = Math.random() * (canvas.height - size * 2) + size;
+                const speedX = (Math.random() * 2 - 1) * 0.5; // Slow speeds
+                const speedY = (Math.random() * 2 - 1) * 0.5;
+                particlesArray.push(new Particle(x, y, speedX, speedY, size, config.particleColor));
+            }
+        }
+        
+        // --- CONNECTING LINES ---
+        function connectParticles() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    const dx = particlesArray[a].x - particlesArray[b].x;
+                    const dy = particlesArray[a].y - particlesArray[b].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < config.connectionDistance) {
+                        ctx.strokeStyle = config.lineColor;
+                        ctx.lineWidth = 1;
+                        // Opacity based on distance
+                        ctx.globalAlpha = 1 - (distance / config.connectionDistance);
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                        ctx.globalAlpha = 1; // Reset alpha
+                    }
+                }
+            }
+        }
+
+        // --- ANIMATION LOOP ---
+        let animationFrameId;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach(particle => particle.update());
+            connectParticles();
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        // --- EVENT LISTENERS ---
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init(); // Re-initialize on resize
+        });
+
+        // Click Event - THE ANIME.JS PART!
+        window.addEventListener('click', () => {
+            // Stop the current animation loop
+            cancelAnimationFrame(animationFrameId);
+            
+            // Use anime.js to create a burst effect
+            anime({
+                targets: particlesArray,
+                // Animate to a position far outside the screen
+                x: () => anime.random(0, canvas.width),
+                y: () => canvas.height + 200,
+                size: 0,
+                easing: 'easeInExpo',
+                duration: 1200,
+                // When animation is complete, reset the system
+                complete: () => {
+                    init();
+                    animate();
+                }
+            });
+        });
+
+
+        // --- START ---
+        init();
+        animate();
+
+    </script>
+</body>
+</html>
