@@ -69,6 +69,7 @@ const calculatorApp = {
         selectedBuff: 'None',
         currentUpgradeIndexes: {}, 
         rollCount: 0,
+        isVisualizerReady: false, // <-- ADD THIS: State to track iframe readiness
         specialAbilities: {
             boxDeterminationActive: false,
             michishiboTransparentWorldActive: false,
@@ -96,6 +97,8 @@ const calculatorApp = {
         rollCounter: null,
         unitSearchInput: null,
         specialControls: null,
+        visualizerFrame: null,
+        visualizerContainer: null,
         resetSelectionBtn: null
     },
 
@@ -123,6 +126,8 @@ const calculatorApp = {
         this.elements.spaRollInput = document.getElementById('spaRollInput');
         this.elements.unitSearchInput = document.getElementById('unitSearchInput');
         this.elements.specialControls = document.getElementById('special-controls');
+        this.elements.visualizerFrame = document.getElementById('aoeVisualizerFrame');
+        this.elements.visualizerContainer = document.getElementById('visualizer-container');
         this.elements.resetSelectionBtn = document.getElementById('resetSelectionBtn');
     },
 
@@ -165,6 +170,13 @@ const calculatorApp = {
                 this.render();
             }
         });
+
+        if (this.elements.visualizerFrame) {
+            this.elements.visualizerFrame.addEventListener('load', () => {
+                // The iframe is fully loaded, it's safe to send the first update.
+                this.updateVisualizer();
+            });
+        }
     },
 
     // --- RENDER & UPDATE ---
@@ -174,20 +186,66 @@ const calculatorApp = {
         this.renderOutputTabs();
         this.updateOutputDisplay();
         this.renderCombinedDpsSection();
-        this.renderSpecialControls(); // Moved here to be called last
+        this.renderSpecialControls(); 
+        this.updateVisualizerVisibility();
+        this.updateVisualizer();
+    },
+
+    updateVisualizerVisibility() {
+        const { visualizerContainer } = this.elements;
+        const hasSelection = !!this.state.selectedUnit;
+
+        if (visualizerContainer) {
+            visualizerContainer.classList.toggle('hidden', !hasSelection);
+        }
+    },
+
+    // AFTER THE FIX
+    updateVisualizer() {
+        const { activeOutputUnit, currentUpgradeIndexes, rngRoll, selectedTrait, selectedSkillTree, selectedUnit, specialAbilities } = this.state;
+        const { visualizerFrame } = this.elements;
+        
+        // Check if the contentWindow is accessible, which it will be after the 'load' event.
+        if (!activeOutputUnit || !visualizerFrame || !visualizerFrame.contentWindow) return;
+
+        const unitData = characterData[activeOutputUnit];
+        if (!unitData || !unitData.upgrades) return;
+
+        const index = currentUpgradeIndexes[activeOutputUnit] || 0;
+        const upgrade = unitData.upgrades[index];
+        if (!upgrade || !upgrade.AOE) return;
+
+        // --- Calculate final range for visualizer ---
+        const traitBonus = traitsData.find(t => t.Traits === selectedTrait);
+        const skillTreeBonus = skillTreeData[selectedSkillTree];
+        const baseRange = upgrade.Range;
+
+        const totalRangeMultiplier = 1 + (rngRoll / 100) + traitBonus.Range + skillTreeBonus.Range;
+        let finalRange = baseRange * totalRangeMultiplier;
+        
+        // Apply special unit passives that affect range
+        if (selectedUnit === 'Michishibo' && specialAbilities.michishiboLunarBlessingActive) {
+            finalRange *= 1.04;
+        }
+
+        const visualizerData = {
+            range: finalRange,
+            aoeType: upgrade.AOE.type.toLowerCase(),
+            params: upgrade.AOE.params || {}
+        };
+        
+        visualizerFrame.contentWindow.postMessage(visualizerData, '*');
     },
 
     updateCurrentUnitDisplay() {
-        const { currentUnitDisplay, resetSelectionBtn } = this.elements; // <-- MODIFIED
+        const { currentUnitDisplay, resetSelectionBtn } = this.elements;
         const { selectedUnit } = this.state;
         const hasSelection = !!selectedUnit;
 
-        // --- START: ADDED VISIBILITY TOGGLE ---
         if (resetSelectionBtn) {
             resetSelectionBtn.classList.toggle('visible', hasSelection);
         }
-        // --- END: ADDED VISIBILITY TOGGLE ---
-
+        
         currentUnitDisplay.classList.toggle('placeholder', !hasSelection);
         currentUnitDisplay.innerHTML = hasSelection
             ? `Current Unit: <span>${selectedUnit.replace(/_/g, ' ')}</span>`
@@ -202,6 +260,25 @@ const calculatorApp = {
         if (percentage >= 30.9) return 'A';
         if (percentage >= 0.89) return 'B';
         return 'C';
+    },
+
+    formatAoeToString(aoeObject) {
+        if (!aoeObject || !aoeObject.type) return 'N/A';
+        const type = aoeObject.type.toLowerCase();
+        const params = aoeObject.params || {};
+        
+        let formattedType = type.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+        if (formattedType === 'Circle') formattedType = 'EAOE';
+
+        let paramString = '';
+        if (params.lineWidth) paramString = `(${params.lineWidth})`;
+        else if (params.coneAngle) paramString = `(${params.coneAngle})`;
+        else if (params.circleRadius) paramString = `(${params.circleRadius})`;
+        else if (params.patrolRadius) paramString = `(${params.patrolRadius})`;
+        else if (params.trapCount) paramString = `(${params.trapCount})`;
+        
+        return `${formattedType} ${paramString}`.trim();
     },
 
     updateOutputDisplay() {
@@ -227,8 +304,8 @@ const calculatorApp = {
         }
         
         const currentUpgradeIndex = this.state.currentUpgradeIndexes[displayUnitName] || 0;
+        const currentUpgrade = unitData.upgrades[currentUpgradeIndex];
         const calculated = this.calculateFinalStats(displayUnitName);
-        const stats = unitData.Stats;
     
         const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
         const placementStatus = (unitData.PlacementStatus && unitData.PlacementStatus[currentUpgradeIndex]) 
@@ -239,16 +316,16 @@ const calculatorApp = {
         const element = unitData.Element || 'N/A';
         const elementClass = element.toLowerCase();
 
-        let displayDotType = stats.DoT[currentUpgradeIndex];
+        let displayDotType = currentUpgrade.DoT || 'None';
         if (selectedUnit === 'Michishibo' && (this.state.currentUpgradeIndexes[selectedUnit] || 0) >= 8 && this.state.specialAbilities.michishiboTransparentWorldActive) {
             displayDotType = 'Bleed';
         }
+        
+        const aoeString = this.formatAoeToString(currentUpgrade.AOE);
     
-        // --- START: MODIFIED NEXT COST LOGIC ---
         let nextUpgradeCost;
-        if (currentUpgradeIndex < stats.Cost.length - 1) {
-            let cost = Number(stats.Cost[currentUpgradeIndex + 1]);
-            // All Star applies to all units if the main unit has the trait.
+        if (currentUpgradeIndex < unitData.MaxUpgrades) {
+            let cost = unitData.upgrades[currentUpgradeIndex + 1].Cost;
             if (selectedTrait === 'All Star') {
                 cost = Math.round(cost * 1.75);
             }
@@ -256,7 +333,6 @@ const calculatorApp = {
         } else {
             nextUpgradeCost = 'N/A';
         }
-        // --- END: MODIFIED NEXT COST LOGIC ---
         
         const dmgGrade = this.getStatGrade(dmgRoll, 15);
         const rngGrade = this.getStatGrade(rngRoll, 12.5);
@@ -308,7 +384,7 @@ const calculatorApp = {
                 <div class="additional-stats">
                     <h4>Stats for ${upgradeLabel}</h4>
                     <div class="additional-stats-grid">
-                        <div class="stat-block"><span class="stat-block-label">AOE</span><span class="stat-block-value">${stats.AOE[currentUpgradeIndex]}</span></div>
+                        <div class="stat-block"><span class="stat-block-label">AOE</span><span class="stat-block-value">${aoeString}</span></div>
                         <div class="stat-block"><span class="stat-block-label">DoT Type</span><span class="stat-block-value">${displayDotType}</span></div>
                         <div class="stat-block"><span class="stat-block-label">Placement</span><span class="stat-block-value">${calculated.totalPlacementCount}</span></div>
                         <div class="stat-block"><span class="stat-block-label">Total Cost</span><span class="stat-block-value">$${calculated.totalCost.toLocaleString()}</span></div>
@@ -322,8 +398,6 @@ const calculatorApp = {
                 </div>
             </div>
         `;
-        
-        // this.renderSpecialControls(); // REMOVED FROM HERE
         
         dpsOutputSection.querySelector('#prevUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(-1));
         dpsOutputSection.querySelector('#maxUpgradeBtn').addEventListener('click', () => this.goToMaxUpgrade());
@@ -508,20 +582,17 @@ const calculatorApp = {
             `;
             document.getElementById('tojiStacksSlider').addEventListener('input', (e) => {
                 this.state.specialAbilities.tojiHeavenlyRestrictionStacks = parseInt(e.target.value, 10);
-                this.updateDynamicStats(); // <-- Call the new lightweight update function
+                this.updateDynamicStats(); 
             });
         }
     },
 
-    // --- START: NEW LIGHTWEIGHT UPDATE FUNCTION ---
     updateDynamicStats() {
-        // This function only updates values, it does not redraw controls
         const { activeOutputUnit, selectedUnit } = this.state;
         const displayUnitName = activeOutputUnit || selectedUnit;
 
         if (!displayUnitName) return;
 
-        // 1. Update Toji's slider label in real-time
         const tojiLabel = document.getElementById('tojiStacksLabel');
         if (tojiLabel) {
             const stacks = this.state.specialAbilities.tojiHeavenlyRestrictionStacks;
@@ -529,10 +600,8 @@ const calculatorApp = {
             tojiLabel.innerHTML = `Sacrificed Units: <span>${stacks}</span> (${currentBonus}% Dmg)`;
         }
 
-        // 2. Recalculate stats
         const calculated = this.calculateFinalStats(displayUnitName);
         
-        // 3. Manually update all relevant stat fields in the DOM
         const dpsOutputSection = this.elements.dpsOutputSection;
 
         const dmgValue = dpsOutputSection.querySelector('.dmg-bar .stat-value');
@@ -550,10 +619,8 @@ const calculatorApp = {
         const groupDpsValue = dpsOutputSection.querySelector('.dps-summary .dps-item:last-child p');
         if(groupDpsValue) groupDpsValue.textContent = calculated.groupDps.toLocaleString();
         
-        // This function is safe to call as it only reads state and redraws its own section
         this.renderCombinedDpsSection();
     },
-    // --- END: NEW LIGHTWEIGHT UPDATE FUNCTION ---
 
     handleStatRollInput(e, statKey) {
         const value = parseFloat(e.target.value);
@@ -580,11 +647,12 @@ const calculatorApp = {
         
         const unitData = characterData[unitNameToCalc];
         const currentUpgradeIndex = this.state.currentUpgradeIndexes[unitNameToCalc] || 0;
-        const { Stats: stats, PlacementCount, Element: unitElement } = unitData;
+        const currentUpgrade = unitData.upgrades[currentUpgradeIndex];
+        const { Element: unitElement } = unitData;
 
-        const baseDamage = parseFloat(stats.Damage[currentUpgradeIndex]);
-        const baseSpa = parseFloat(stats.SPA[currentUpgradeIndex]);
-        const baseRange = parseFloat(stats.Range[currentUpgradeIndex]);
+        const baseDamage = currentUpgrade.Damage;
+        const baseSpa = currentUpgrade.SPA;
+        const baseRange = currentUpgrade.Range;
 
         const traitBonus = traitsData.find(t => t.Traits === selectedTrait);
         const skillTreeBonus = skillTreeData[selectedSkillTree];
@@ -596,14 +664,15 @@ const calculatorApp = {
         
         let finalDamage = Math.round(levelAdjustedDamage * totalDamageMultiplier);
 
-        //UNIT PASSIVES
         let passiveMultiplier = 0;
         const mainUnitUpgradeIndex = this.state.currentUpgradeIndexes[selectedUnit] || 0;
-        //box determination
+        let finalSpa = baseSpa;
+        let finalRange = baseRange;
+
         if (this.state.selectedUnit === 'BOX' && this.state.specialAbilities.boxDeterminationActive && mainUnitUpgradeIndex >= 2) {
             finalSpa *= 0.75;
         }
-        //stw koku
+        
         if (this.state.selectedUnit === 'Michishibo') {
             if (this.state.specialAbilities.michishiboLunarBlessingActive) {
                 finalSpa *= 0.96;
@@ -613,7 +682,7 @@ const calculatorApp = {
                 finalSpa *= 0.80;
             }
         }
-        //toji heavenly restriction
+        
         if (unitNameToCalc === 'Toji' && mainUnitUpgradeIndexForCalc >= 7) {
             const stacks = this.state.specialAbilities.tojiHeavenlyRestrictionStacks || 0;
             const tojiBonus = stacks * 0.0666;
@@ -621,7 +690,6 @@ const calculatorApp = {
         }
         finalDamage *= (1 + passiveMultiplier);
 
-        //ON FIELD BUFFS
         let buffMultiplier = 1.0;
         switch (selectedBuff) {
             case 'Shinzou Wo Sasageyo': buffMultiplier = (unitElement === 'Green') ? 1.50 : 1.40; break;
@@ -632,13 +700,13 @@ const calculatorApp = {
         finalDamage = Math.round(finalDamage * buffMultiplier);
 
         const totalSpaMultiplier = 1 - ((spaRoll / 100) + traitBonus.Spa + skillTreeBonus.SPA);
-        let finalSpa = Math.max(0, baseSpa * totalSpaMultiplier);
+        finalSpa = Math.max(0, finalSpa * totalSpaMultiplier);
         
         const totalRangeMultiplier = 1 + (rngRoll / 100) + traitBonus.Range + skillTreeBonus.Range;
-        let finalRange = baseRange * totalRangeMultiplier;
+        finalRange = finalRange * totalRangeMultiplier;
         
         let dotMultiplier = 0;
-        const effect = (stats.DoT[currentUpgradeIndex] || '').toLowerCase();
+        const effect = (currentUpgrade.DoT || '').toLowerCase();
         if (effect !== "none") {
             if (effect.includes("burn")) dotMultiplier = 0.1;
             else if (effect.includes("bleed")) dotMultiplier = 0.0833;
@@ -673,7 +741,7 @@ const calculatorApp = {
 
         let totalCost = 0;
         for (let i = 0; i <= currentUpgradeIndex; i++) {
-            let costOfUpgrade = parseFloat(stats.Cost[i] || 0);
+            let costOfUpgrade = unitData.upgrades[i].Cost || 0;
             if (i === 0 && isSeparateUnit) {
                 costOfUpgrade = 0;
             }
@@ -685,7 +753,7 @@ const calculatorApp = {
         }
 
         return {
-            finalDamage: finalDamage,
+            finalDamage: Math.round(finalDamage),
             finalSpa: Math.round(finalSpa * 100) / 100,
             finalRange: Math.round(finalRange * 10) / 10,
             unitDps: Math.round(unitDps * 100) / 100,
@@ -724,6 +792,7 @@ const calculatorApp = {
     },
 
     resetSelection() {
+        this.state.selectedUnit = null;
         this.state.activeOutputUnit = null;
         this.state.spawnedUnits = [];
         this.state.unitLevel = 1;
@@ -741,6 +810,8 @@ const calculatorApp = {
             michishiboLunarBlessingActive: false,
             tojiHeavenlyRestrictionStacks: 0,
         };
+        
+        document.querySelectorAll('.unit-card.selected').forEach(card => card.classList.remove('selected'));
         
         const levelSlider = this.elements.unitLevelControl.querySelector('#unitLevelSlider');
         if (levelSlider) levelSlider.value = 1;
@@ -763,7 +834,6 @@ const calculatorApp = {
         const buffDropdown = this.elements.onFieldBuffsControl.querySelector('#onFieldBuffsSelection');
         if (buffDropdown) buffDropdown.value = 'None';
         
-        // Re-render the app to reflect the cleared state
         this.render();
     },
 
@@ -853,7 +923,7 @@ const calculatorApp = {
         if (newlyAddedUnits && newlyAddedUnits.length > 0) {
             finalHTML += `<h3 class="rarity-header rarity-header--newly-added">New Units!</h3>`;
             const newUnitCardsHTML = newlyAddedUnits
-                .filter(unitName => characterData[unitName] && !banlist.includes(unitName)) // Check banlist here
+                .filter(unitName => characterData[unitName] && !banlist.includes(unitName))
                 .sort((a, b) => a.localeCompare(b))
                 .map(unitName => {
                     const unitData = characterData[unitName];
@@ -866,7 +936,7 @@ const calculatorApp = {
 
         const groupedUnits = {};
         for (const unitName in remainingUnits) {
-            if (banlist.includes(unitName)) continue; // Check banlist here
+            if (banlist.includes(unitName)) continue;
             const unit = remainingUnits[unitName];
             if (unit.IsSpawnedOnly) continue;
             const rarity = unit.Rarity || 'Uncategorized';

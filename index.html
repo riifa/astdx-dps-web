@@ -23,6 +23,7 @@
         <div class="popup-content">
             <h2>Disclaimer</h2>
             <p>This website is in testing. Information included may be inaccurate. Contact @riifa_ on Discord if issues arise.</p>
+            <p>AOE Visualizer is in early build. Not all units have a setting yet.</p>
             <button id="closeDisclaimerBtn">Okay</button>
         </div>
     </div>
@@ -33,7 +34,7 @@
     <main>
         <header class="app-header">
             <h1>ASTDX DPS Calculator</h1>
-            <p class="subtitle">Ver 3.1.1 - Update</p>
+            <p class="subtitle">Ver 3.2.0 - Update</p>
             <p class="subtitle">Made by: @riifa_ (@Tr4pC14p on Roblox)</p>
         </header>
 
@@ -49,14 +50,12 @@
 
                     <div class="unit-grid-container" id="unitGrid"></div>
 
-                    <!-- START: MODIFIED SECTION -->
                     <div class="selection-info-bar">
                         <div class="current-unit-display placeholder" id="currentUnitDisplay">
                             Select a unit by clicking its image.
                         </div>
                         <button id="resetSelectionBtn" class="reset-btn">Reset Stat Selection</button>
                     </div>
-                    <!-- END: MODIFIED SECTION -->
 
                     <div id="unitLevelControl" class="control-group"></div>
                     <div id="traitSelectionControl" class="control-group"></div>
@@ -96,9 +95,11 @@
             <section class="output-card">
                 <div id="outputTabsContainer"></div>
                 <div class="dps-output-section placeholder" id="dpsOutputSection"></div>
-                <!-- START: NEW SECTION FOR COMBINED DPS -->
                 <section id="combined-dps-section"></section>
-                <!-- END: NEW SECTION FOR COMBINED DPS -->
+                <div id="visualizer-container" class="hidden">
+                    <p>AOE Visualizer - NOT ALL UNITS HAVE THIS SETTING YET</p>
+                    <iframe id="aoeVisualizerFrame" src="unitVisualizer/test.html?embedded=true"></iframe>
+                </div>
                 <section id="special-controls"></section>
             </section>
         </div>

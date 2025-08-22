@@ -8,30 +8,18 @@ const characterData = {
         Image: './images/units/unbound_units/kokushiboU_icon.png',
         Element: "Purple",
         Rarity: "Unbound",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "420", "770", "1170", "4335", "5695", "6910", "11425", "13490", "15920"
-            ],
-            Range: [
-                "10", "10", "15", "30", "35", "40", "30", "30", "33"
-            ],
-            SPA: [
-                "3", "3", "3", "8", "8", "8", "8", "11", "11"
-            ],
-            AOE: [
-                "Full AOE", "Full AOE", "Full AOE", "Line (16)", "Line (16)", "Line (16)", "Cone (115)", "Cone (115)", "Cone (115)"
-            ],
-            Cost: [
-                "2000", "2500", "4150", "6785", "7450", "9525", "10800", "11400", "12390"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 420, "Range": 10, "SPA": 3, "AOE": { "type": "full aoe", "params": {} }, "Cost": 2000, "DoT": null },
+            { "Damage": 770, "Range": 10, "SPA": 3, "AOE": { "type": "full aoe", "params": {} }, "Cost": 2500, "DoT": null },
+            { "Damage": 1170, "Range": 15, "SPA": 3, "AOE": { "type": "full aoe", "params": {} }, "Cost": 4150, "DoT": null },
+            { "Damage": 4335, "Range": 30, "SPA": 8, "AOE": { "type": "line", "params": { "lineWidth": 16 } }, "Cost": 6785, "DoT": null },
+            { "Damage": 5695, "Range": 35, "SPA": 8, "AOE": { "type": "line", "params": { "lineWidth": 16 } }, "Cost": 7450, "DoT": null },
+            { "Damage": 6910, "Range": 40, "SPA": 8, "AOE": { "type": "line", "params": { "lineWidth": 16 } }, "Cost": 9525, "DoT": null },
+            { "Damage": 11425, "Range": 30, "SPA": 8, "AOE": { "type": "cone", "params": { "coneAngle": 115 } }, "Cost": 10800, "DoT": null },
+            { "Damage": 13490, "Range": 30, "SPA": 11, "AOE": { "type": "cone", "params": { "coneAngle": 115 } }, "Cost": 11400, "DoT": null },
+            { "Damage": 15920, "Range": 33, "SPA": 11, "AOE": { "type": "cone", "params": { "coneAngle": 115 } }, "Cost": 12390, "DoT": null }
+        ]
     },
     "Etri": {
         MaxCost: 62250,
@@ -40,30 +28,18 @@ const characterData = {
         Image: './images/units/unbound_units/esdeathU_icon.png',
         Element: "Blue",
         Rarity: "Unbound",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "1050", "1460", "1950", "2845", "3645", "4405", "6295", "7685", "9480"
-            ],
-            Range: [
-                "15", "16", "17", "20", "25", "30", "15", "20", "25"
-            ],
-            SPA: [
-                "5", "5", "5", "6", "6", "6", "7", "7", "7"
-            ],
-            AOE: [
-                "EAOE (7)", "EAOE (7)", "EAOE (7)", "EAOE (6)", "EAOE (6)", "EAOE (6)", "Line (4)", "Line (4)", "Line (4)"
-            ],
-            Cost: [
-                "2500", "3000", "3750", "4750", "5375", "5875", "7250", "10500", "16250"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 1050, "Range": 15, "SPA": 5, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 2500, "DoT": null },
+            { "Damage": 1460, "Range": 16, "SPA": 5, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 3000, "DoT": null },
+            { "Damage": 1950, "Range": 17, "SPA": 5, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 3750, "DoT": null },
+            { "Damage": 2845, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 4750, "DoT": null },
+            { "Damage": 3645, "Range": 25, "SPA": 6, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 5375, "DoT": null },
+            { "Damage": 4405, "Range": 30, "SPA": 6, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 5875, "DoT": null },
+            { "Damage": 6295, "Range": 15, "SPA": 7, "AOE": { "type": "line", "params": { "lineWidth": 4 } }, "Cost": 7250, "DoT": null },
+            { "Damage": 7685, "Range": 20, "SPA": 7, "AOE": { "type": "line", "params": { "lineWidth": 4 } }, "Cost": 10500, "DoT": null },
+            { "Damage": 9480, "Range": 25, "SPA": 7, "AOE": { "type": "line", "params": { "lineWidth": 4 } }, "Cost": 16250, "DoT": null }
+        ]
     },
     "Airren (Summoner)": {
         MaxCost: 52000,
@@ -72,68 +48,37 @@ const characterData = {
         Image: './images/units/5_star_units/eren5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
-        "Spawns": [
-        {
-            "unitName": "Airren (Titan)", 
-            "spawnAtUpgrade": 0,
-            "SeperateUnit": false,
-        }],
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "300", "750", "1400", "2500", "4000", "6000", "9250", "14000"
-            ],
-            Range: [
-                "13", "13", "13", "13", "13", "13", "13", "13"
-            ],
-            SPA: [
-                "45", "45", "45", "45", "45", "45", "45", "45"
-            ],
-            AOE: [
-                "Summoner", "Summoner", "Summoner", "Summoner", "Summoner", "Summoner", "Summoner", "Summoner"
-            ],
-            Cost: [
-                "1650", "2500", "4000", "6000", "7750", "8475", "10500", "11125"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        "Spawns": [{ "unitName": "Airren (Titan)", "spawnAtUpgrade": 0, "SeperateUnit": false }],
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 300, "Range": 13, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 1650, "DoT": null },
+            { "Damage": 750, "Range": 13, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 2500, "DoT": null },
+            { "Damage": 1400, "Range": 13, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 4000, "DoT": null },
+            { "Damage": 2500, "Range": 13, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 6000, "DoT": null },
+            { "Damage": 4000, "Range": 13, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 7750, "DoT": null },
+            { "Damage": 6000, "Range": 13, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 8475, "DoT": null },
+            { "Damage": 9250, "Range": 13, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 10500, "DoT": null },
+            { "Damage": 14000, "Range": 13, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 11125, "DoT": null }
+        ]
     },
     "Airren (Titan)": {
         MaxCost: 47900,
         PlacementCount: 4,
         MaxUpgrades: 7,
         Image: './images/units/5_star_units/eren5_icon.png',
-        Element: "Green", 
-        Rarity: "5 Star", 
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "355", "730", "1215", "1885", "1825", "2435", "3065", "3715"
-            ],
-            Range: [
-                "12", "13.5", "15", "22", "22", "22", "30", "30"
-            ],
-            SPA: [
-                "4", "4", "4", "7", "7", "7", "7", "7"
-            ],
-            AOE: [
-                "Full AOE", "Full AOE", "Full AOE", "EAOE (7)", "EAOE (7)", "EAOE (7)", "EAOE (7)", "EAOE (7)"
-            ],
-            Cost: [
-                "1650", "2500", "3500", "5500", "7650", "8400", "9200", "9500"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        Element: "Green",
+        Rarity: "5 Star",
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 355, "Range": 12, "SPA": 4, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1650, "DoT": null },
+            { "Damage": 730, "Range": 13.5, "SPA": 4, "AOE": { "type": "full aoe", "params": {} }, "Cost": 2500, "DoT": null },
+            { "Damage": 1215, "Range": 15, "SPA": 4, "AOE": { "type": "full aoe", "params": {} }, "Cost": 3500, "DoT": null },
+            { "Damage": 1885, "Range": 22, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 5500, "DoT": null },
+            { "Damage": 1825, "Range": 22, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 7650, "DoT": null },
+            { "Damage": 2435, "Range": 22, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 8400, "DoT": null },
+            { "Damage": 3065, "Range": 30, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 9200, "DoT": null },
+            { "Damage": 3715, "Range": 30, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 9500, "DoT": null }
+        ]
     },
     "Blackstache": {
         MaxCost: 31500,
@@ -142,30 +87,16 @@ const characterData = {
         Image: './images/units/5_star_units/blackbeard5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "360", "600", "1500", "2025", "2695", "2995", "4120"
-            ],
-            Range: [
-                "26", "27", "28", "29", "30", "30", "28"
-            ],
-            SPA: [
-                "6", "6", "10", "10", "10", "8", "8"
-            ],
-            AOE: [
-                "Line (9)", "Line (9)", "EAOE (7)", "EAOE (7)", "EAOE (7)", "Line (10)", "Line (10)"
-            ],
-            Cost: [
-                "1000", "1500", "2500", "3000", "3500", "5000", "15000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 360, "Range": 26, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 9 } }, "Cost": 1000, "DoT": null },
+            { "Damage": 600, "Range": 27, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 9 } }, "Cost": 1500, "DoT": null },
+            { "Damage": 1500, "Range": 28, "SPA": 10, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 2500, "DoT": null },
+            { "Damage": 2025, "Range": 29, "SPA": 10, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 3000, "DoT": null },
+            { "Damage": 2695, "Range": 30, "SPA": 10, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 3500, "DoT": null },
+            { "Damage": 2995, "Range": 30, "SPA": 8, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 5000, "DoT": null },
+            { "Damage": 4120, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 15000, "DoT": null }
+        ]
     },
     "Dark Wing": {
         MaxCost: 46730,
@@ -174,30 +105,16 @@ const characterData = {
         Image: './images/units/5_star_units/ulq5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "585", "875", "1285", "1495", "2525", "5315", "6540"
-            ],
-            Range: [
-                "20", "20", "20", "25", "25", "30", "30"
-            ],
-            SPA: [
-                "5", "5", "5", "6", "6", "7", "7"
-            ],
-            AOE: [
-                "EAOE (7)", "EAOE (7)", "EAOE (7)", "EAOE (8)", "EAOE (8)", "Line (8)", "Line (8)"
-            ],
-            Cost: [
-                "1350", "2225", "3150", "4400", "6925", "13000", "15680"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 585, "Range": 20, "SPA": 5, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 1350, "DoT": null },
+            { "Damage": 875, "Range": 20, "SPA": 5, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 2225, "DoT": null },
+            { "Damage": 1285, "Range": 20, "SPA": 5, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 3150, "DoT": null },
+            { "Damage": 1495, "Range": 25, "SPA": 6, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 4400, "DoT": null },
+            { "Damage": 2525, "Range": 25, "SPA": 6, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 6925, "DoT": null },
+            { "Damage": 5315, "Range": 30, "SPA": 7, "AOE": { "type": "line", "params": { "lineWidth": 8 } }, "Cost": 13000, "DoT": null },
+            { "Damage": 6540, "Range": 30, "SPA": 7, "AOE": { "type": "line", "params": { "lineWidth": 8 } }, "Cost": 15680, "DoT": null }
+        ]
     },
     "Explosion Artist": {
         MaxCost: 35000,
@@ -206,30 +123,16 @@ const characterData = {
         Image: './images/units/5_star_units/deidara5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid"
-        ],
-        Stats: {
-            Damage: [
-                "305", "515", "770", "1075", "3560", "4435", "5600"
-            ],
-            Range: [
-                "10", "10", "10", "10", "15", "15", "15"
-            ],
-            SPA: [
-                "2", "2", "2", "2", "5", "5", "5"
-            ],
-            AOE: [
-                "Patrol (10)", "Patrol (10)", "Patrol (10)", "Patrol (10)", "Patrol (15)", "Patrol (15)", "Patrol (15)"
-            ],
-            Cost: [
-                "1000", "1750", "2500", "3360", "7150", "8500", "10750"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid"],
+        "upgrades": [
+            { "Damage": 305, "Range": 10, "SPA": 2, "AOE": { "type": "patrol", "params": { "patrolRadius": 10 } }, "Cost": 1000, "DoT": null },
+            { "Damage": 515, "Range": 10, "SPA": 2, "AOE": { "type": "patrol", "params": { "patrolRadius": 10 } }, "Cost": 1750, "DoT": null },
+            { "Damage": 770, "Range": 10, "SPA": 2, "AOE": { "type": "patrol", "params": { "patrolRadius": 10 } }, "Cost": 2500, "DoT": null },
+            { "Damage": 1075, "Range": 10, "SPA": 2, "AOE": { "type": "patrol", "params": { "patrolRadius": 10 } }, "Cost": 3360, "DoT": null },
+            { "Damage": 3560, "Range": 15, "SPA": 5, "AOE": { "type": "patrol", "params": { "patrolRadius": 15 } }, "Cost": 7150, "DoT": null },
+            { "Damage": 4435, "Range": 15, "SPA": 5, "AOE": { "type": "patrol", "params": { "patrolRadius": 15 } }, "Cost": 8500, "DoT": null },
+            { "Damage": 5600, "Range": 15, "SPA": 5, "AOE": { "type": "patrol", "params": { "patrolRadius": 15 } }, "Cost": 10750, "DoT": null }
+        ]
     },
     "Ikki (Hollow)": {
         MaxCost: 47400,
@@ -238,30 +141,17 @@ const characterData = {
         Image: './images/units/5_star_units/ichigo5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "490", "1145", "2300", "3420", "4650", "6710", "8495", "10450"
-            ],
-            Range: [
-                "12", "12", "15", "22.5", "30", "30", "35", "35"
-            ],
-            SPA: [
-                "7", "7", "7", "8", "8", "9", "9", "9"
-            ],
-            AOE: [
-                "Full AOE", "Full AOE", "Line (8)", "Line (8)", "Line (8)", "Line (10)", "Line (10)", "Line (10)"
-            ],
-            Cost: [
-                "1800", "2250", "3500", "4550", "6300", "8800", "9250", "10950"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 490, "Range": 12, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1800, "DoT": null },
+            { "Damage": 1145, "Range": 12, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 2250, "DoT": null },
+            { "Damage": 2300, "Range": 15, "SPA": 7, "AOE": { "type": "line", "params": { "lineWidth": 8 } }, "Cost": 3500, "DoT": null },
+            { "Damage": 3420, "Range": 22.5, "SPA": 8, "AOE": { "type": "line", "params": { "lineWidth": 8 } }, "Cost": 4550, "DoT": null },
+            { "Damage": 4650, "Range": 30, "SPA": 8, "AOE": { "type": "line", "params": { "lineWidth": 8 } }, "Cost": 6300, "DoT": null },
+            { "Damage": 6710, "Range": 30, "SPA": 9, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 8800, "DoT": null },
+            { "Damage": 8495, "Range": 35, "SPA": 9, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 9250, "DoT": null },
+            { "Damage": 10450, "Range": 35, "SPA": 9, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 10950, "DoT": null }
+        ]
     },
     "Jin Sung": {
         MaxCost: 49750,
@@ -270,36 +160,18 @@ const characterData = {
         Image: './images/units/5_star_units/sjw5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
-        "Spawns": [
-        {
-            "unitName": "Blood Commander",
-            "spawnAtUpgrade": 5,
-            "SeperateUnit": true
-        }],
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "235", "470", "1215", "1600", "2515", "2925", "3510", "7200"
-            ],
-            Range: [
-                "12", "12", "19", "21", "28", "30", "30", "34"
-            ],
-            SPA: [
-                "2", "2", "2", "4", "5", "5", "5", "8"
-            ],
-            AOE: [
-                "Single", "Single", "EAOE (7)", "EAOE (7)", "Line (10)", "Line (10)", "Line (10)", "EAOE (10)"
-            ],
-            Cost: [
-                "1250", "1800", "3000", "4000", "6000", "13000", "7900", "12000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        "Spawns": [{ "unitName": "Blood Commander", "spawnAtUpgrade": 5, "SeperateUnit": true }],
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 235, "Range": 12, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 1250, "DoT": null },
+            { "Damage": 470, "Range": 12, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 1800, "DoT": null },
+            { "Damage": 1215, "Range": 19, "SPA": 2, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 3000, "DoT": null },
+            { "Damage": 1600, "Range": 21, "SPA": 4, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 4000, "DoT": null },
+            { "Damage": 2515, "Range": 28, "SPA": 5, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 6000, "DoT": null },
+            { "Damage": 2925, "Range": 30, "SPA": 5, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 13000, "DoT": null },
+            { "Damage": 3510, "Range": 30, "SPA": 5, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 7900, "DoT": null },
+            { "Damage": 7200, "Range": 34, "SPA": 8, "AOE": { "type": "circle", "params": { "circleRadius": 10 } }, "Cost": 12000, "DoT": null }
+        ]
     },
     "Blood Commander": {
         MaxCost: 34000,
@@ -308,30 +180,14 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "735", "900", "1145", "3365", "4485"
-            ],
-            Range: [
-                "25", "25", "25", "32", "32"
-            ],
-            SPA: [
-                "3.5", "3.5", "3.5", "8", "8"
-            ],
-            AOE: [
-                "Line (5)", "Line (5)", "Line (5)", "Line (10)", "Line (10)"
-            ],
-            Cost: [
-                "3500", "5500", "11000", "14000"
-            ],
-            DoT: [
-                "Bleed", "Bleed", "Bleed", "Bleed", "Bleed"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 735, "Range": 25, "SPA": 3.5, "AOE": { "type": "line", "params": { "lineWidth": 5 } }, "Cost": 0, "DoT": "Bleed" },
+            { "Damage": 900, "Range": 25, "SPA": 3.5, "AOE": { "type": "line", "params": { "lineWidth": 5 } }, "Cost": 3500, "DoT": "Bleed" },
+            { "Damage": 1145, "Range": 25, "SPA": 3.5, "AOE": { "type": "line", "params": { "lineWidth": 5 } }, "Cost": 5500, "DoT": "Bleed" },
+            { "Damage": 3365, "Range": 32, "SPA": 8, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 11000, "DoT": "Bleed" },
+            { "Damage": 4485, "Range": 32, "SPA": 8, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 14000, "DoT": "Bleed" }
+        ]
     },
     "King Kaoe": {
         MaxCost: 22500,
@@ -340,30 +196,15 @@ const characterData = {
         Image: './images/units/5_star_units/kingkai5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "4", "8", "12", "16", "20", "20"
-            ],
-            Range: [
-                "7", "7", "7", "7", "7", "7"
-            ],
-            SPA: [
-                "16", "16", "16", "16", "16", "16"
-            ],
-            AOE: [
-                "Full AOE", "Full AOE", "Full AOE", "Full AOE", "Full AOE", "Full AOE"
-            ],
-            Cost: [
-                "1000", "1000", "1000", "1000", "1000", "17500"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 4, "Range": 7, "SPA": 16, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 8, "Range": 7, "SPA": 16, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 12, "Range": 7, "SPA": 16, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 16, "Range": 7, "SPA": 16, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 20, "Range": 7, "SPA": 16, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 20, "Range": 7, "SPA": 16, "AOE": { "type": "full aoe", "params": {} }, "Cost": 17500, "DoT": null }
+        ]
     },
     "Kujo": {
         MaxCost: 33950,
@@ -372,30 +213,16 @@ const characterData = {
         Image: './images/units/5_star_units/ginjo5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "880", "1695", "2675", "3900", "5190", "4660", "5710"
-            ],
-            Range: [
-                "25", "25", "25", "25", "25", "15", "15"
-            ],
-            SPA: [
-                "7", "7", "7", "7", "7", "5", "5"
-            ],
-            AOE: [
-                "EAOE (6)", "EAOE (6)", "EAOE (6)", "EAOE (6)", "EAOE (6)", "Cone (115)", "Cone (115)"
-            ],
-            Cost: [
-                "900", "1500", "3100", "4700", "6200", "8750", "8800"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 880, "Range": 25, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 900, "DoT": null },
+            { "Damage": 1695, "Range": 25, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 1500, "DoT": null },
+            { "Damage": 2675, "Range": 25, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 3100, "DoT": null },
+            { "Damage": 3900, "Range": 25, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 4700, "DoT": null },
+            { "Damage": 5190, "Range": 25, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 6200, "DoT": null },
+            { "Damage": 4660, "Range": 15, "SPA": 5, "AOE": { "type": "cone", "params": { "coneAngle": 115 } }, "Cost": 8750, "DoT": null },
+            { "Damage": 5710, "Range": 15, "SPA": 5, "AOE": { "type": "cone", "params": { "coneAngle": 115 } }, "Cost": 8800, "DoT": null }
+        ]
     },
     "Mysterious X": {
         MaxCost: 45150,
@@ -404,30 +231,17 @@ const characterData = {
         Image: './images/units/5_star_units/gojo5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "325", "560", "615", "810", "1120", "3080", "4060", "5320"
-            ],
-            Range: [
-                "10", "14", "18", "22", "26", "30", "30", "30"
-            ],
-            SPA: [
-                "4", "4", "3", "3", "3", "6", "6", "6"
-            ],
-            AOE: [
-                "Full AOE", "Full AOE", "EAOE (8)", "EAOE (8)", "EAOE (8)", "Line (9)", "Line (9)", "Line (9)"
-            ],
-            Cost: [
-                "1500", "2000", "3000", "4100", "5600", "8700", "9000", "11250"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 325, "Range": 10, "SPA": 4, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1500, "DoT": null },
+            { "Damage": 560, "Range": 14, "SPA": 4, "AOE": { "type": "full aoe", "params": {} }, "Cost": 2000, "DoT": null },
+            { "Damage": 615, "Range": 18, "SPA": 3, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 3000, "DoT": null },
+            { "Damage": 810, "Range": 22, "SPA": 3, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 4100, "DoT": null },
+            { "Damage": 1120, "Range": 26, "SPA": 3, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 5600, "DoT": null },
+            { "Damage": 3080, "Range": 30, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 9 } }, "Cost": 8700, "DoT": null },
+            { "Damage": 4060, "Range": 30, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 9 } }, "Cost": 9000, "DoT": null },
+            { "Damage": 5320, "Range": 30, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 9 } }, "Cost": 11250, "DoT": null }
+        ]
     },
     "Nighty": {
         MaxCost: 47000,
@@ -436,30 +250,16 @@ const characterData = {
         Image: './images/units/5_star_units/sunny5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "175", "330", "515", "770", "3220", "4340", "6020"
-            ],
-            Range: [
-                "13", "13", "18", "18", "23", "23", "33"
-            ],
-            SPA: [
-                "2", "2", "2", "2", "6", "6", "6"
-            ],
-            AOE: [
-                "Cone (80)", "Cone (80)", "Cone (80)", "Cone (80)", "Line (20)", "Line (20)", "Line (20)"
-            ],
-            Cost: [
-                "1300", "2000", "3150", "4675", "8750", "10525", "16600"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 175, "Range": 13, "SPA": 2, "AOE": { "type": "cone", "params": { "coneAngle": 80 } }, "Cost": 1300, "DoT": null },
+            { "Damage": 330, "Range": 13, "SPA": 2, "AOE": { "type": "cone", "params": { "coneAngle": 80 } }, "Cost": 2000, "DoT": null },
+            { "Damage": 515, "Range": 18, "SPA": 2, "AOE": { "type": "cone", "params": { "coneAngle": 80 } }, "Cost": 3150, "DoT": null },
+            { "Damage": 770, "Range": 18, "SPA": 2, "AOE": { "type": "cone", "params": { "coneAngle": 80 } }, "Cost": 4675, "DoT": null },
+            { "Damage": 3220, "Range": 23, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 20 } }, "Cost": 8750, "DoT": null },
+            { "Damage": 4340, "Range": 23, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 20 } }, "Cost": 10525, "DoT": null },
+            { "Damage": 6020, "Range": 33, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 20 } }, "Cost": 16600, "DoT": null }
+        ]
     },
     "Onwin": {
         MaxCost: 26500,
@@ -468,30 +268,15 @@ const characterData = {
         Image: './images/units/5_star_units/erwin5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "120", "240", "20", "20", "20", "20"
-            ],
-            Range: [
-                "20", "30", "30", "30", "30", "30"
-            ],
-            SPA: [
-                "7", "7", "5", "5", "5", "5"
-            ],
-            AOE: [
-                "EAOE (8)", "EAOE (8)", "Full AOE", "Full AOE", "Full AOE", "Full AOE"
-            ],
-            Cost: [
-                "1100", "1100", "2800", "4000", "7500", "10000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 120, "Range": 20, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 1100, "DoT": null },
+            { "Damage": 240, "Range": 30, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 1100, "DoT": null },
+            { "Damage": 20, "Range": 30, "SPA": 5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 2800, "DoT": null },
+            { "Damage": 20, "Range": 30, "SPA": 5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 4000, "DoT": null },
+            { "Damage": 20, "Range": 30, "SPA": 5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 7500, "DoT": null },
+            { "Damage": 20, "Range": 30, "SPA": 5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 10000, "DoT": null }
+        ]
     },
     "Onwin (Summon)": {
         MaxCost: 26500,
@@ -500,30 +285,15 @@ const characterData = {
         Image: './images/units/5_star_units/erwin5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "120", "240", "750", "1750", "3250", "6000"
-            ],
-            Range: [
-                "20", "30", "30", "30", "30", "30"
-            ],
-            SPA: [
-                "7", "7", "45", "45", "45", "45"
-            ],
-            AOE: [
-                "EAOE (8)", "EAOE (8)", "Summoner", "Summoner", "Summoner", "Summoner"
-            ],
-            Cost: [
-                "1100", "1100", "2800", "4000", "7500", "10000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 120, "Range": 20, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 1100, "DoT": null },
+            { "Damage": 240, "Range": 30, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 1100, "DoT": null },
+            { "Damage": 750, "Range": 30, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 2800, "DoT": null },
+            { "Damage": 1750, "Range": 30, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 4000, "DoT": null },
+            { "Damage": 3250, "Range": 30, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 7500, "DoT": null },
+            { "Damage": 6000, "Range": 30, "SPA": 45, "AOE": { "type": "summoner", "params": {} }, "Cost": 10000, "DoT": null }
+        ]
     },
     "Slayer Mage": {
         MaxCost: 53000,
@@ -532,30 +302,17 @@ const characterData = {
         Image: './images/units/5_star_units/frieren5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "945", "1090", "2910", "4165", "5475", "6875", "8295", "10190"
-            ],
-            Range: [
-                "25", "25", "31", "31", "31", "31", "38", "38"
-            ],
-            SPA: [
-                "7.8", "7.8", "7.8", "7.8", "7.8", "7.8", "7.8", "7.8"
-            ],
-            AOE: [
-                "EAOE (5)", "EAOE (5)", "EAOE (5)", "EAOE (5)", "EAOE (5)", "EAOE (5)", "EAOE (15)", "EAOE (15)"
-            ],
-            Cost: [
-                "1450", "2800", "3500", "5550", "6700", "8000", "10300", "14700"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 945, "Range": 25, "SPA": 7.8, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 1450, "DoT": null },
+            { "Damage": 1090, "Range": 25, "SPA": 7.8, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 2800, "DoT": null },
+            { "Damage": 2910, "Range": 31, "SPA": 7.8, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 3500, "DoT": null },
+            { "Damage": 4165, "Range": 31, "SPA": 7.8, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 5550, "DoT": null },
+            { "Damage": 5475, "Range": 31, "SPA": 7.8, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 6700, "DoT": null },
+            { "Damage": 6875, "Range": 31, "SPA": 7.8, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 8000, "DoT": null },
+            { "Damage": 8295, "Range": 38, "SPA": 7.8, "AOE": { "type": "circle", "params": { "circleRadius": 15 } }, "Cost": 10300, "DoT": null },
+            { "Damage": 10190, "Range": 38, "SPA": 7.8, "AOE": { "type": "circle", "params": { "circleRadius": 15 } }, "Cost": 14700, "DoT": null }
+        ]
     },
     "Super Borul": {
         MaxCost: 57500,
@@ -564,30 +321,17 @@ const characterData = {
         Image: './images/units/5_star_units/broly5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "585", "1120", "1400", "1960", "2615", "3410", "6305", "6655"
-            ],
-            Range: [
-                "25", "25", "25", "28", "28", "28", "36", "36"
-            ],
-            SPA: [
-                "5", "5", "5", "4", "4", "4", "6", "6"
-            ],
-            AOE: [
-                "EAOE (5)", "EAOE (5)", "EAOE (7)", "EAOE (7)", "EAOE (7)", "EAOE (7)", "EAOE (10)", "EAOE (10)"
-            ],
-            Cost: [
-                "1100", "2600", "4100", "6000", "7650", "9850", "12350", "13850"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 585, "Range": 25, "SPA": 5, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 1100, "DoT": null },
+            { "Damage": 1120, "Range": 25, "SPA": 5, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 2600, "DoT": null },
+            { "Damage": 1400, "Range": 25, "SPA": 5, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 4100, "DoT": null },
+            { "Damage": 1960, "Range": 28, "SPA": 4, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 6000, "DoT": null },
+            { "Damage": 2615, "Range": 28, "SPA": 4, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 7650, "DoT": null },
+            { "Damage": 3410, "Range": 28, "SPA": 4, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 9850, "DoT": null },
+            { "Damage": 6305, "Range": 36, "SPA": 6, "AOE": { "type": "circle", "params": { "circleRadius": 10 } }, "Cost": 12350, "DoT": null },
+            { "Damage": 6655, "Range": 36, "SPA": 6, "AOE": { "type": "circle", "params": { "circleRadius": 10 } }, "Cost": 13850, "DoT": null }
+        ]
     },
     "Super God Koku": {
         MaxCost: 39250,
@@ -596,30 +340,16 @@ const characterData = {
         Image: './images/units/5_star_units/goku5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "310", "490", "700", "725", "1005", "1310", "5135"
-            ],
-            Range: [
-                "24", "27", "30", "35", "37.5", "40", "40"
-            ],
-            SPA: [
-                "3", "3", "3", "3", "2", "2", "5"
-            ],
-            AOE: [
-                "Single", "Single", "Single", "EAOE (5)", "EAOE (5)", "EAOE (5)", "Line (7)"
-            ],
-            Cost: [
-                "750", "1500", "2400", "3000", "5500", "8250", "17850"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 310, "Range": 24, "SPA": 3, "AOE": { "type": "single", "params": {} }, "Cost": 750, "DoT": null },
+            { "Damage": 490, "Range": 27, "SPA": 3, "AOE": { "type": "single", "params": {} }, "Cost": 1500, "DoT": null },
+            { "Damage": 700, "Range": 30, "SPA": 3, "AOE": { "type": "single", "params": {} }, "Cost": 2400, "DoT": null },
+            { "Damage": 725, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 3000, "DoT": null },
+            { "Damage": 1005, "Range": 37.5, "SPA": 2, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 5500, "DoT": null },
+            { "Damage": 1310, "Range": 40, "SPA": 2, "AOE": { "type": "circle", "params": { "circleRadius": 5 } }, "Cost": 8250, "DoT": null },
+            { "Damage": 5135, "Range": 40, "SPA": 5, "AOE": { "type": "line", "params": { "lineWidth": 7 } }, "Cost": 17850, "DoT": null }
+        ]
     },
     "The Strongest One": {
         MaxCost: 40325,
@@ -628,30 +358,16 @@ const characterData = {
         Image: './images/units/5_star_units/sukuna5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "785", "1385", "1865", "2600", "3415", "4295", "6910"
-            ],
-            Range: [
-                "25", "26", "27", "28", "30", "30", "40"
-            ],
-            SPA: [
-                "8", "8", "7", "7", "7", "7", "9"
-            ],
-            AOE: [
-                "EAOE (7)", "EAOE (7)", "EAOE (8)", "EAOE (8)", "EAOE (8)", "EAOE (8)", "EAOE (9)"
-            ],
-            Cost: [
-                "1750", "2250", "3675", "5700", "7500", "8450", "11000"
-            ],
-            DoT: [
-                "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Burn"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 785, "Range": 25, "SPA": 8, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 1750, "DoT": "Bleed" },
+            { "Damage": 1385, "Range": 26, "SPA": 8, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 2250, "DoT": "Bleed" },
+            { "Damage": 1865, "Range": 27, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 3675, "DoT": "Bleed" },
+            { "Damage": 2600, "Range": 28, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 5700, "DoT": "Bleed" },
+            { "Damage": 3415, "Range": 30, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 7500, "DoT": "Bleed" },
+            { "Damage": 4295, "Range": 30, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 8450, "DoT": "Bleed" },
+            { "Damage": 6910, "Range": 40, "SPA": 9, "AOE": { "type": "circle", "params": { "circleRadius": 9 } }, "Cost": 11000, "DoT": "Burn" }
+        ]
     },
     "Venus": {
         MaxCost: 72500,
@@ -660,30 +376,17 @@ const characterData = {
         Image: './images/units/5_star_units/ishtar5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "235", "440", "705", "1015", "1350", "6835", "9145", "11770"
-            ],
-            Range: [
-                "20", "20", "22.5", "22.5", "25", "25", "25", "25"
-            ],
-            SPA: [
-                "2.5", "2.5", "2.5", "2.5", "2.5", "9", "9", "9"
-            ],
-            AOE: [
-                "EAOE (2)", "EAOE (2)", "EAOE (2)", "EAOE (2)", "EAOE (2)", "EAOE (12)", "EAOE (12)", "EAOE (12)"
-            ],
-            Cost: [
-                "1400", "1800", "2450", "3900", "5450", "27500", "14000", "16000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 235, "Range": 20, "SPA": 2.5, "AOE": { "type": "circle", "params": { "circleRadius": 2 } }, "Cost": 1400, "DoT": null },
+            { "Damage": 440, "Range": 20, "SPA": 2.5, "AOE": { "type": "circle", "params": { "circleRadius": 2 } }, "Cost": 1800, "DoT": null },
+            { "Damage": 705, "Range": 22.5, "SPA": 2.5, "AOE": { "type": "circle", "params": { "circleRadius": 2 } }, "Cost": 2450, "DoT": null },
+            { "Damage": 1015, "Range": 22.5, "SPA": 2.5, "AOE": { "type": "circle", "params": { "circleRadius": 2 } }, "Cost": 3900, "DoT": null },
+            { "Damage": 1350, "Range": 25, "SPA": 2.5, "AOE": { "type": "circle", "params": { "circleRadius": 2 } }, "Cost": 5450, "DoT": null },
+            { "Damage": 6835, "Range": 25, "SPA": 9, "AOE": { "type": "circle", "params": { "circleRadius": 12 } }, "Cost": 27500, "DoT": null },
+            { "Damage": 9145, "Range": 25, "SPA": 9, "AOE": { "type": "circle", "params": { "circleRadius": 12 } }, "Cost": 14000, "DoT": null },
+            { "Damage": 11770, "Range": 25, "SPA": 9, "AOE": { "type": "circle", "params": { "circleRadius": 12 } }, "Cost": 16000, "DoT": null }
+        ]
     },
     "Water Goddess": {
         MaxCost: 52500,
@@ -692,30 +395,17 @@ const characterData = {
         Image: './images/units/5_star_units/aqua5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "730", "1120", "1820", "2605", "3445", "4480", "5740", "7420"
-            ],
-            Range: [
-                "15", "15", "15", "20", "20", "20", "32", "32"
-            ],
-            SPA: [
-                "6", "6", "6", "6", "6", "7", "7", "7"
-            ],
-            AOE: [
-                "EAOE (6)", "EAOE (6)", "Line (10)", "Line (10)", "Line (10)", "EAOE (8)", "EAOE (8)", "EAOE (8)"
-            ],
-            Cost: [
-                "1200", "2000", "3400", "4600", "6700", "9500", "12000", "13100"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 730, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 1200, "DoT": null },
+            { "Damage": 1120, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 2000, "DoT": null },
+            { "Damage": 1820, "Range": 15, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 3400, "DoT": null },
+            { "Damage": 2605, "Range": 20, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 4600, "DoT": null },
+            { "Damage": 3445, "Range": 20, "SPA": 6, "AOE": { "type": "line", "params": { "lineWidth": 10 } }, "Cost": 6700, "DoT": null },
+            { "Damage": 4480, "Range": 20, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 9500, "DoT": null },
+            { "Damage": 5740, "Range": 32, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 12000, "DoT": null },
+            { "Damage": 7420, "Range": 32, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 13100, "DoT": null }
+        ]
     },
     "Whitestache": {
         MaxCost: 45000,
@@ -724,30 +414,17 @@ const characterData = {
         Image: './images/units/5_star_units/whitebeard5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "350", "735", "1635", "2370", "3155", "3970", "6240", "7500"
-            ],
-            Range: [
-                "12", "15", "18", "22", "26", "30", "25", "25"
-            ],
-            SPA: [
-                "5", "5", "8", "8", "8", "8", "9", "9"
-            ],
-            AOE: [
-                "Line (5)", "Line (5)", "EAOE (8)", "EAOE (8)", "EAOE (8)", "EAOE (8)", "Full AOE", "Full AOE"
-            ],
-            Cost: [
-                "950", "1950", "2600", "3150", "3800", "4700", "12850", "15000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 350, "Range": 12, "SPA": 5, "AOE": { "type": "line", "params": { "lineWidth": 5 } }, "Cost": 950, "DoT": null },
+            { "Damage": 735, "Range": 15, "SPA": 5, "AOE": { "type": "line", "params": { "lineWidth": 5 } }, "Cost": 1950, "DoT": null },
+            { "Damage": 1635, "Range": 18, "SPA": 8, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 2600, "DoT": null },
+            { "Damage": 2370, "Range": 22, "SPA": 8, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 3150, "DoT": null },
+            { "Damage": 3155, "Range": 26, "SPA": 8, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 3800, "DoT": null },
+            { "Damage": 3970, "Range": 30, "SPA": 8, "AOE": { "type": "circle", "params": { "circleRadius": 8 } }, "Cost": 4700, "DoT": null },
+            { "Damage": 6240, "Range": 25, "SPA": 9, "AOE": { "type": "full aoe", "params": {} }, "Cost": 12850, "DoT": null },
+            { "Damage": 7500, "Range": 25, "SPA": 9, "AOE": { "type": "full aoe", "params": {} }, "Cost": 15000, "DoT": null }
+        ]
     },
     "Xero": {
         MaxCost: 5000,
@@ -756,30 +433,14 @@ const characterData = {
         Image: './images/units/5_star_units/lelouche5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "3.71", "7.44", "11.17", "14.9", "18.67"
-            ],
-            Range: [
-                "16", "16", "16", "16", "16"
-            ],
-            SPA: [
-                "7", "7", "7", "7", "7"
-            ],
-            AOE: [
-                "Full AOE", "Full AOE", "Full AOE", "Full AOE", "Full AOE"
-            ],
-            Cost: [
-                "1000", "1000", "1000", "1000", "1000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 3.71, "Range": 16, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 7.44, "Range": 16, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 11.17, "Range": 16, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 14.9, "Range": 16, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 18.67, "Range": 16, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1000, "DoT": null }
+        ]
     },
     "Xerxes": {
         MaxCost: 45000,
@@ -788,30 +449,16 @@ const characterData = {
         Image: './images/units/5_star_units/edward5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "860", "1805", "2445", "2880", "3410", "4275", "5225"
-            ],
-            Range: [
-                "15", "15", "15", "15", "15", "15", "15"
-            ],
-            SPA: [
-                "7.5", "7.5", "6.5", "6.5", "5.5", "5", "5"
-            ],
-            AOE: [
-                "Trap (3)", "Trap (3)", "Trap (3)", "Trap (3)", "Trap (5)", "Trap (5)", "Trap (5)"
-            ],
-            Cost: [
-                "1000", "1500", "3000", "5000", "9500", "11000", "14000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 860, "Range": 15, "SPA": 7.5, "AOE": { "type": "trap", "params": { "trapCount": 3 } }, "Cost": 1000, "DoT": null },
+            { "Damage": 1805, "Range": 15, "SPA": 7.5, "AOE": { "type": "trap", "params": { "trapCount": 3 } }, "Cost": 1500, "DoT": null },
+            { "Damage": 2445, "Range": 15, "SPA": 6.5, "AOE": { "type": "trap", "params": { "trapCount": 3 } }, "Cost": 3000, "DoT": null },
+            { "Damage": 2880, "Range": 15, "SPA": 6.5, "AOE": { "type": "trap", "params": { "trapCount": 3 } }, "Cost": 5000, "DoT": null },
+            { "Damage": 3410, "Range": 15, "SPA": 5.5, "AOE": { "type": "trap", "params": { "trapCount": 5 } }, "Cost": 9500, "DoT": null },
+            { "Damage": 4275, "Range": 15, "SPA": 5, "AOE": { "type": "trap", "params": { "trapCount": 5 } }, "Cost": 11000, "DoT": null },
+            { "Damage": 5225, "Range": 15, "SPA": 5, "AOE": { "type": "trap", "params": { "trapCount": 5 } }, "Cost": 14000, "DoT": null }
+        ]
     },
     "Yuni": {
         MaxCost: 21500,
@@ -820,30 +467,14 @@ const characterData = {
         Image: './images/units/5_star_units/yuno5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "305", "430", "615", "745", "315"
-            ],
-            Range: [
-                "4.75", "5", "5.25", "5.75", "6"
-            ],
-            SPA: [
-                "2", "1.75", "1.5", "1", "0.25"
-            ],
-            AOE: [
-                "Single", "Single", "Single", "Single", "Single"
-            ],
-            Cost: [
-                "1250", "2000", "2500", "5000", "10750"
-            ],
-            DoT: [
-                "Bleed", "Bleed", "Bleed", "Bleed", "Bleed"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 305, "Range": 4.75, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 1250, "DoT": "Bleed" },
+            { "Damage": 430, "Range": 5, "SPA": 1.75, "AOE": { "type": "single", "params": {} }, "Cost": 2000, "DoT": "Bleed" },
+            { "Damage": 615, "Range": 5.25, "SPA": 1.5, "AOE": { "type": "single", "params": {} }, "Cost": 2500, "DoT": "Bleed" },
+            { "Damage": 745, "Range": 5.75, "SPA": 1, "AOE": { "type": "single", "params": {} }, "Cost": 5000, "DoT": "Bleed" },
+            { "Damage": 315, "Range": 6, "SPA": 0.25, "AOE": { "type": "single", "params": {} }, "Cost": 10750, "DoT": "Bleed" }
+        ]
     },
     "Zaruto (Beast Cloak)": {
         MaxCost: 37400,
@@ -852,30 +483,16 @@ const characterData = {
         Image: './images/units/5_star_units/naruto5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "375", "645", "1700", "2470", "3320", "2690", "3500"
-            ],
-            Range: [
-                "15", "17", "17", "20", "24", "29", "33"
-            ],
-            SPA: [
-                "4", "4", "7", "7", "7", "4", "4"
-            ],
-            AOE: [
-                "Line (3)", "Line (3)", "EAOE (7)", "EAOE (7)", "EAOE (7)", "EAOE (6)", "EAOE (6)"
-            ],
-            Cost: [
-                "1250", "2575", "3700", "4800", "6225", "8250", "10600"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 375, "Range": 15, "SPA": 4, "AOE": { "type": "line", "params": { "lineWidth": 3 } }, "Cost": 1250, "DoT": null },
+            { "Damage": 645, "Range": 17, "SPA": 4, "AOE": { "type": "line", "params": { "lineWidth": 3 } }, "Cost": 2575, "DoT": null },
+            { "Damage": 1700, "Range": 17, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 3700, "DoT": null },
+            { "Damage": 2470, "Range": 20, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 4800, "DoT": null },
+            { "Damage": 3320, "Range": 24, "SPA": 7, "AOE": { "type": "circle", "params": { "circleRadius": 7 } }, "Cost": 6225, "DoT": null },
+            { "Damage": 2690, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 8250, "DoT": null },
+            { "Damage": 3500, "Range": 33, "SPA": 4, "AOE": { "type": "circle", "params": { "circleRadius": 6 } }, "Cost": 10600, "DoT": null }
+        ]
     },
     "Zorro": {
         MaxCost: 36750,
@@ -884,30 +501,16 @@ const characterData = {
         Image: './images/units/5_star_units/mihawk5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "900", "1405", "1515", "2155", "3030", "2445", "3215"
-            ],
-            Range: [
-                "25", "25", "25", "30", "35", "40", "50"
-            ],
-            SPA: [
-                "7", "7", "5", "5", "5", "3", "3"
-            ],
-            AOE: [
-                "Line (11)", "Line (11)", "Line (11)", "Line (11)", "Line (11)", "Line (2)", "Line (2)"
-            ],
-            Cost: [
-                "1750", "2250", "3500", "4350", "5950", "8600", "10350"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 900, "Range": 25, "SPA": 7, "AOE": { "type": "line", "params": { "lineWidth": 11 } }, "Cost": 1750, "DoT": null },
+            { "Damage": 1405, "Range": 25, "SPA": 7, "AOE": { "type": "line", "params": { "lineWidth": 11 } }, "Cost": 2250, "DoT": null },
+            { "Damage": 1515, "Range": 25, "SPA": 5, "AOE": { "type": "line", "params": { "lineWidth": 11 } }, "Cost": 3500, "DoT": null },
+            { "Damage": 2155, "Range": 30, "SPA": 5, "AOE": { "type": "line", "params": { "lineWidth": 11 } }, "Cost": 4350, "DoT": null },
+            { "Damage": 3030, "Range": 35, "SPA": 5, "AOE": { "type": "line", "params": { "lineWidth": 11 } }, "Cost": 5950, "DoT": null },
+            { "Damage": 2445, "Range": 40, "SPA": 3, "AOE": { "type": "line", "params": { "lineWidth": 2 } }, "Cost": 8600, "DoT": null },
+            { "Damage": 3215, "Range": 50, "SPA": 3, "AOE": { "type": "line", "params": { "lineWidth": 2 } }, "Cost": 10350, "DoT": null }
+        ]
     },
     "Magma Marine": {
         MaxCost: 66400,
@@ -916,30 +519,18 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Red",
         Rarity: "Unbound",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "266","557","873","3352","4456","5600","4328","5206","5403"
-            ],
-            Range: [
-                "15", "15", "15", "28", "28", "30", "30", "30", "30"
-            ],
-            SPA: [
-                "3", "3", "3", "8", "8", "8", "5", "5", "5"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "1200", "1600", "2400", "2400", "3800", "7000", "9000", "14000", "25000"
-            ],
-            DoT: [
-                "Burn", "Burn", "Burn", "Burn", "Burn", "Burn", "Burn", "Burn", "Burn"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 266, "Range": 15, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1200, "DoT": "Burn" },
+            { "Damage": 557, "Range": 15, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1600, "DoT": "Burn" },
+            { "Damage": 873, "Range": 15, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": "Burn" },
+            { "Damage": 3352, "Range": 28, "SPA": 8, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": "Burn" },
+            { "Damage": 4456, "Range": 28, "SPA": 8, "AOE": { "type": "circle", "params": {} }, "Cost": 3800, "DoT": "Burn" },
+            { "Damage": 5600, "Range": 30, "SPA": 8, "AOE": { "type": "circle", "params": {} }, "Cost": 7000, "DoT": "Burn" },
+            { "Damage": 4328, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 9000, "DoT": "Burn" },
+            { "Damage": 5206, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": "Burn" },
+            { "Damage": 5403, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 25000, "DoT": "Burn" }
+        ]
     },
     "Spider Boss": {
         MaxCost: 70000,
@@ -948,30 +539,18 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Green",
         Rarity: "Unbound",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "177","937","1410","1932","2514","3204","5028","7118","10150"
-            ],
-            Range: [
-                "15", "20", "20", "20", "25", "30", "35", "35", "35"
-            ],
-            SPA: [
-                "2", "6", "6", "6", "6", "6", "7", "7", "7"
-            ],
-            AOE: [
-                "Single", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "Line", "Line", "Line"
-            ],
-            Cost: [
-                "800", "1500", "1900", "2800", "4500", "6500", "10000", "15000", "27000"
-            ],
-            DoT: [
-                "Poison", "Poison", "Poison", "Poison", "Poison", "Poison", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 177, "Range": 15, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 800, "DoT": "Poison" },
+            { "Damage": 937, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 1500, "DoT": "Poison" },
+            { "Damage": 1410, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 1900, "DoT": "Poison" },
+            { "Damage": 1932, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 2800, "DoT": "Poison" },
+            { "Damage": 2514, "Range": 25, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 4500, "DoT": "Poison" },
+            { "Damage": 3204, "Range": 30, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 6500, "DoT": "Poison" },
+            { "Damage": 5028, "Range": 35, "SPA": 7, "AOE": { "type": "line", "params": {} }, "Cost": 10000, "DoT": null },
+            { "Damage": 7118, "Range": 35, "SPA": 7, "AOE": { "type": "line", "params": {} }, "Cost": 15000, "DoT": null },
+            { "Damage": 10150, "Range": 35, "SPA": 7, "AOE": { "type": "line", "params": {} }, "Cost": 27000, "DoT": null }
+        ]
     },
     "Alligator": {
         MaxCost: 61000,
@@ -980,30 +559,17 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Orange",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "463","877","1326","5102","7035","9006","6906","8518"
-            ],
-            Range: [
-                "25", "25", "25", "28", "28", "28", "30", "30"
-            ],
-            SPA: [
-                "3", "3", "3", "8", "8", "8", "5", "5"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "Line", "Line", "Line", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "1500", "2000", "2350", "5750", "7000", "8400", "15000", "19000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 463, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1500, "DoT": null },
+            { "Damage": 877, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2000, "DoT": null },
+            { "Damage": 1326, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2350, "DoT": null },
+            { "Damage": 5102, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": {} }, "Cost": 5750, "DoT": null },
+            { "Damage": 7035, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": {} }, "Cost": 7000, "DoT": null },
+            { "Damage": 9006, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": {} }, "Cost": 8400, "DoT": null },
+            { "Damage": 6906, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 15000, "DoT": null },
+            { "Damage": 8518, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 19000, "DoT": null }
+        ]
     },
     "Killer (Serious)": {
         MaxCost: 42500,
@@ -1012,30 +578,17 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Purple",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "140","315","525","2235","2925","3650","3935","4085"
-            ],
-            Range: [
-                "25", "25", "25", "28", "28", "28", "30", "30"
-            ],
-            SPA: [
-                "1.5", "1.5", "1.5", "4.5", "4.5", "4.5", "4", "4"
-            ],
-            AOE: [
-                "Single", "Single", "Single", "EAOE", "EAOE", "EAOE", "Full AOE", "Full AOE"
-            ],
-            Cost: [
-                "700", "950", "1250", "1600", "5000", "8000", "11000", "14000"
-            ],
-            DoT: [
-                "Shock", "Shock", "Shock", "Shock", "Shock", "Shock", "Shock", "Shock"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 140, "Range": 25, "SPA": 1.5, "AOE": { "type": "single", "params": {} }, "Cost": 700, "DoT": "Shock" },
+            { "Damage": 315, "Range": 25, "SPA": 1.5, "AOE": { "type": "single", "params": {} }, "Cost": 950, "DoT": "Shock" },
+            { "Damage": 525, "Range": 25, "SPA": 1.5, "AOE": { "type": "single", "params": {} }, "Cost": 1250, "DoT": "Shock" },
+            { "Damage": 2235, "Range": 28, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1600, "DoT": "Shock" },
+            { "Damage": 2925, "Range": 28, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 5000, "DoT": "Shock" },
+            { "Damage": 3650, "Range": 28, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 8000, "DoT": "Shock" },
+            { "Damage": 3935, "Range": 30, "SPA": 4, "AOE": { "type": "full aoe", "params": {} }, "Cost": 11000, "DoT": "Shock" },
+            { "Damage": 4085, "Range": 30, "SPA": 4, "AOE": { "type": "full aoe", "params": {} }, "Cost": 14000, "DoT": "Shock" }
+        ]
     },
     "Mercury Guardian": {
         MaxCost: 34000,
@@ -1044,30 +597,16 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Blue",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "725","1287","2011","2761","2977","5245","4511"
-            ],
-            Range: [
-                "12", "12", "12", "15", "15", "15", "15"
-            ],
-            SPA: [
-                "7", "7", "6", "6", "6", "6", "6"
-            ],
-            AOE: [
-                "Full AOE", "Full AOE", "Full AOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "1600", "1800", "2375", "3600", "5150", "7250", "12225"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 725, "Range": 12, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1600, "DoT": null },
+            { "Damage": 1287, "Range": 12, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1800, "DoT": null },
+            { "Damage": 2011, "Range": 12, "SPA": 6, "AOE": { "type": "full aoe", "params": {} }, "Cost": 2375, "DoT": null },
+            { "Damage": 2761, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 3600, "DoT": null },
+            { "Damage": 2977, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 5150, "DoT": null },
+            { "Damage": 5245, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 7250, "DoT": null },
+            { "Damage": 4511, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 12225, "DoT": null }
+        ]
     },
     "Shark Ninja": {
         MaxCost: 39700,
@@ -1076,30 +615,17 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Blue",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "276","414","646","1380","1863","2415","5063","6443"
-            ],
-            Range: [
-                "10", "10", "10", "20", "20", "20", "22", "22"
-            ],
-            SPA: [
-                "2", "2", "3", "3", "3", "5", "5", "5"
-            ],
-            AOE: [
-                "Single", "Single", "Single", "EAOE", "EAOE", "EAOE", "Cone", "Cone"
-            ],
-            Cost: [
-                "950", "1250", "1750", "2500", "3250", "5000", "10000", "15000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 276, "Range": 10, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 950, "DoT": null },
+            { "Damage": 414, "Range": 10, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 1250, "DoT": null },
+            { "Damage": 646, "Range": 10, "SPA": 3, "AOE": { "type": "single", "params": {} }, "Cost": 1750, "DoT": null },
+            { "Damage": 1380, "Range": 20, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2500, "DoT": null },
+            { "Damage": 1863, "Range": 20, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 3250, "DoT": null },
+            { "Damage": 2415, "Range": 20, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 5000, "DoT": null },
+            { "Damage": 5063, "Range": 22, "SPA": 5, "AOE": { "type": "cone", "params": {} }, "Cost": 10000, "DoT": null },
+            { "Damage": 6443, "Range": 22, "SPA": 5, "AOE": { "type": "cone", "params": {} }, "Cost": 15000, "DoT": null }
+        ]
     },
     "Silent Swordsman": {
         MaxCost: 50000,
@@ -1108,30 +634,16 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Blue",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "414","863","1346","4432","5832","7345","11806"
-            ],
-            Range: [
-                "20", "22", "25", "28", "29", "30", "35"
-            ],
-            SPA: [
-                "3", "3", "3", "7", "7", "7", "9"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "Line"
-            ],
-            Cost: [
-                "900", "1000", "1600", "3500", "9000", "14000", "20000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 414, "Range": 20, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 900, "DoT": null },
+            { "Damage": 863, "Range": 22, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 1346, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1600, "DoT": null },
+            { "Damage": 4432, "Range": 28, "SPA": 7, "AOE": { "type": "circle", "params": {} }, "Cost": 3500, "DoT": null },
+            { "Damage": 5832, "Range": 29, "SPA": 7, "AOE": { "type": "circle", "params": {} }, "Cost": 9000, "DoT": null },
+            { "Damage": 7345, "Range": 30, "SPA": 7, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": null },
+            { "Damage": 11806, "Range": 35, "SPA": 9, "AOE": { "type": "line", "params": {} }, "Cost": 20000, "DoT": null }
+        ]
     },
     "Spade": {
         MaxCost: 44100,
@@ -1140,30 +652,17 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "330","532","828","1494","2125","2815","3564","2623"
-            ],
-            Range: [
-                "20", "23", "26", "30", "32", "34", "36", "40"
-            ],
-            SPA: [
-                "4", "4", "4", "5", "5", "5", "5", "3"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "875", "1575", "2100", "3400", "5150", "7875", "9500", "13625"
-            ],
-            DoT: [
-                "Burn", "Burn", "Burn", "Burn", "Burn", "Burn", "Burn", "Burn"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 330, "Range": 20, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 875, "DoT": "Burn" },
+            { "Damage": 532, "Range": 23, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 1575, "DoT": "Burn" },
+            { "Damage": 828, "Range": 26, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 2100, "DoT": "Burn" },
+            { "Damage": 1494, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 3400, "DoT": "Burn" },
+            { "Damage": 2125, "Range": 32, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 5150, "DoT": "Burn" },
+            { "Damage": 2815, "Range": 34, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 7875, "DoT": "Burn" },
+            { "Damage": 3564, "Range": 36, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 9500, "DoT": "Burn" },
+            { "Damage": 2623, "Range": 40, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 13625, "DoT": "Burn" }
+        ]
     },
     "Ziek (Beast Giant)": {
         MaxCost: 58500,
@@ -1172,30 +671,17 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Blue",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid"
-        ],
-        Stats: {
-            Damage: [
-                "645","1345","2100","2910","3806","9546","12886","16941"
-            ],
-            Range: [
-                "14", "14", "14", "14", "14", "19", "19", "19"
-            ],
-            SPA: [
-                "6", "6", "6", "6", "6", "12", "12", "12"
-            ],
-            AOE: [
-                "Ring EAOE", "Ring EAOE", "Ring EAOE", "Ring EAOE", "Ring EAOE", "Ring Cone", "Ring Cone", "Ring Cone"
-            ],
-            Cost: [
-                "900", "1300", "2100", "3700", "6500", "10000", "15000", "19000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid"],
+        "upgrades": [
+            { "Damage": 645, "Range": 14, "SPA": 6, "AOE": { "type": "ring circle", "params": {} }, "Cost": 900, "DoT": null },
+            { "Damage": 1345, "Range": 14, "SPA": 6, "AOE": { "type": "ring circle", "params": {} }, "Cost": 1300, "DoT": null },
+            { "Damage": 2100, "Range": 14, "SPA": 6, "AOE": { "type": "ring circle", "params": {} }, "Cost": 2100, "DoT": null },
+            { "Damage": 2910, "Range": 14, "SPA": 6, "AOE": { "type": "ring circle", "params": {} }, "Cost": 3700, "DoT": null },
+            { "Damage": 3806, "Range": 14, "SPA": 6, "AOE": { "type": "ring circle", "params": {} }, "Cost": 6500, "DoT": null },
+            { "Damage": 9546, "Range": 19, "SPA": 12, "AOE": { "type": "ring cone", "params": {} }, "Cost": 10000, "DoT": null },
+            { "Damage": 12886, "Range": 19, "SPA": 12, "AOE": { "type": "ring cone", "params": {} }, "Cost": 15000, "DoT": null },
+            { "Damage": 16941, "Range": 19, "SPA": 12, "AOE": { "type": "ring cone", "params": {} }, "Cost": 19000, "DoT": null }
+        ]
     },
     "Supreme Leader": {
         MaxCost: 77175,
@@ -1204,30 +690,18 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Orange",
         Rarity: "Unbound",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "235", "375", "540", "725", "935", "1170", "1405", "1635", "1870"
-            ],
-            Range: [
-                "30", "30", "31", "31", "32", "32", "33", "33", "34"
-            ],
-            SPA: [
-                "2", "2", "2", "2", "2", "2", "2", "2", "2"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "1200", "1750", "2400", "3575", "5200", "8050", "12500", "17500", "25000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 235, "Range": 30, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 1200, "DoT": null },
+            { "Damage": 375, "Range": 30, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 1750, "DoT": null },
+            { "Damage": 540, "Range": 31, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": null },
+            { "Damage": 725, "Range": 31, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 3575, "DoT": null },
+            { "Damage": 935, "Range": 32, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 5200, "DoT": null },
+            { "Damage": 1170, "Range": 32, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 8050, "DoT": null },
+            { "Damage": 1405, "Range": 33, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null },
+            { "Damage": 1635, "Range": 33, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 17500, "DoT": null },
+            { "Damage": 1870, "Range": 34, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 25000, "DoT": null }
+        ]
     },
     "Supreme Leader (2nd Form)": {
         MaxCost: 77175,
@@ -1236,30 +710,18 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Orange",
         Rarity: "Unbound",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "375", "598", "861", "1156", "1490", "1865", "2239", "2606", "2980"
-            ],
-            Range: [
-                "34", "34", "35", "35", "36", "36", "37", "37", "38"
-            ],
-            SPA: [
-                "3", "3", "3", "3", "3", "3", "3", "3", "3"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "1200", "1750", "2400", "3575", "5200", "8050", "12500", "17500", "25000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 375, "Range": 34, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1200, "DoT": null },
+            { "Damage": 598, "Range": 34, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1750, "DoT": null },
+            { "Damage": 861, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": null },
+            { "Damage": 1156, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 3575, "DoT": null },
+            { "Damage": 1490, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 5200, "DoT": null },
+            { "Damage": 1865, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 8050, "DoT": null },
+            { "Damage": 2239, "Range": 37, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null },
+            { "Damage": 2606, "Range": 37, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 17500, "DoT": null },
+            { "Damage": 2980, "Range": 38, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 25000, "DoT": null }
+        ]
     },
     "Supreme Leader (3rd Form)": {
         MaxCost: 77175,
@@ -1268,30 +730,18 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Orange",
         Rarity: "Unbound",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "662", "1055", "1519", "2040", "2629", "3291", "3951", "4699", "5259"
-            ],
-            Range: [
-                "38", "38", "39", "39", "40", "40", "41", "41", "42"
-            ],
-            SPA: [
-                "5", "5", "5", "5", "5", "5", "5", "5", "5"
-            ],
-            AOE: [
-                "Line", "Line", "Line", "Line", "Line", "Line", "Line", "Line", "Line"
-            ],
-            Cost: [
-                "1200", "1750", "2400", "3575", "5200", "8050", "12500", "17500", "25000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 662, "Range": 38, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 1200, "DoT": null },
+            { "Damage": 1055, "Range": 38, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 1750, "DoT": null },
+            { "Damage": 1519, "Range": 39, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 2400, "DoT": null },
+            { "Damage": 2040, "Range": 39, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 3575, "DoT": null },
+            { "Damage": 2629, "Range": 40, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 5200, "DoT": null },
+            { "Damage": 3291, "Range": 40, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 8050, "DoT": null },
+            { "Damage": 3951, "Range": 41, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 12500, "DoT": null },
+            { "Damage": 4699, "Range": 41, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 17500, "DoT": null },
+            { "Damage": 5259, "Range": 42, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 25000, "DoT": null }
+        ]
     },
     "Supreme Leader (Final Form)": {
         MaxCost: 77175,
@@ -1300,30 +750,18 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Orange",
         Rarity: "Unbound",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "1236", "1969", "2836", "3808", "4908", "6143", "7375", "8585", "9817"
-            ],
-            Range: [
-                "42", "42", "43", "43", "44", "44", "45", "45", "46"
-            ],
-            SPA: [
-                "7.5", "7.5", "7.5", "7.5", "7.5", "7.5", "7.5", "7.5", "7.5"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "1200", "1750", "2400", "3575", "5200", "8050", "12500", "17500", "25000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 1236, "Range": 42, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1200, "DoT": null },
+            { "Damage": 1969, "Range": 42, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1750, "DoT": null },
+            { "Damage": 2836, "Range": 43, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": null },
+            { "Damage": 3808, "Range": 43, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 3575, "DoT": null },
+            { "Damage": 4908, "Range": 44, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 5200, "DoT": null },
+            { "Damage": 6143, "Range": 44, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 8050, "DoT": null },
+            { "Damage": 7375, "Range": 45, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null },
+            { "Damage": 8585, "Range": 45, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 17500, "DoT": null },
+            { "Damage": 9817, "Range": 46, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 25000, "DoT": null }
+        ]
     },
     "Zesty General": {
         MaxCost: 55000,
@@ -1332,30 +770,17 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Green",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "495", "934", "1400", "3366", "4379", "5686", "6415", "8663"
-            ],
-            Range: [
-                "29", "29", "32", "32", "37", "37", "39", "42"
-            ],
-            SPA: [
-                "4", "4", "4", "4", "4", "4", "6", "6"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "950", "1350", "2200", "4000", "7500", "9000", "13000", "17000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 495, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 950, "DoT": null },
+            { "Damage": 934, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 1350, "DoT": null },
+            { "Damage": 1400, "Range": 32, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 2200, "DoT": null },
+            { "Damage": 3366, "Range": 32, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 4000, "DoT": null },
+            { "Damage": 4379, "Range": 37, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 7500, "DoT": null },
+            { "Damage": 5686, "Range": 37, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 9000, "DoT": null },
+            { "Damage": 6415, "Range": 39, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 13000, "DoT": null },
+            { "Damage": 8663, "Range": 42, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 17000, "DoT": null }
+        ]
     },
     "Sky God": {
         MaxCost: 44560,
@@ -1364,30 +789,18 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Blue",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "542", "812", "1157", "2507", "3487", "4566", "4797", "5709", "6898"
-            ],
-            Range: [
-                "25", "27", "29", "32", "35", "37", "40", "42", "45"
-            ],
-            SPA: [
-                "4", "4", "4", "6", "6", "6", "5", "5", "5"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "1350", "1600", "2200", "3375", "4150", "5475", "7250", "8675", "10505"
-            ],
-            DoT: [
-                "Shock", "Shock", "Shock", "Shock", "Shock", "Shock", "Shock", "Shock", "Shock"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 542, "Range": 25, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 1350, "DoT": "Shock" },
+            { "Damage": 812, "Range": 27, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 1600, "DoT": "Shock" },
+            { "Damage": 1157, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 2200, "DoT": "Shock" },
+            { "Damage": 2507, "Range": 32, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 3375, "DoT": "Shock" },
+            { "Damage": 3487, "Range": 35, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 4150, "DoT": "Shock" },
+            { "Damage": 4566, "Range": 37, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 5475, "DoT": "Shock" },
+            { "Damage": 4797, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 7250, "DoT": "Shock" },
+            { "Damage": 5709, "Range": 42, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 8675, "DoT": "Shock" },
+            { "Damage": 6898, "Range": 45, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 10505, "DoT": "Shock" }
+        ]
     },
     "Masochist Lady": {
         MaxCost: 50000,
@@ -1396,30 +809,17 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Orange",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "210", "357", "525", "2268", "3062", "3969", "3430", "4573"
-            ],
-            Range: [
-                "10", "12", "14", "17", "19", "22", "24", "30"
-            ],
-            SPA: [
-                "1.5", "1.5", "1.5", "4.5", "4.5", "4.5", "3.5", "3.5"
-            ],
-            AOE: [
-                "Full AOE", "Full AOE", "Full AOE", "Full AOE", "Full AOE", "Full AOE", "Line", "Line"
-            ],
-            Cost: [
-                "950", "1500", "2250", "4750", "5250", "7000", "12300", "16000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 210, "Range": 10, "SPA": 1.5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 950, "DoT": null },
+            { "Damage": 357, "Range": 12, "SPA": 1.5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1500, "DoT": null },
+            { "Damage": 525, "Range": 14, "SPA": 1.5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 2250, "DoT": null },
+            { "Damage": 2268, "Range": 17, "SPA": 4.5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 4750, "DoT": null },
+            { "Damage": 3062, "Range": 19, "SPA": 4.5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 5250, "DoT": null },
+            { "Damage": 3969, "Range": 22, "SPA": 4.5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 7000, "DoT": null },
+            { "Damage": 3430, "Range": 24, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 12300, "DoT": null },
+            { "Damage": 4573, "Range": 30, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 16000, "DoT": null }
+        ]
     },
     "Future T": {
         MaxCost: 48500,
@@ -1428,30 +828,17 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Orange",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"
-        ],
-        Stats: {
-            Damage: [
-                "315", "588", "903", "989", "1315", "1707", "3402", "4262"
-            ],
-            Range: [
-                "25", "27", "29", "32", "32", "37", "42", "45"
-            ],
-            SPA: [
-                "4.5", "4.5", "4.5", "3.5", "3.5", "3.5", "5.5", "5.5"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "950", "1500", "2400", "4250", "6000", "8400", "11000", "14000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
+        "upgrades": [
+            { "Damage": 315, "Range": 25, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 950, "DoT": null },
+            { "Damage": 588, "Range": 27, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1500, "DoT": null },
+            { "Damage": 903, "Range": 29, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": null },
+            { "Damage": 989, "Range": 32, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 4250, "DoT": null },
+            { "Damage": 1315, "Range": 32, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 6000, "DoT": null },
+            { "Damage": 1707, "Range": 37, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 8400, "DoT": null },
+            { "Damage": 3402, "Range": 42, "SPA": 5.5, "AOE": { "type": "circle", "params": {} }, "Cost": 11000, "DoT": null },
+            { "Damage": 4262, "Range": 45, "SPA": 5.5, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": null }
+        ]
     },
     "Freezer (Final Form)": {
         MaxCost: 70000,
@@ -1460,30 +847,17 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Purple",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "193", "420", "665", "2836", "3782", "5042", "5310", "7189"
-            ],
-            Range: [
-                "30", "32", "34", "37", "37", "37", "37", "40"
-            ],
-            SPA: [
-                "1.5", "1.5", "1.5", "4.5", "4.5", "4.5", "3.5", "3.5"
-            ],
-            AOE: [
-                "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"
-            ],
-            Cost: [
-                "1050", "1350", "2500", "3500", "5600", "12500", "18500", "25000"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 193, "Range": 30, "SPA": 1.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1050, "DoT": null },
+            { "Damage": 420, "Range": 32, "SPA": 1.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1350, "DoT": null },
+            { "Damage": 665, "Range": 34, "SPA": 1.5, "AOE": { "type": "circle", "params": {} }, "Cost": 2500, "DoT": null },
+            { "Damage": 2836, "Range": 37, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 3500, "DoT": null },
+            { "Damage": 3782, "Range": 37, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 5600, "DoT": null },
+            { "Damage": 5042, "Range": 37, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null },
+            { "Damage": 5310, "Range": 37, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 18500, "DoT": null },
+            { "Damage": 7189, "Range": 40, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 25000, "DoT": null }
+        ]
     },
     "BOX": {
         MaxCost: 39990,
@@ -1492,30 +866,16 @@ const characterData = {
         Image: './images/units/placeholder.png',
         Element: "Red",
         Rarity: "5 Star",
-        PlacementStatus: [
-            "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"
-        ],
-        Stats: {
-            Damage: [
-                "564", "850", "1683", "2205", "3676", "4569", "5987"
-            ],
-            Range: [
-                "15", "16", "17", "18", "19", "20", "20"
-            ],
-            SPA: [
-                "3.5", "3.5", "3.5", "3.5", "3.5", "4.5", "4.5"
-            ],
-            AOE: [
-                "Line", "Line", "Line", "Line", "Line", "Line", "Line"
-            ],
-            Cost: [
-                "1150", "2000", "3350", "4450", "7875", "8600", "12565"
-            ],
-            DoT: [
-                "None", "None", "None", "None", "None", "None", "None"
-            ],
-            AttackCount: []
-        }
+        PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
+        "upgrades": [
+            { "Damage": 564, "Range": 15, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 1150, "DoT": null },
+            { "Damage": 850, "Range": 16, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 2000, "DoT": null },
+            { "Damage": 1683, "Range": 17, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 3350, "DoT": null },
+            { "Damage": 2205, "Range": 18, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 4450, "DoT": null },
+            { "Damage": 3676, "Range": 19, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 7875, "DoT": null },
+            { "Damage": 4569, "Range": 20, "SPA": 4.5, "AOE": { "type": "line", "params": {} }, "Cost": 8600, "DoT": null },
+            { "Damage": 5987, "Range": 20, "SPA": 4.5, "AOE": { "type": "line", "params": {} }, "Cost": 12565, "DoT": null }
+        ]
     },
     "Benimaru": {
         MaxCost: 63000,
@@ -1525,15 +885,16 @@ const characterData = {
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["233", "481", "742", "2579", "3373", "6583", "8347", "9841"],
-            Range: ["15", "15", "15", "20", "20", "40", "40", "40"],
-            SPA: ["2", "2", "2", "5", "5", "8", "8", "8"],
-            AOE: ["EAOE", "EAOE", "EAOE", "Cone", "Cone", "EAOE", "EAOE", "EAOE"],
-            Cost: ["1400", "2000", "3500", "5500", "8600", "10000", "13000", "19000"],
-            DoT: ["Burn", "Burn", "Burn", "Burn", "Burn", "Burn", "Burn", "Burn"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 233, "Range": 15, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 1400, "DoT": "Burn" },
+            { "Damage": 481, "Range": 15, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 2000, "DoT": "Burn" },
+            { "Damage": 742, "Range": 15, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 3500, "DoT": "Burn" },
+            { "Damage": 2579, "Range": 20, "SPA": 5, "AOE": { "type": "cone", "params": {} }, "Cost": 5500, "DoT": "Burn" },
+            { "Damage": 3373, "Range": 20, "SPA": 5, "AOE": { "type": "cone", "params": {} }, "Cost": 8600, "DoT": "Burn" },
+            { "Damage": 6583, "Range": 40, "SPA": 8, "AOE": { "type": "circle", "params": {} }, "Cost": 10000, "DoT": "Burn" },
+            { "Damage": 8347, "Range": 40, "SPA": 8, "AOE": { "type": "circle", "params": {} }, "Cost": 13000, "DoT": "Burn" },
+            { "Damage": 9841, "Range": 40, "SPA": 8, "AOE": { "type": "circle", "params": {} }, "Cost": 19000, "DoT": "Burn" }
+        ]
     },
     "Kuroma": {
         MaxCost: 75000,
@@ -1543,27 +904,20 @@ const characterData = {
         Element: "Green",
         Rarity: "5 Star",
         "Spawns": [
-        {
-            "unitName": "Kuroma (Hybrid Form)", 
-            "spawnAtUpgrade": 2,
-            "SeperateUnit": false,
-        },
-        {
-            "unitName": "Kuroma (Full AOE Form)", 
-            "spawnAtUpgrade": 2,
-            "SeperateUnit": false,
-        }
+            { "unitName": "Kuroma (Hybrid Form)", "spawnAtUpgrade": 2, "SeperateUnit": false },
+            { "unitName": "Kuroma (Full AOE Form)", "spawnAtUpgrade": 2, "SeperateUnit": false }
         ],
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["420", "875", "1386", "1954", "2577", "3340", "4341", "5602"],
-            Range: ["12", "12", "14", "16", "16", "18", "18", "19"],
-            SPA: ["3", "3", "3", "3", "3", "3", "3", "3"],
-            AOE: ["Cone", "Cone", "Cone", "Cone", "Cone", "Cone", "Cone", "Cone"],
-            Cost: ["800", "1200", "2500", "4500", "9000", "12000", "15000", "30000"],
-            DoT: ["None", "None", "None", "None", "None", "None", "None", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 420, "Range": 12, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 800, "DoT": null },
+            { "Damage": 875, "Range": 12, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 1200, "DoT": null },
+            { "Damage": 1386, "Range": 14, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 2500, "DoT": null },
+            { "Damage": 1954, "Range": 16, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 4500, "DoT": null },
+            { "Damage": 2577, "Range": 16, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 9000, "DoT": null },
+            { "Damage": 3340, "Range": 18, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 12000, "DoT": null },
+            { "Damage": 4341, "Range": 18, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 15000, "DoT": null },
+            { "Damage": 5602, "Range": 19, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 30000, "DoT": null }
+        ]
     },
     "Kuroma (Hybrid Form)": {
         MaxCost: 75000,
@@ -1573,15 +927,14 @@ const characterData = {
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["1538", "2169", "2860", "3707", "4819", "6218"],
-            Range: ["31.5", "31.5", "36", "36", "40.5", "42.75"],
-            SPA: ["3", "3", "3", "3", "3", "3"],
-            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
-            Cost: ["800", "4500", "4500", "9000", "12000", "15000"],
-            DoT: ["None", "None", "None", "None", "None", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 1538, "Range": 31.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 800, "DoT": null },
+            { "Damage": 2169, "Range": 31.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 4500, "DoT": null },
+            { "Damage": 2860, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 4500, "DoT": null },
+            { "Damage": 3707, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 9000, "DoT": null },
+            { "Damage": 4819, "Range": 40.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 12000, "DoT": null },
+            { "Damage": 6218, "Range": 42.75, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 15000, "DoT": null }
+        ]
     },
     "Kuroma (Full AOE Form)": {
         MaxCost: 75000,
@@ -1591,15 +944,14 @@ const characterData = {
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["4435", "6253", "8246", "10688", "13891", "17926"],
-            Range: ["23.52", "23.52", "26.88", "26.88", "30.24", "31.92"],
-            SPA: ["9", "9", "9", "9", "9", "9"],
-            AOE: ["AOE", "AOE", "AOE", "AOE", "AOE", "AOE"],
-            Cost: ["800", "4500", "4500", "9000", "12000", "15000"],
-            DoT: ["None", "None", "None", "None", "None", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 4435, "Range": 23.52, "SPA": 9, "AOE": { "type": "full aoe", "params": {} }, "Cost": 800, "DoT": null },
+            { "Damage": 6253, "Range": 23.52, "SPA": 9, "AOE": { "type": "full aoe", "params": {} }, "Cost": 4500, "DoT": null },
+            { "Damage": 8246, "Range": 26.88, "SPA": 9, "AOE": { "type": "full aoe", "params": {} }, "Cost": 4500, "DoT": null },
+            { "Damage": 10688, "Range": 26.88, "SPA": 9, "AOE": { "type": "full aoe", "params": {} }, "Cost": 9000, "DoT": null },
+            { "Damage": 13891, "Range": 30.24, "SPA": 9, "AOE": { "type": "full aoe", "params": {} }, "Cost": 12000, "DoT": null },
+            { "Damage": 17926, "Range": 31.92, "SPA": 9, "AOE": { "type": "full aoe", "params": {} }, "Cost": 15000, "DoT": null }
+        ]
     },
     "Inumaki": {
         MaxCost: 60000,
@@ -1609,32 +961,21 @@ const characterData = {
         Element: "Purple",
         Rarity: "5 Star",
         "Spawns": [
-        {
-            "unitName": "Inumaki (Stop)", 
-            "spawnAtUpgrade": 2,
-            "SeperateUnit": false,
-        },
-        {
-            "unitName": "Inumaki (Cut)", 
-            "spawnAtUpgrade": 2,
-            "SeperateUnit": false,
-        },
-        {
-            "unitName": "Inumaki (Explode)", 
-            "spawnAtUpgrade": 2,
-            "SeperateUnit": false,
-        }
+            { "unitName": "Inumaki (Stop)", "spawnAtUpgrade": 2, "SeperateUnit": false },
+            { "unitName": "Inumaki (Cut)", "spawnAtUpgrade": 2, "SeperateUnit": false },
+            { "unitName": "Inumaki (Explode)", "spawnAtUpgrade": 2, "SeperateUnit": false }
         ],
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["243", "523", "831", "1186", "1587", "2082", "2670", "3501"],
-            Range: ["10", "11", "12", "14", "15", "17", "18", "20"],
-            SPA: ["2", "2", "2", "2", "2", "2", "2", "2"],
-            AOE: ["Cone", "Cone", "Cone", "Cone", "Cone", "Cone", "Cone", "Cone"],
-            Cost: ["725", "1300", "2500", "7500", "7225", "9750", "14000", "17000"],
-            DoT: ["None", "None", "None", "None", "None", "None", "None", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 243, "Range": 10, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 725, "DoT": null },
+            { "Damage": 523, "Range": 11, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 1300, "DoT": null },
+            { "Damage": 831, "Range": 12, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 2500, "DoT": null },
+            { "Damage": 1186, "Range": 14, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 7500, "DoT": null },
+            { "Damage": 1587, "Range": 15, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 7225, "DoT": null },
+            { "Damage": 2082, "Range": 17, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 9750, "DoT": null },
+            { "Damage": 2670, "Range": 18, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 14000, "DoT": null },
+            { "Damage": 3501, "Range": 20, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 17000, "DoT": null }
+        ]
     },
     "Inumaki (Stop)": {
         MaxCost: 60000,
@@ -1644,15 +985,14 @@ const characterData = {
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["997", "1423", "1904", "2498", "3204", "4201"],
-            Range: ["30", "35", "37.5", "42.5", "45", "50"],
-            SPA: ["3", "3", "3", "3", "3", "3"],
-            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
-            Cost: ["4525", "7500", "7225", "9750", "14000","17000"],
-            DoT: ["None", "None", "None", "None", "None", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 997, "Range": 30, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 4525, "DoT": null },
+            { "Damage": 1423, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 7500, "DoT": null },
+            { "Damage": 1904, "Range": 37.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 7225, "DoT": null },
+            { "Damage": 2498, "Range": 42.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 9750, "DoT": null },
+            { "Damage": 3204, "Range": 45, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": null },
+            { "Damage": 4201, "Range": 50, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 17000, "DoT": null }
+        ]
     },
     "Inumaki (Cut)": {
         MaxCost: 60000,
@@ -1662,15 +1002,14 @@ const characterData = {
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["998", "1424", "1906", "2500", "3207", "4205"],
-            Range: ["27", "31.5", "33.75", "38.25", "40.5", "45"],
-            SPA: ["2", "2", "2", "2", "2", "2"],
-            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
-            Cost: ["4525", "7500", "7225", "9750", "14000","17000"],
-            DoT: ["Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 998, "Range": 27, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 4525, "DoT": "Bleed" },
+            { "Damage": 1424, "Range": 31.5, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 7500, "DoT": "Bleed" },
+            { "Damage": 1906, "Range": 33.75, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 7225, "DoT": "Bleed" },
+            { "Damage": 2500, "Range": 38.25, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 9750, "DoT": "Bleed" },
+            { "Damage": 3207, "Range": 40.5, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": "Bleed" },
+            { "Damage": 4205, "Range": 45, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 17000, "DoT": "Bleed" }
+        ]
     },
     "Inumaki (Explode)": {
         MaxCost: 60000,
@@ -1680,15 +1019,14 @@ const characterData = {
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["1903", "2716", "3634", "4768", "6114", "8017"],
-            Range: ["24", "28", "30", "34", "36", "40"],
-            SPA: ["4", "4", "4", "4", "4", "4"],
-            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
-            Cost: ["4525", "7500", "7225", "9750", "14000","17000"],
-            DoT: ["None", "None", "None", "None", "None", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 1903, "Range": 24, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 4525, "DoT": null },
+            { "Damage": 2716, "Range": 28, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 7500, "DoT": null },
+            { "Damage": 3634, "Range": 30, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 7225, "DoT": null },
+            { "Damage": 4768, "Range": 34, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 9750, "DoT": null },
+            { "Damage": 6114, "Range": 36, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": null },
+            { "Damage": 8017, "Range": 40, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 17000, "DoT": null }
+        ]
     },
     "Reigen": {
         MaxCost: 49000,
@@ -1698,15 +1036,16 @@ const characterData = {
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["567", "945", "1342", "1606", "2054", "2987", "5134", "7081"],
-            Range: ["20", "24", "28", "32", "36", "40", "40", "40"],
-            SPA: ["4.5", "4.5", "4.5", "4", "4", "4", "5", "5"],
-            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
-            Cost: ["1111", "1350", "1859", "3680", "4500", "8800", "10000", "17700"],
-            DoT: ["None", "None", "None", "None", "None", "None", "None", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 567, "Range": 20, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1111, "DoT": null },
+            { "Damage": 945, "Range": 24, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1350, "DoT": null },
+            { "Damage": 1342, "Range": 28, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1859, "DoT": null },
+            { "Damage": 1606, "Range": 32, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 3680, "DoT": null },
+            { "Damage": 2054, "Range": 36, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 4500, "DoT": null },
+            { "Damage": 2987, "Range": 40, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 8800, "DoT": null },
+            { "Damage": 5134, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 10000, "DoT": null },
+            { "Damage": 7081, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 17700, "DoT": null }
+        ]
     },
     "Starrk": {
         MaxCost: 59000,
@@ -1716,15 +1055,17 @@ const characterData = {
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["496", "788", "1167", "4097", "5234", "6524", "6303", "8053", "10307"],
-            Range: ["17", "20", "23", "18", "20", "22", "32", "38", "45"],
-            SPA: ["2.5", "2.5", "2.5", "6.5", "6.5", "6.5", "5", "5", "5"],
-            AOE: ["Cone", "Cone", "Cone", "Line", "Line", "Line", "Line", "Line", "Line"],
-            Cost: ["1075", "1300", "1875", "3450", "5250", "6800", "9250", "12750", "17250"],
-            DoT: ["None", "None", "None", "None", "None", "None", "None", "None", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 496, "Range": 17, "SPA": 2.5, "AOE": { "type": "cone", "params": {} }, "Cost": 1075, "DoT": null },
+            { "Damage": 788, "Range": 20, "SPA": 2.5, "AOE": { "type": "cone", "params": {} }, "Cost": 1300, "DoT": null },
+            { "Damage": 1167, "Range": 23, "SPA": 2.5, "AOE": { "type": "cone", "params": {} }, "Cost": 1875, "DoT": null },
+            { "Damage": 4097, "Range": 18, "SPA": 6.5, "AOE": { "type": "line", "params": {} }, "Cost": 3450, "DoT": null },
+            { "Damage": 5234, "Range": 20, "SPA": 6.5, "AOE": { "type": "line", "params": {} }, "Cost": 5250, "DoT": null },
+            { "Damage": 6524, "Range": 22, "SPA": 6.5, "AOE": { "type": "line", "params": {} }, "Cost": 6800, "DoT": null },
+            { "Damage": 6303, "Range": 32, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 9250, "DoT": null },
+            { "Damage": 8053, "Range": 38, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 12750, "DoT": null },
+            { "Damage": 10307, "Range": 45, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 17250, "DoT": null }
+        ]
     },
     "Tobi": {
         MaxCost: 65000,
@@ -1734,15 +1075,16 @@ const characterData = {
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["448", "980", "1568", "2213", "4855", "7190", "9757", "12838"],
-            Range: ["23", "24", "25", "27", "32", "35", "40", "45"],
-            SPA: ["3", "3", "3", "3", "5", "5", "5", "5"],
-            AOE: ["EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE", "EAOE"],
-            Cost: ["950", "1550", "2600", "3900", "8000", "12000", "15000", "21000"],
-            DoT: ["None", "None", "None", "None", "None", "None", "None", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 448, "Range": 23, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 950, "DoT": null },
+            { "Damage": 980, "Range": 24, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1550, "DoT": null },
+            { "Damage": 1568, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2600, "DoT": null },
+            { "Damage": 2213, "Range": 27, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 3900, "DoT": null },
+            { "Damage": 4855, "Range": 32, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 8000, "DoT": null },
+            { "Damage": 7190, "Range": 35, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 12000, "DoT": null },
+            { "Damage": 9757, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 15000, "DoT": null },
+            { "Damage": 12838, "Range": 45, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 21000, "DoT": null }
+        ]
     },
     "Toji": {
         MaxCost: 40000,
@@ -1752,15 +1094,16 @@ const characterData = {
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["195","410","639","1424","1890","2534","3360","4989"],
-            Range: ["20", "22", "25", "30", "30", "32", "36", "40"],
-            SPA: ["2","2","2","2.75","2.75","2.75","2.75","3.25"],
-            AOE: ["Line", "Line", "Line", "Line", "EAOE", "EAOE", "EAOE", "EAOE"],
-            Cost: ["950", "1400", "2800", "3500", "4350", "6500", "8000", "12500"],
-            DoT: ["Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "Bleed", "None"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 195, "Range": 20, "SPA": 2, "AOE": { "type": "line", "params": {} }, "Cost": 950, "DoT": "Bleed" },
+            { "Damage": 410, "Range": 22, "SPA": 2, "AOE": { "type": "line", "params": {} }, "Cost": 1400, "DoT": "Bleed" },
+            { "Damage": 639, "Range": 25, "SPA": 2, "AOE": { "type": "line", "params": {} }, "Cost": 2800, "DoT": "Bleed" },
+            { "Damage": 1424, "Range": 30, "SPA": 2.75, "AOE": { "type": "line", "params": {} }, "Cost": 3500, "DoT": "Bleed" },
+            { "Damage": 1890, "Range": 30, "SPA": 2.75, "AOE": { "type": "circle", "params": {} }, "Cost": 4350, "DoT": "Bleed" },
+            { "Damage": 2534, "Range": 32, "SPA": 2.75, "AOE": { "type": "circle", "params": {} }, "Cost": 6500, "DoT": "Bleed" },
+            { "Damage": 3360, "Range": 36, "SPA": 2.75, "AOE": { "type": "circle", "params": {} }, "Cost": 8000, "DoT": "Bleed" },
+            { "Damage": 4989, "Range": 40, "SPA": 3.25, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null }
+        ]
     },
     "Yami": {
         MaxCost: 60000,
@@ -1770,14 +1113,16 @@ const characterData = {
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
-        Stats: {
-            Damage: ["116", "270", "452", "686", "947", "1227", "4172", "5071", "6098"],
-            Range: ["10", "12", "15", "22", "27", "32", "38", "38", "38"],
-            SPA: ["2", "2", "2", "2", "2", "2", "5.5", "5.5", "5.5"],
-            AOE: ["Single", "Single", "Single", "EAOE", "EAOE", "EAOE", "Line", "Line", "Line"],
-            Cost: ["1000", "1300", "2200", "3235", "4400", "5875", "9475", "12750", "19765"],
-            DoT: ["BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames", "BlackFlames"],
-            AttackCount: []
-        }
+        "upgrades": [
+            { "Damage": 116, "Range": 10, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 1000, "DoT": "BlackFlames" },
+            { "Damage": 270, "Range": 12, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 1300, "DoT": "BlackFlames" },
+            { "Damage": 452, "Range": 15, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 2200, "DoT": "BlackFlames" },
+            { "Damage": 686, "Range": 22, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 3235, "DoT": "BlackFlames" },
+            { "Damage": 947, "Range": 27, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 4400, "DoT": "BlackFlames" },
+            { "Damage": 1227, "Range": 32, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 5875, "DoT": "BlackFlames" },
+            { "Damage": 4172, "Range": 38, "SPA": 5.5, "AOE": { "type": "line", "params": {} }, "Cost": 9475, "DoT": "BlackFlames" },
+            { "Damage": 5071, "Range": 38, "SPA": 5.5, "AOE": { "type": "line", "params": {} }, "Cost": 12750, "DoT": "BlackFlames" },
+            { "Damage": 6098, "Range": 38, "SPA": 5.5, "AOE": { "type": "line", "params": {} }, "Cost": 19765, "DoT": "BlackFlames" }
+        ]
     }
 };
