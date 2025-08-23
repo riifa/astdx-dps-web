@@ -516,7 +516,7 @@ const characterData = {
         MaxCost: 66400,
         PlacementCount: 3,
         MaxUpgrades: 8,
-        Image: './images/units/unbound_units/akainu5_icon.png',
+        Image: './images/units/unbound_units/akainuU_icon.png',
         Element: "Red",
         Rarity: "Unbound",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],

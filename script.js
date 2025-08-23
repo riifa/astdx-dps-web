@@ -1,13 +1,13 @@
 // script.js
 
 const newlyAddedUnits = [
-    "Yami","Toji","Reigen","Tobi","Starrk","Inumaki","Kuroma","Benimaru"
+    "Dark","Sorcerer Killer","Expert Sorcerer (Serious)","Tomi","Tony Stark","Cursed Talker","Kuroma","Fire Officer"
 ];
 
 // --- START: NEW BANLIST ---
 // Add the exact names of any units you want to hide from the selection grid here.
 const banlist = [
-    "Inumaki (Stop)", "Inumaki (Cut)", "Inumaki (Explode)", "Kuroma (Hybrid Form)", "Kuroma (Full AOE Form)", "Airren (Titan)"
+    "Cursed Talker (Stop)", "Cursed Talker (Cut)", "Cursed Talker (Explode)", "Kuroma (Hybrid Form)", "Kuroma (Full AOE Form)", "Airren (Titan)"
 ];
 // --- END: NEW BANLIST ---
 
@@ -567,7 +567,7 @@ const calculatorApp = {
                 });
             }
         }
-        else if (unitForControls === 'Toji' && mainUnitUpgradeIndex >= 7) {
+        else if (unitForControls === 'Sorcerer Killer' && mainUnitUpgradeIndex >= 7) {
             const stacks = specialAbilities.tojiHeavenlyRestrictionStacks || 0;
             const currentBonus = (stacks * 6.66).toFixed(2);
             specialControls.innerHTML = `
