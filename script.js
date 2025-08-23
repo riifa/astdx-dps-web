@@ -794,7 +794,6 @@ const calculatorApp = {
     },
 
     resetSelection() {
-        this.state.selectedUnit = null;
         this.state.activeOutputUnit = null;
         this.state.spawnedUnits = [];
         this.state.unitLevel = 1;
@@ -812,8 +811,6 @@ const calculatorApp = {
             michishiboLunarBlessingActive: false,
             tojiHeavenlyRestrictionStacks: 0,
         };
-        
-        document.querySelectorAll('.unit-card.selected').forEach(card => card.classList.remove('selected'));
         
         const levelSlider = this.elements.unitLevelControl.querySelector('#unitLevelSlider');
         if (levelSlider) levelSlider.value = 1;
