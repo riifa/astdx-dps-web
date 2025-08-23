@@ -542,14 +542,14 @@ const characterData = {
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
             { "Damage": 177, "Range": 15, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 800, "DoT": "Poison" },
-            { "Damage": 937, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 1500, "DoT": "Poison" },
-            { "Damage": 1410, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 1900, "DoT": "Poison" },
-            { "Damage": 1932, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 2800, "DoT": "Poison" },
-            { "Damage": 2514, "Range": 25, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 4500, "DoT": "Poison" },
-            { "Damage": 3204, "Range": 30, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 6500, "DoT": "Poison" },
-            { "Damage": 5028, "Range": 35, "SPA": 7, "AOE": { "type": "line", "params": {} }, "Cost": 10000, "DoT": null },
-            { "Damage": 7118, "Range": 35, "SPA": 7, "AOE": { "type": "line", "params": {} }, "Cost": 15000, "DoT": null },
-            { "Damage": 10150, "Range": 35, "SPA": 7, "AOE": { "type": "line", "params": {} }, "Cost": 27000, "DoT": null }
+            { "Damage": 937, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 1500, "DoT": "Poison" },
+            { "Damage": 1410, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 1900, "DoT": "Poison" },
+            { "Damage": 1932, "Range": 20, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 2800, "DoT": "Poison" },
+            { "Damage": 2514, "Range": 25, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 4500, "DoT": "Poison" },
+            { "Damage": 3204, "Range": 30, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 6500, "DoT": "Poison" },
+            { "Damage": 5028, "Range": 35, "SPA": 7, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 10000, "DoT": null },
+            { "Damage": 7118, "Range": 35, "SPA": 7, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 15000, "DoT": null },
+            { "Damage": 10150, "Range": 35, "SPA": 7, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 27000, "DoT": null }
         ]
     },
     "Alligator": {
@@ -561,14 +561,14 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 463, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1500, "DoT": null },
-            { "Damage": 877, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2000, "DoT": null },
-            { "Damage": 1326, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2350, "DoT": null },
-            { "Damage": 5102, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": {} }, "Cost": 5750, "DoT": null },
-            { "Damage": 7035, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": {} }, "Cost": 7000, "DoT": null },
-            { "Damage": 9006, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": {} }, "Cost": 8400, "DoT": null },
-            { "Damage": 6906, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 15000, "DoT": null },
-            { "Damage": 8518, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 19000, "DoT": null }
+            { "Damage": 463, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 1500, "DoT": null },
+            { "Damage": 877, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 2000, "DoT": null },
+            { "Damage": 1326, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 2350, "DoT": null },
+            { "Damage": 5102, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": {"lineWidth":5} }, "Cost": 5750, "DoT": null },
+            { "Damage": 7035, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": {"lineWidth":5} }, "Cost": 7000, "DoT": null },
+            { "Damage": 9006, "Range": 28, "SPA": 8, "AOE": { "type": "line", "params": {"lineWidth":5} }, "Cost": 8400, "DoT": null },
+            { "Damage": 6906, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 15000, "DoT": null },
+            { "Damage": 8518, "Range": 30, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 19000, "DoT": null }
         ]
     },
     "Killer (Serious)": {
@@ -602,10 +602,10 @@ const characterData = {
             { "Damage": 725, "Range": 12, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1600, "DoT": null },
             { "Damage": 1287, "Range": 12, "SPA": 7, "AOE": { "type": "full aoe", "params": {} }, "Cost": 1800, "DoT": null },
             { "Damage": 2011, "Range": 12, "SPA": 6, "AOE": { "type": "full aoe", "params": {} }, "Cost": 2375, "DoT": null },
-            { "Damage": 2761, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 3600, "DoT": null },
-            { "Damage": 2977, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 5150, "DoT": null },
-            { "Damage": 5245, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 7250, "DoT": null },
-            { "Damage": 4511, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 12225, "DoT": null }
+            { "Damage": 2761, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 3600, "DoT": null },
+            { "Damage": 2977, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 5150, "DoT": null },
+            { "Damage": 5245, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 7250, "DoT": null },
+            { "Damage": 4511, "Range": 15, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 12225, "DoT": null }
         ]
     },
     "Shark Ninja": {
@@ -636,13 +636,13 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 414, "Range": 20, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 900, "DoT": null },
-            { "Damage": 863, "Range": 22, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1000, "DoT": null },
-            { "Damage": 1346, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1600, "DoT": null },
-            { "Damage": 4432, "Range": 28, "SPA": 7, "AOE": { "type": "circle", "params": {} }, "Cost": 3500, "DoT": null },
-            { "Damage": 5832, "Range": 29, "SPA": 7, "AOE": { "type": "circle", "params": {} }, "Cost": 9000, "DoT": null },
-            { "Damage": 7345, "Range": 30, "SPA": 7, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": null },
-            { "Damage": 11806, "Range": 35, "SPA": 9, "AOE": { "type": "line", "params": {} }, "Cost": 20000, "DoT": null }
+            { "Damage": 414, "Range": 20, "SPA": 3, "AOE": { "type": "line", "params": {"lineWidth":2} }, "Cost": 900, "DoT": null },
+            { "Damage": 863, "Range": 22, "SPA": 3, "AOE": { "type": "line", "params": {"lineWidth":2} }, "Cost": 1000, "DoT": null },
+            { "Damage": 1346, "Range": 25, "SPA": 3, "AOE": { "type": "line", "params": {"lineWidth":2} }, "Cost": 1600, "DoT": null },
+            { "Damage": 4432, "Range": 28, "SPA": 7, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 3500, "DoT": null },
+            { "Damage": 5832, "Range": 29, "SPA": 7, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 9000, "DoT": null },
+            { "Damage": 7345, "Range": 30, "SPA": 7, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 14000, "DoT": null },
+            { "Damage": 11806, "Range": 35, "SPA": 9, "AOE": { "type": "line", "params": {"lineWidth":9} }, "Cost": 20000, "DoT": null }
         ]
     },
     "Spade": {
@@ -692,15 +692,15 @@ const characterData = {
         Rarity: "Unbound",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
         "upgrades": [
-            { "Damage": 235, "Range": 30, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 1200, "DoT": null },
-            { "Damage": 375, "Range": 30, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 1750, "DoT": null },
-            { "Damage": 540, "Range": 31, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": null },
-            { "Damage": 725, "Range": 31, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 3575, "DoT": null },
-            { "Damage": 935, "Range": 32, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 5200, "DoT": null },
-            { "Damage": 1170, "Range": 32, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 8050, "DoT": null },
-            { "Damage": 1405, "Range": 33, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null },
-            { "Damage": 1635, "Range": 33, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 17500, "DoT": null },
-            { "Damage": 1870, "Range": 34, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 25000, "DoT": null }
+            { "Damage": 235, "Range": 30, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 1200, "DoT": null },
+            { "Damage": 375, "Range": 30, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 1750, "DoT": null },
+            { "Damage": 540, "Range": 31, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 2400, "DoT": null },
+            { "Damage": 725, "Range": 31, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 3575, "DoT": null },
+            { "Damage": 935, "Range": 32, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 5200, "DoT": null },
+            { "Damage": 1170, "Range": 32, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 8050, "DoT": null },
+            { "Damage": 1405, "Range": 33, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 12500, "DoT": null },
+            { "Damage": 1635, "Range": 33, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 17500, "DoT": null },
+            { "Damage": 1870, "Range": 34, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 25000, "DoT": null }
         ]
     },
     "Supreme Leader (2nd Form)": {
@@ -712,15 +712,15 @@ const characterData = {
         Rarity: "Unbound",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
         "upgrades": [
-            { "Damage": 375, "Range": 34, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1200, "DoT": null },
-            { "Damage": 598, "Range": 34, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1750, "DoT": null },
-            { "Damage": 861, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": null },
-            { "Damage": 1156, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 3575, "DoT": null },
-            { "Damage": 1490, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 5200, "DoT": null },
-            { "Damage": 1865, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 8050, "DoT": null },
-            { "Damage": 2239, "Range": 37, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null },
-            { "Damage": 2606, "Range": 37, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 17500, "DoT": null },
-            { "Damage": 2980, "Range": 38, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 25000, "DoT": null }
+            { "Damage": 375, "Range": 34, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 1200, "DoT": null },
+            { "Damage": 598, "Range": 34, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 1750, "DoT": null },
+            { "Damage": 861, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 2400, "DoT": null },
+            { "Damage": 1156, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 3575, "DoT": null },
+            { "Damage": 1490, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 5200, "DoT": null },
+            { "Damage": 1865, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 8050, "DoT": null },
+            { "Damage": 2239, "Range": 37, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 12500, "DoT": null },
+            { "Damage": 2606, "Range": 37, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 17500, "DoT": null },
+            { "Damage": 2980, "Range": 38, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 25000, "DoT": null }
         ]
     },
     "Supreme Leader (3rd Form)": {
@@ -732,15 +732,15 @@ const characterData = {
         Rarity: "Unbound",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
         "upgrades": [
-            { "Damage": 662, "Range": 38, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 1200, "DoT": null },
-            { "Damage": 1055, "Range": 38, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 1750, "DoT": null },
-            { "Damage": 1519, "Range": 39, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 2400, "DoT": null },
-            { "Damage": 2040, "Range": 39, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 3575, "DoT": null },
-            { "Damage": 2629, "Range": 40, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 5200, "DoT": null },
-            { "Damage": 3291, "Range": 40, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 8050, "DoT": null },
-            { "Damage": 3951, "Range": 41, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 12500, "DoT": null },
-            { "Damage": 4699, "Range": 41, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 17500, "DoT": null },
-            { "Damage": 5259, "Range": 42, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 25000, "DoT": null }
+            { "Damage": 662, "Range": 38, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 1200, "DoT": null },
+            { "Damage": 1055, "Range": 38, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 1750, "DoT": null },
+            { "Damage": 1519, "Range": 39, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 2400, "DoT": null },
+            { "Damage": 2040, "Range": 39, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 3575, "DoT": null },
+            { "Damage": 2629, "Range": 40, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 5200, "DoT": null },
+            { "Damage": 3291, "Range": 40, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 8050, "DoT": null },
+            { "Damage": 3951, "Range": 41, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 12500, "DoT": null },
+            { "Damage": 4699, "Range": 41, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 17500, "DoT": null },
+            { "Damage": 5259, "Range": 42, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 25000, "DoT": null }
         ]
     },
     "Supreme Leader (Final Form)": {
@@ -752,15 +752,15 @@ const characterData = {
         Rarity: "Unbound",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
         "upgrades": [
-            { "Damage": 1236, "Range": 42, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1200, "DoT": null },
-            { "Damage": 1969, "Range": 42, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1750, "DoT": null },
-            { "Damage": 2836, "Range": 43, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": null },
-            { "Damage": 3808, "Range": 43, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 3575, "DoT": null },
-            { "Damage": 4908, "Range": 44, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 5200, "DoT": null },
-            { "Damage": 6143, "Range": 44, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 8050, "DoT": null },
-            { "Damage": 7375, "Range": 45, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null },
-            { "Damage": 8585, "Range": 45, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 17500, "DoT": null },
-            { "Damage": 9817, "Range": 46, "SPA": 7.5, "AOE": { "type": "circle", "params": {} }, "Cost": 25000, "DoT": null }
+            { "Damage": 1236, "Range": 42, "SPA": 7.5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 1200, "DoT": null },
+            { "Damage": 1969, "Range": 42, "SPA": 7.5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 1750, "DoT": null },
+            { "Damage": 2836, "Range": 43, "SPA": 7.5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 2400, "DoT": null },
+            { "Damage": 3808, "Range": 43, "SPA": 7.5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 3575, "DoT": null },
+            { "Damage": 4908, "Range": 44, "SPA": 7.5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 5200, "DoT": null },
+            { "Damage": 6143, "Range": 44, "SPA": 7.5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 8050, "DoT": null },
+            { "Damage": 7375, "Range": 45, "SPA": 7.5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 12500, "DoT": null },
+            { "Damage": 8585, "Range": 45, "SPA": 7.5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 17500, "DoT": null },
+            { "Damage": 9817, "Range": 46, "SPA": 7.5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 25000, "DoT": null }
         ]
     },
     "Zesty General": {
@@ -772,14 +772,14 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 495, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 950, "DoT": null },
-            { "Damage": 934, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 1350, "DoT": null },
-            { "Damage": 1400, "Range": 32, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 2200, "DoT": null },
-            { "Damage": 3366, "Range": 32, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 4000, "DoT": null },
-            { "Damage": 4379, "Range": 37, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 7500, "DoT": null },
-            { "Damage": 5686, "Range": 37, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 9000, "DoT": null },
-            { "Damage": 6415, "Range": 39, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 13000, "DoT": null },
-            { "Damage": 8663, "Range": 42, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 17000, "DoT": null }
+            { "Damage": 495, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 950, "DoT": null },
+            { "Damage": 934, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 1350, "DoT": null },
+            { "Damage": 1400, "Range": 32, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 2200, "DoT": null },
+            { "Damage": 3366, "Range": 32, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 4000, "DoT": null },
+            { "Damage": 4379, "Range": 37, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 7500, "DoT": null },
+            { "Damage": 5686, "Range": 37, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 9000, "DoT": null },
+            { "Damage": 6415, "Range": 39, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 13000, "DoT": null },
+            { "Damage": 8663, "Range": 42, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 17000, "DoT": null }
         ]
     },
     "Sky God": {
@@ -791,15 +791,15 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
         "upgrades": [
-            { "Damage": 542, "Range": 25, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 1350, "DoT": "Shock" },
-            { "Damage": 812, "Range": 27, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 1600, "DoT": "Shock" },
-            { "Damage": 1157, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 2200, "DoT": "Shock" },
-            { "Damage": 2507, "Range": 32, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 3375, "DoT": "Shock" },
-            { "Damage": 3487, "Range": 35, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 4150, "DoT": "Shock" },
-            { "Damage": 4566, "Range": 37, "SPA": 6, "AOE": { "type": "circle", "params": {} }, "Cost": 5475, "DoT": "Shock" },
-            { "Damage": 4797, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 7250, "DoT": "Shock" },
-            { "Damage": 5709, "Range": 42, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 8675, "DoT": "Shock" },
-            { "Damage": 6898, "Range": 45, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 10505, "DoT": "Shock" }
+            { "Damage": 542, "Range": 25, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 1350, "DoT": "Shock" },
+            { "Damage": 812, "Range": 27, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 1600, "DoT": "Shock" },
+            { "Damage": 1157, "Range": 29, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 2200, "DoT": "Shock" },
+            { "Damage": 2507, "Range": 32, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":6} }, "Cost": 3375, "DoT": "Shock" },
+            { "Damage": 3487, "Range": 35, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":6} }, "Cost": 4150, "DoT": "Shock" },
+            { "Damage": 4566, "Range": 37, "SPA": 6, "AOE": { "type": "circle", "params": {"circleRadius":6} }, "Cost": 5475, "DoT": "Shock" },
+            { "Damage": 4797, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 7250, "DoT": "Shock" },
+            { "Damage": 5709, "Range": 42, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 8675, "DoT": "Shock" },
+            { "Damage": 6898, "Range": 45, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 10505, "DoT": "Shock" }
         ]
     },
     "Masochist Lady": {
@@ -817,8 +817,8 @@ const characterData = {
             { "Damage": 2268, "Range": 17, "SPA": 4.5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 4750, "DoT": null },
             { "Damage": 3062, "Range": 19, "SPA": 4.5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 5250, "DoT": null },
             { "Damage": 3969, "Range": 22, "SPA": 4.5, "AOE": { "type": "full aoe", "params": {} }, "Cost": 7000, "DoT": null },
-            { "Damage": 3430, "Range": 24, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 12300, "DoT": null },
-            { "Damage": 4573, "Range": 30, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 16000, "DoT": null }
+            { "Damage": 3430, "Range": 24, "SPA": 3.5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 12300, "DoT": null },
+            { "Damage": 4573, "Range": 30, "SPA": 3.5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 16000, "DoT": null }
         ]
     },
     "Future T": {
@@ -830,14 +830,14 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
         "upgrades": [
-            { "Damage": 315, "Range": 25, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 950, "DoT": null },
-            { "Damage": 588, "Range": 27, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1500, "DoT": null },
-            { "Damage": 903, "Range": 29, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 2400, "DoT": null },
-            { "Damage": 989, "Range": 32, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 4250, "DoT": null },
-            { "Damage": 1315, "Range": 32, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 6000, "DoT": null },
-            { "Damage": 1707, "Range": 37, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 8400, "DoT": null },
-            { "Damage": 3402, "Range": 42, "SPA": 5.5, "AOE": { "type": "circle", "params": {} }, "Cost": 11000, "DoT": null },
-            { "Damage": 4262, "Range": 45, "SPA": 5.5, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": null }
+            { "Damage": 315, "Range": 25, "SPA": 4.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 950, "DoT": null },
+            { "Damage": 588, "Range": 27, "SPA": 4.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 1500, "DoT": null },
+            { "Damage": 903, "Range": 29, "SPA": 4.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 2400, "DoT": null },
+            { "Damage": 989, "Range": 32, "SPA": 3.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 4250, "DoT": null },
+            { "Damage": 1315, "Range": 32, "SPA": 3.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 6000, "DoT": null },
+            { "Damage": 1707, "Range": 37, "SPA": 3.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 8400, "DoT": null },
+            { "Damage": 3402, "Range": 42, "SPA": 5.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 11000, "DoT": null },
+            { "Damage": 4262, "Range": 45, "SPA": 5.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 14000, "DoT": null }
         ]
     },
     "Freezer (Final Form)": {
@@ -849,14 +849,14 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 193, "Range": 30, "SPA": 1.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1050, "DoT": null },
-            { "Damage": 420, "Range": 32, "SPA": 1.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1350, "DoT": null },
-            { "Damage": 665, "Range": 34, "SPA": 1.5, "AOE": { "type": "circle", "params": {} }, "Cost": 2500, "DoT": null },
-            { "Damage": 2836, "Range": 37, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 3500, "DoT": null },
-            { "Damage": 3782, "Range": 37, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 5600, "DoT": null },
-            { "Damage": 5042, "Range": 37, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null },
-            { "Damage": 5310, "Range": 37, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 18500, "DoT": null },
-            { "Damage": 7189, "Range": 40, "SPA": 3.5, "AOE": { "type": "circle", "params": {} }, "Cost": 25000, "DoT": null }
+            { "Damage": 193, "Range": 30, "SPA": 1.5, "AOE": { "type": "line", "params": {"lineWidth":7} }, "Cost": 1050, "DoT": null },
+            { "Damage": 420, "Range": 32, "SPA": 1.5, "AOE": { "type": "line", "params": {"lineWidth":7} }, "Cost": 1350, "DoT": null },
+            { "Damage": 665, "Range": 34, "SPA": 1.5, "AOE": { "type": "line", "params": {"lineWidth":7} }, "Cost": 2500, "DoT": null },
+            { "Damage": 2836, "Range": 37, "SPA": 4.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 3500, "DoT": null },
+            { "Damage": 3782, "Range": 37, "SPA": 4.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 5600, "DoT": null },
+            { "Damage": 5042, "Range": 37, "SPA": 4.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 12500, "DoT": null },
+            { "Damage": 5310, "Range": 37, "SPA": 3.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 18500, "DoT": null },
+            { "Damage": 7189, "Range": 40, "SPA": 3.5, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 25000, "DoT": null }
         ]
     },
     "BOX": {
@@ -868,13 +868,13 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 564, "Range": 15, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 1150, "DoT": null },
-            { "Damage": 850, "Range": 16, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 2000, "DoT": null },
-            { "Damage": 1683, "Range": 17, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 3350, "DoT": null },
-            { "Damage": 2205, "Range": 18, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 4450, "DoT": null },
-            { "Damage": 3676, "Range": 19, "SPA": 3.5, "AOE": { "type": "line", "params": {} }, "Cost": 7875, "DoT": null },
-            { "Damage": 4569, "Range": 20, "SPA": 4.5, "AOE": { "type": "line", "params": {} }, "Cost": 8600, "DoT": null },
-            { "Damage": 5987, "Range": 20, "SPA": 4.5, "AOE": { "type": "line", "params": {} }, "Cost": 12565, "DoT": null }
+            { "Damage": 564, "Range": 15, "SPA": 3.5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 1150, "DoT": null },
+            { "Damage": 850, "Range": 16, "SPA": 3.5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 2000, "DoT": null },
+            { "Damage": 1683, "Range": 17, "SPA": 3.5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 3350, "DoT": null },
+            { "Damage": 2205, "Range": 18, "SPA": 3.5, "AOE": { "type": "line", "params": {"lineWidth":8} }, "Cost": 4450, "DoT": null },
+            { "Damage": 3676, "Range": 19, "SPA": 3.5, "AOE": { "type": "line", "params": {"lineWidth":9} }, "Cost": 7875, "DoT": null },
+            { "Damage": 4569, "Range": 20, "SPA": 4.5, "AOE": { "type": "line", "params": {"lineWidth":9} }, "Cost": 8600, "DoT": null },
+            { "Damage": 5987, "Range": 20, "SPA": 4.5, "AOE": { "type": "line", "params": {"lineWidth":9} }, "Cost": 12565, "DoT": null }
         ]
     },
     "Benimaru": {
@@ -886,14 +886,14 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 233, "Range": 15, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 1400, "DoT": "Burn" },
-            { "Damage": 481, "Range": 15, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 2000, "DoT": "Burn" },
-            { "Damage": 742, "Range": 15, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 3500, "DoT": "Burn" },
-            { "Damage": 2579, "Range": 20, "SPA": 5, "AOE": { "type": "cone", "params": {} }, "Cost": 5500, "DoT": "Burn" },
-            { "Damage": 3373, "Range": 20, "SPA": 5, "AOE": { "type": "cone", "params": {} }, "Cost": 8600, "DoT": "Burn" },
-            { "Damage": 6583, "Range": 40, "SPA": 8, "AOE": { "type": "circle", "params": {} }, "Cost": 10000, "DoT": "Burn" },
-            { "Damage": 8347, "Range": 40, "SPA": 8, "AOE": { "type": "circle", "params": {} }, "Cost": 13000, "DoT": "Burn" },
-            { "Damage": 9841, "Range": 40, "SPA": 8, "AOE": { "type": "circle", "params": {} }, "Cost": 19000, "DoT": "Burn" }
+            { "Damage": 233, "Range": 15, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 1400, "DoT": "Burn" },
+            { "Damage": 481, "Range": 15, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 2000, "DoT": "Burn" },
+            { "Damage": 742, "Range": 15, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 3500, "DoT": "Burn" },
+            { "Damage": 2579, "Range": 20, "SPA": 5, "AOE": { "type": "cone", "params": {"coneAngle":140} }, "Cost": 5500, "DoT": "Burn" },
+            { "Damage": 3373, "Range": 20, "SPA": 5, "AOE": { "type": "cone", "params": {"coneAngle":140} }, "Cost": 8600, "DoT": "Burn" },
+            { "Damage": 6583, "Range": 40, "SPA": 8, "AOE": { "type": "circle", "params": {"circleRadius":12} }, "Cost": 10000, "DoT": "Burn" },
+            { "Damage": 8347, "Range": 40, "SPA": 8, "AOE": { "type": "circle", "params": {"circleRadius":12} }, "Cost": 13000, "DoT": "Burn" },
+            { "Damage": 9841, "Range": 40, "SPA": 8, "AOE": { "type": "circle", "params": {"circleRadius":12} }, "Cost": 19000, "DoT": "Burn" }
         ]
     },
     "Kuroma": {
@@ -909,14 +909,14 @@ const characterData = {
         ],
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 420, "Range": 12, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 800, "DoT": null },
-            { "Damage": 875, "Range": 12, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 1200, "DoT": null },
-            { "Damage": 1386, "Range": 14, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 2500, "DoT": null },
-            { "Damage": 1954, "Range": 16, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 4500, "DoT": null },
-            { "Damage": 2577, "Range": 16, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 9000, "DoT": null },
-            { "Damage": 3340, "Range": 18, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 12000, "DoT": null },
-            { "Damage": 4341, "Range": 18, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 15000, "DoT": null },
-            { "Damage": 5602, "Range": 19, "SPA": 3, "AOE": { "type": "cone", "params": {} }, "Cost": 30000, "DoT": null }
+            { "Damage": 420, "Range": 12, "SPA": 3, "AOE": { "type": "cone", "params": {"coneAngle":90} }, "Cost": 800, "DoT": null },
+            { "Damage": 875, "Range": 12, "SPA": 3, "AOE": { "type": "cone", "params": {"coneAngle":90} }, "Cost": 1200, "DoT": null },
+            { "Damage": 1386, "Range": 14, "SPA": 3, "AOE": { "type": "cone", "params": {"coneAngle":90} }, "Cost": 2500, "DoT": null },
+            { "Damage": 1954, "Range": 16, "SPA": 3, "AOE": { "type": "cone", "params": {"coneAngle":90} }, "Cost": 4500, "DoT": null },
+            { "Damage": 2577, "Range": 16, "SPA": 3, "AOE": { "type": "cone", "params": {"coneAngle":90} }, "Cost": 9000, "DoT": null },
+            { "Damage": 3340, "Range": 18, "SPA": 3, "AOE": { "type": "cone", "params": {"coneAngle":90} }, "Cost": 12000, "DoT": null },
+            { "Damage": 4341, "Range": 18, "SPA": 3, "AOE": { "type": "cone", "params": {"coneAngle":90} }, "Cost": 15000, "DoT": null },
+            { "Damage": 5602, "Range": 19, "SPA": 3, "AOE": { "type": "cone", "params": {"coneAngle":90} }, "Cost": 30000, "DoT": null }
         ]
     },
     "Kuroma (Hybrid Form)": {
@@ -928,12 +928,12 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 1538, "Range": 31.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 800, "DoT": null },
-            { "Damage": 2169, "Range": 31.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 4500, "DoT": null },
-            { "Damage": 2860, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 4500, "DoT": null },
-            { "Damage": 3707, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 9000, "DoT": null },
-            { "Damage": 4819, "Range": 40.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 12000, "DoT": null },
-            { "Damage": 6218, "Range": 42.75, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 15000, "DoT": null }
+            { "Damage": 1538, "Range": 31.5, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 800, "DoT": null },
+            { "Damage": 2169, "Range": 31.5, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 4500, "DoT": null },
+            { "Damage": 2860, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 4500, "DoT": null },
+            { "Damage": 3707, "Range": 36, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 9000, "DoT": null },
+            { "Damage": 4819, "Range": 40.5, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 12000, "DoT": null },
+            { "Damage": 6218, "Range": 42.75, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 15000, "DoT": null }
         ]
     },
     "Kuroma (Full AOE Form)": {
@@ -967,14 +967,14 @@ const characterData = {
         ],
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 243, "Range": 10, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 725, "DoT": null },
-            { "Damage": 523, "Range": 11, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 1300, "DoT": null },
-            { "Damage": 831, "Range": 12, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 2500, "DoT": null },
-            { "Damage": 1186, "Range": 14, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 7500, "DoT": null },
-            { "Damage": 1587, "Range": 15, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 7225, "DoT": null },
-            { "Damage": 2082, "Range": 17, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 9750, "DoT": null },
-            { "Damage": 2670, "Range": 18, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 14000, "DoT": null },
-            { "Damage": 3501, "Range": 20, "SPA": 2, "AOE": { "type": "cone", "params": {} }, "Cost": 17000, "DoT": null }
+            { "Damage": 243, "Range": 10, "SPA": 2, "AOE": { "type": "cone", "params": {"coneAngle":55} }, "Cost": 725, "DoT": null },
+            { "Damage": 523, "Range": 11, "SPA": 2, "AOE": { "type": "cone", "params": {"coneAngle":55} }, "Cost": 1300, "DoT": null },
+            { "Damage": 831, "Range": 12, "SPA": 2, "AOE": { "type": "cone", "params": {"coneAngle":55} }, "Cost": 2500, "DoT": null },
+            { "Damage": 1186, "Range": 14, "SPA": 2, "AOE": { "type": "cone", "params": {"coneAngle":55} }, "Cost": 7500, "DoT": null },
+            { "Damage": 1587, "Range": 15, "SPA": 2, "AOE": { "type": "cone", "params": {"coneAngle":55} }, "Cost": 7225, "DoT": null },
+            { "Damage": 2082, "Range": 17, "SPA": 2, "AOE": { "type": "cone", "params": {"coneAngle":55} }, "Cost": 9750, "DoT": null },
+            { "Damage": 2670, "Range": 18, "SPA": 2, "AOE": { "type": "cone", "params": {"coneAngle":55} }, "Cost": 14000, "DoT": null },
+            { "Damage": 3501, "Range": 20, "SPA": 2, "AOE": { "type": "cone", "params": {"coneAngle":55} }, "Cost": 17000, "DoT": null }
         ]
     },
     "Inumaki (Stop)": {
@@ -986,12 +986,12 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 997, "Range": 30, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 4525, "DoT": null },
-            { "Damage": 1423, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 7500, "DoT": null },
-            { "Damage": 1904, "Range": 37.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 7225, "DoT": null },
-            { "Damage": 2498, "Range": 42.5, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 9750, "DoT": null },
-            { "Damage": 3204, "Range": 45, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": null },
-            { "Damage": 4201, "Range": 50, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 17000, "DoT": null }
+            { "Damage": 997, "Range": 30, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 4525, "DoT": null },
+            { "Damage": 1423, "Range": 35, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 7500, "DoT": null },
+            { "Damage": 1904, "Range": 37.5, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 7225, "DoT": null },
+            { "Damage": 2498, "Range": 42.5, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 9750, "DoT": null },
+            { "Damage": 3204, "Range": 45, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 14000, "DoT": null },
+            { "Damage": 4201, "Range": 50, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 17000, "DoT": null }
         ]
     },
     "Inumaki (Cut)": {
@@ -1003,12 +1003,12 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 998, "Range": 27, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 4525, "DoT": "Bleed" },
-            { "Damage": 1424, "Range": 31.5, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 7500, "DoT": "Bleed" },
-            { "Damage": 1906, "Range": 33.75, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 7225, "DoT": "Bleed" },
-            { "Damage": 2500, "Range": 38.25, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 9750, "DoT": "Bleed" },
-            { "Damage": 3207, "Range": 40.5, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": "Bleed" },
-            { "Damage": 4205, "Range": 45, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 17000, "DoT": "Bleed" }
+            { "Damage": 998, "Range": 27, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":3} }, "Cost": 4525, "DoT": "Bleed" },
+            { "Damage": 1424, "Range": 31.5, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":3} }, "Cost": 7500, "DoT": "Bleed" },
+            { "Damage": 1906, "Range": 33.75, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":3} }, "Cost": 7225, "DoT": "Bleed" },
+            { "Damage": 2500, "Range": 38.25, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":3} }, "Cost": 9750, "DoT": "Bleed" },
+            { "Damage": 3207, "Range": 40.5, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":3} }, "Cost": 14000, "DoT": "Bleed" },
+            { "Damage": 4205, "Range": 45, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":3} }, "Cost": 17000, "DoT": "Bleed" }
         ]
     },
     "Inumaki (Explode)": {
@@ -1020,12 +1020,12 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 1903, "Range": 24, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 4525, "DoT": null },
-            { "Damage": 2716, "Range": 28, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 7500, "DoT": null },
-            { "Damage": 3634, "Range": 30, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 7225, "DoT": null },
-            { "Damage": 4768, "Range": 34, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 9750, "DoT": null },
-            { "Damage": 6114, "Range": 36, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 14000, "DoT": null },
-            { "Damage": 8017, "Range": 40, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 17000, "DoT": null }
+            { "Damage": 1903, "Range": 24, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 4525, "DoT": null },
+            { "Damage": 2716, "Range": 28, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 7500, "DoT": null },
+            { "Damage": 3634, "Range": 30, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 7225, "DoT": null },
+            { "Damage": 4768, "Range": 34, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 9750, "DoT": null },
+            { "Damage": 6114, "Range": 36, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 14000, "DoT": null },
+            { "Damage": 8017, "Range": 40, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 17000, "DoT": null }
         ]
     },
     "Reigen": {
@@ -1037,14 +1037,14 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 567, "Range": 20, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1111, "DoT": null },
-            { "Damage": 945, "Range": 24, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1350, "DoT": null },
-            { "Damage": 1342, "Range": 28, "SPA": 4.5, "AOE": { "type": "circle", "params": {} }, "Cost": 1859, "DoT": null },
-            { "Damage": 1606, "Range": 32, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 3680, "DoT": null },
-            { "Damage": 2054, "Range": 36, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 4500, "DoT": null },
-            { "Damage": 2987, "Range": 40, "SPA": 4, "AOE": { "type": "circle", "params": {} }, "Cost": 8800, "DoT": null },
-            { "Damage": 5134, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 10000, "DoT": null },
-            { "Damage": 7081, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 17700, "DoT": null }
+            { "Damage": 567, "Range": 20, "SPA": 4.5, "AOE": { "type": "circle", "params": {"circleRadius" : 7} }, "Cost": 1111, "DoT": null },
+            { "Damage": 945, "Range": 24, "SPA": 4.5, "AOE": { "type": "circle", "params": {"circleRadius" : 7} }, "Cost": 1350, "DoT": null },
+            { "Damage": 1342, "Range": 28, "SPA": 4.5, "AOE": { "type": "circle", "params": {"circleRadius" : 7} }, "Cost": 1859, "DoT": null },
+            { "Damage": 1606, "Range": 32, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius" : 7} }, "Cost": 3680, "DoT": null },
+            { "Damage": 2054, "Range": 36, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius" : 7} }, "Cost": 4500, "DoT": null },
+            { "Damage": 2987, "Range": 40, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius" : 7} }, "Cost": 8800, "DoT": null },
+            { "Damage": 5134, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius" : 10} }, "Cost": 10000, "DoT": null },
+            { "Damage": 7081, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius" : 10} }, "Cost": 17700, "DoT": null }
         ]
     },
     "Starrk": {
@@ -1056,15 +1056,15 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 496, "Range": 17, "SPA": 2.5, "AOE": { "type": "cone", "params": {} }, "Cost": 1075, "DoT": null },
-            { "Damage": 788, "Range": 20, "SPA": 2.5, "AOE": { "type": "cone", "params": {} }, "Cost": 1300, "DoT": null },
-            { "Damage": 1167, "Range": 23, "SPA": 2.5, "AOE": { "type": "cone", "params": {} }, "Cost": 1875, "DoT": null },
-            { "Damage": 4097, "Range": 18, "SPA": 6.5, "AOE": { "type": "line", "params": {} }, "Cost": 3450, "DoT": null },
-            { "Damage": 5234, "Range": 20, "SPA": 6.5, "AOE": { "type": "line", "params": {} }, "Cost": 5250, "DoT": null },
-            { "Damage": 6524, "Range": 22, "SPA": 6.5, "AOE": { "type": "line", "params": {} }, "Cost": 6800, "DoT": null },
-            { "Damage": 6303, "Range": 32, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 9250, "DoT": null },
-            { "Damage": 8053, "Range": 38, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 12750, "DoT": null },
-            { "Damage": 10307, "Range": 45, "SPA": 5, "AOE": { "type": "line", "params": {} }, "Cost": 17250, "DoT": null }
+            { "Damage": 496, "Range": 17, "SPA": 2.5, "AOE": { "type": "cone", "params": {"coneAngle":40} }, "Cost": 1075, "DoT": null },
+            { "Damage": 788, "Range": 20, "SPA": 2.5, "AOE": { "type": "cone", "params": {"coneAngle":40} }, "Cost": 1300, "DoT": null },
+            { "Damage": 1167, "Range": 23, "SPA": 2.5, "AOE": { "type": "cone", "params": {"coneAngle":40} }, "Cost": 1875, "DoT": null },
+            { "Damage": 4097, "Range": 18, "SPA": 6.5, "AOE": { "type": "line", "params": {"lineWidth":7} }, "Cost": 3450, "DoT": null },
+            { "Damage": 5234, "Range": 20, "SPA": 6.5, "AOE": { "type": "line", "params": {"lineWidth":7} }, "Cost": 5250, "DoT": null },
+            { "Damage": 6524, "Range": 22, "SPA": 6.5, "AOE": { "type": "line", "params": {"lineWidth":7} }, "Cost": 6800, "DoT": null },
+            { "Damage": 6303, "Range": 32, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":10} }, "Cost": 9250, "DoT": null },
+            { "Damage": 8053, "Range": 38, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":10} }, "Cost": 12750, "DoT": null },
+            { "Damage": 10307, "Range": 45, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":10} }, "Cost": 17250, "DoT": null }
         ]
     },
     "Tobi": {
@@ -1076,14 +1076,14 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 448, "Range": 23, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 950, "DoT": null },
-            { "Damage": 980, "Range": 24, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 1550, "DoT": null },
-            { "Damage": 1568, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 2600, "DoT": null },
-            { "Damage": 2213, "Range": 27, "SPA": 3, "AOE": { "type": "circle", "params": {} }, "Cost": 3900, "DoT": null },
-            { "Damage": 4855, "Range": 32, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 8000, "DoT": null },
-            { "Damage": 7190, "Range": 35, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 12000, "DoT": null },
-            { "Damage": 9757, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 15000, "DoT": null },
-            { "Damage": 12838, "Range": 45, "SPA": 5, "AOE": { "type": "circle", "params": {} }, "Cost": 21000, "DoT": null }
+            { "Damage": 448, "Range": 23, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 950, "DoT": null },
+            { "Damage": 980, "Range": 24, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 1550, "DoT": null },
+            { "Damage": 1568, "Range": 25, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 2600, "DoT": null },
+            { "Damage": 2213, "Range": 27, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 3900, "DoT": null },
+            { "Damage": 4855, "Range": 32, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 8000, "DoT": null },
+            { "Damage": 7190, "Range": 35, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 12000, "DoT": null },
+            { "Damage": 9757, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 15000, "DoT": null },
+            { "Damage": 12838, "Range": 45, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 21000, "DoT": null }
         ]
     },
     "Toji": {
@@ -1095,14 +1095,14 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
-            { "Damage": 195, "Range": 20, "SPA": 2, "AOE": { "type": "line", "params": {} }, "Cost": 950, "DoT": "Bleed" },
-            { "Damage": 410, "Range": 22, "SPA": 2, "AOE": { "type": "line", "params": {} }, "Cost": 1400, "DoT": "Bleed" },
-            { "Damage": 639, "Range": 25, "SPA": 2, "AOE": { "type": "line", "params": {} }, "Cost": 2800, "DoT": "Bleed" },
-            { "Damage": 1424, "Range": 30, "SPA": 2.75, "AOE": { "type": "line", "params": {} }, "Cost": 3500, "DoT": "Bleed" },
-            { "Damage": 1890, "Range": 30, "SPA": 2.75, "AOE": { "type": "circle", "params": {} }, "Cost": 4350, "DoT": "Bleed" },
-            { "Damage": 2534, "Range": 32, "SPA": 2.75, "AOE": { "type": "circle", "params": {} }, "Cost": 6500, "DoT": "Bleed" },
-            { "Damage": 3360, "Range": 36, "SPA": 2.75, "AOE": { "type": "circle", "params": {} }, "Cost": 8000, "DoT": "Bleed" },
-            { "Damage": 4989, "Range": 40, "SPA": 3.25, "AOE": { "type": "circle", "params": {} }, "Cost": 12500, "DoT": null }
+            { "Damage": 195, "Range": 20, "SPA": 2, "AOE": { "type": "line", "params": {"lineWidth":7} }, "Cost": 950, "DoT": "Bleed" },
+            { "Damage": 410, "Range": 22, "SPA": 2, "AOE": { "type": "line", "params": {"lineWidth":7} }, "Cost": 1400, "DoT": "Bleed" },
+            { "Damage": 639, "Range": 25, "SPA": 2, "AOE": { "type": "line", "params": {"lineWidth":7} }, "Cost": 2800, "DoT": "Bleed" },
+            { "Damage": 1424, "Range": 30, "SPA": 2.75, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 3500, "DoT": "Bleed" },
+            { "Damage": 1890, "Range": 30, "SPA": 2.75, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 4350, "DoT": "Bleed" },
+            { "Damage": 2534, "Range": 32, "SPA": 2.75, "AOE": { "type": "circle", "params": {"circleRadius":11} }, "Cost": 6500, "DoT": "Bleed" },
+            { "Damage": 3360, "Range": 36, "SPA": 2.75, "AOE": { "type": "circle", "params": {"circleRadius":11} }, "Cost": 8000, "DoT": "Bleed" },
+            { "Damage": 4989, "Range": 40, "SPA": 3.25, "AOE": { "type": "circle", "params": {"circleRadius":12} }, "Cost": 12500, "DoT": null }
         ]
     },
     "Yami": {
@@ -1117,12 +1117,12 @@ const characterData = {
             { "Damage": 116, "Range": 10, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 1000, "DoT": "BlackFlames" },
             { "Damage": 270, "Range": 12, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 1300, "DoT": "BlackFlames" },
             { "Damage": 452, "Range": 15, "SPA": 2, "AOE": { "type": "single", "params": {} }, "Cost": 2200, "DoT": "BlackFlames" },
-            { "Damage": 686, "Range": 22, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 3235, "DoT": "BlackFlames" },
-            { "Damage": 947, "Range": 27, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 4400, "DoT": "BlackFlames" },
-            { "Damage": 1227, "Range": 32, "SPA": 2, "AOE": { "type": "circle", "params": {} }, "Cost": 5875, "DoT": "BlackFlames" },
-            { "Damage": 4172, "Range": 38, "SPA": 5.5, "AOE": { "type": "line", "params": {} }, "Cost": 9475, "DoT": "BlackFlames" },
-            { "Damage": 5071, "Range": 38, "SPA": 5.5, "AOE": { "type": "line", "params": {} }, "Cost": 12750, "DoT": "BlackFlames" },
-            { "Damage": 6098, "Range": 38, "SPA": 5.5, "AOE": { "type": "line", "params": {} }, "Cost": 19765, "DoT": "BlackFlames" }
+            { "Damage": 686, "Range": 22, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 3235, "DoT": "BlackFlames" },
+            { "Damage": 947, "Range": 27, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 4400, "DoT": "BlackFlames" },
+            { "Damage": 1227, "Range": 32, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":7} }, "Cost": 5875, "DoT": "BlackFlames" },
+            { "Damage": 4172, "Range": 38, "SPA": 5.5, "AOE": { "type": "line", "params": {"lineWidth":6} }, "Cost": 9475, "DoT": "BlackFlames" },
+            { "Damage": 5071, "Range": 38, "SPA": 5.5, "AOE": { "type": "line", "params": {"lineWidth":6} }, "Cost": 12750, "DoT": "BlackFlames" },
+            { "Damage": 6098, "Range": 38, "SPA": 5.5, "AOE": { "type": "line", "params": {"lineWidth":6} }, "Cost": 19765, "DoT": "BlackFlames" }
         ]
     }
 };

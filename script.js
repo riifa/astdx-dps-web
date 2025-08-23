@@ -707,18 +707,20 @@ const calculatorApp = {
         
         let dotMultiplier = 0;
         const effect = (currentUpgrade.DoT || '').toLowerCase();
-        if (effect !== "none") {
+        if (effect !== "None") {
             if (effect.includes("burn")) dotMultiplier = 0.1;
             else if (effect.includes("bleed")) dotMultiplier = 0.0833;
             else if (effect.includes("poison")) dotMultiplier = 0.05;
             else if (effect.includes("shock")) dotMultiplier = 0.025;
             else if (effect.includes("blackflames")) dotMultiplier = 0.125;
+
+            if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
         }
         
         if (this.state.selectedUnit === 'Michishibo' && this.state.specialAbilities.michishiboTransparentWorldActive && mainUnitUpgradeIndex >= 8) {
             dotMultiplier = 0.0833; 
         }
-        if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
+        
 
         const dotDps = (finalDamage * dotMultiplier) / 2;
         const unitDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
