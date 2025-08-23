@@ -516,7 +516,7 @@ const characterData = {
         MaxCost: 66400,
         PlacementCount: 3,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/unbound_units/akainu5_icon.png',
         Element: "Red",
         Rarity: "Unbound",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -536,7 +536,7 @@ const characterData = {
         MaxCost: 70000,
         PlacementCount: 4,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/unbound_units/chrolloU_icon.png',
         Element: "Green",
         Rarity: "Unbound",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -556,7 +556,7 @@ const characterData = {
         MaxCost: 61000,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/crocodile5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -575,7 +575,7 @@ const characterData = {
         MaxCost: 42500,
         PlacementCount: 3,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/killua5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
@@ -594,7 +594,7 @@ const characterData = {
         MaxCost: 34000,
         PlacementCount: 4,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/mercury5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -612,7 +612,7 @@ const characterData = {
         MaxCost: 39700,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/kisame5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -631,7 +631,7 @@ const characterData = {
         MaxCost: 50000,
         PlacementCount: 4,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/giyu5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -649,7 +649,7 @@ const characterData = {
         MaxCost: 44100,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/ace5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
@@ -668,7 +668,7 @@ const characterData = {
         MaxCost: 58500,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/zeke5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: ["Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid"],
@@ -687,7 +687,7 @@ const characterData = {
         MaxCost: 77175,
         PlacementCount: 3,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/unbound_units/freizaU_icon.png',
         Element: "Orange",
         Rarity: "Unbound",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
@@ -707,7 +707,7 @@ const characterData = {
         MaxCost: 77175,
         PlacementCount: 3,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/unbound_units/freizaU_icon.png',
         Element: "Orange",
         Rarity: "Unbound",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
@@ -727,7 +727,7 @@ const characterData = {
         MaxCost: 77175,
         PlacementCount: 3,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/unbound_units/freizaU_icon.png',
         Element: "Orange",
         Rarity: "Unbound",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
@@ -747,7 +747,7 @@ const characterData = {
         MaxCost: 77175,
         PlacementCount: 3,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/unbound_units/freizaU_icon.png',
         Element: "Orange",
         Rarity: "Unbound",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
@@ -767,7 +767,7 @@ const characterData = {
         MaxCost: 55000,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/zesty5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -786,7 +786,7 @@ const characterData = {
         MaxCost: 44560,
         PlacementCount: 4,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/enel5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
@@ -806,7 +806,7 @@ const characterData = {
         MaxCost: 50000,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/darkness5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -825,7 +825,7 @@ const characterData = {
         MaxCost: 48500,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/trunks5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: ["Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill", "Hill"],
@@ -844,7 +844,7 @@ const characterData = {
         MaxCost: 70000,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/freezer5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -863,7 +863,7 @@ const characterData = {
         MaxCost: 39990,
         PlacementCount: 3,
         MaxUpgrades: 6,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/BOX5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -877,11 +877,11 @@ const characterData = {
             { "Damage": 5987, "Range": 20, "SPA": 4.5, "AOE": { "type": "line", "params": {"lineWidth":9} }, "Cost": 12565, "DoT": null }
         ]
     },
-    "Benimaru": {
+    "Fire Officer": {
         MaxCost: 63000,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/benimaru5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -900,7 +900,7 @@ const characterData = {
         MaxCost: 75000,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/kuroma5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         "Spawns": [
@@ -923,7 +923,7 @@ const characterData = {
         MaxCost: 75000,
         PlacementCount: 3,
         MaxUpgrades: 5,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/kuroma5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -940,7 +940,7 @@ const characterData = {
         MaxCost: 75000,
         PlacementCount: 3,
         MaxUpgrades: 5,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/kuroma5_icon.png',
         Element: "Green",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -953,17 +953,17 @@ const characterData = {
             { "Damage": 17926, "Range": 31.92, "SPA": 9, "AOE": { "type": "full aoe", "params": {} }, "Cost": 15000, "DoT": null }
         ]
     },
-    "Inumaki": {
+    "Cursed Talker": {
         MaxCost: 60000,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/inumaki5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         "Spawns": [
-            { "unitName": "Inumaki (Stop)", "spawnAtUpgrade": 2, "SeperateUnit": false },
-            { "unitName": "Inumaki (Cut)", "spawnAtUpgrade": 2, "SeperateUnit": false },
-            { "unitName": "Inumaki (Explode)", "spawnAtUpgrade": 2, "SeperateUnit": false }
+            { "unitName": "Cursed Talker (Stop)", "spawnAtUpgrade": 2, "SeperateUnit": false },
+            { "unitName": "Cursed Talker (Cut)", "spawnAtUpgrade": 2, "SeperateUnit": false },
+            { "unitName": "Cursed Talker (Explode)", "spawnAtUpgrade": 2, "SeperateUnit": false }
         ],
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
         "upgrades": [
@@ -977,11 +977,11 @@ const characterData = {
             { "Damage": 3501, "Range": 20, "SPA": 2, "AOE": { "type": "cone", "params": {"coneAngle":55} }, "Cost": 17000, "DoT": null }
         ]
     },
-    "Inumaki (Stop)": {
+    "Cursed Talker (Stop)": {
         MaxCost: 60000,
         PlacementCount: 4,
         MaxUpgrades: 5,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/inumaki5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -994,11 +994,11 @@ const characterData = {
             { "Damage": 4201, "Range": 50, "SPA": 3, "AOE": { "type": "circle", "params": {"circleRadius":5} }, "Cost": 17000, "DoT": null }
         ]
     },
-    "Inumaki (Cut)": {
+    "Cursed Talker (Cut)": {
         MaxCost: 60000,
         PlacementCount: 4,
         MaxUpgrades: 5,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/inumaki5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -1011,11 +1011,11 @@ const characterData = {
             { "Damage": 4205, "Range": 45, "SPA": 2, "AOE": { "type": "circle", "params": {"circleRadius":3} }, "Cost": 17000, "DoT": "Bleed" }
         ]
     },
-    "Inumaki (Explode)": {
+    "Cursed Talker (Explode)": {
         MaxCost: 60000,
         PlacementCount: 4,
         MaxUpgrades: 5,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/inumaki5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -1028,11 +1028,11 @@ const characterData = {
             { "Damage": 8017, "Range": 40, "SPA": 4, "AOE": { "type": "circle", "params": {"circleRadius":8} }, "Cost": 17000, "DoT": null }
         ]
     },
-    "Reigen": {
+    "Expert Sorcerer (Serious)": {
         MaxCost: 49000,
         PlacementCount: 4,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/reigen5_icon.png',
         Element: "Orange",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -1047,11 +1047,11 @@ const characterData = {
             { "Damage": 7081, "Range": 40, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius" : 10} }, "Cost": 17700, "DoT": null }
         ]
     },
-    "Starrk": {
+    "Tony Stark": {
         MaxCost: 59000,
         PlacementCount: 4,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/starrk5_icon.png',
         Element: "Blue",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -1067,11 +1067,11 @@ const characterData = {
             { "Damage": 10307, "Range": 45, "SPA": 5, "AOE": { "type": "line", "params": {"lineWidth":10} }, "Cost": 17250, "DoT": null }
         ]
     },
-    "Tobi": {
+    "Tomi": {
         MaxCost: 65000,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/tobi5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -1086,11 +1086,11 @@ const characterData = {
             { "Damage": 12838, "Range": 45, "SPA": 5, "AOE": { "type": "circle", "params": {"circleRadius":9} }, "Cost": 21000, "DoT": null }
         ]
     },
-    "Toji": {
+    "Sorcerer Killer": {
         MaxCost: 40000,
         PlacementCount: 3,
         MaxUpgrades: 7,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/toji5_icon.png',
         Element: "Red",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
@@ -1105,11 +1105,11 @@ const characterData = {
             { "Damage": 4989, "Range": 40, "SPA": 3.25, "AOE": { "type": "circle", "params": {"circleRadius":12} }, "Cost": 12500, "DoT": null }
         ]
     },
-    "Yami": {
+    "Dark": {
         MaxCost: 60000,
         PlacementCount: 3,
         MaxUpgrades: 8,
-        Image: './images/units/placeholder.png',
+        Image: './images/units/5_star_units/yami5_icon.png',
         Element: "Purple",
         Rarity: "5 Star",
         PlacementStatus: ["Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground", "Ground"],
