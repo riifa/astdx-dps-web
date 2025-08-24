@@ -4,12 +4,10 @@ const newlyAddedUnits = [
     "Dark","Sorcerer Killer","Expert Sorcerer (Serious)","Tomi","Tony Stark","Cursed Talker","Kuroma","Fire Officer"
 ];
 
-// --- START: NEW BANLIST ---
-// Add the exact names of any units you want to hide from the selection grid here.
 const banlist = [
     "Cursed Talker (Stop)", "Cursed Talker (Cut)", "Cursed Talker (Explode)", "Kuroma (Hybrid Form)", "Kuroma (Full AOE Form)", "Airren (Titan)"
 ];
-// --- END: NEW BANLIST ---
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -69,13 +67,14 @@ const calculatorApp = {
         selectedBuff: 'None',
         currentUpgradeIndexes: {}, 
         rollCount: 0,
-        isVisualizerReady: false, // <-- ADD THIS: State to track iframe readiness
+        isVisualizerReady: false, 
         specialAbilities: {
             boxDeterminationActive: false,
             michishiboTransparentWorldActive: false,
             michishiboLunarBlessingActive: false,
             tojiHeavenlyRestrictionStacks: 0,
         },
+        previousCalculations: {},
     },
 
     // --- DOM ELEMENTS ---
@@ -99,7 +98,8 @@ const calculatorApp = {
         specialControls: null,
         visualizerFrame: null,
         visualizerContainer: null,
-        resetSelectionBtn: null
+        resetSelectionBtn: null,
+        traitRollContainer: null,
     },
 
     // --- INITIALIZATION ---
@@ -128,6 +128,8 @@ const calculatorApp = {
         this.elements.specialControls = document.getElementById('special-controls');
         this.elements.visualizerFrame = document.getElementById('aoeVisualizerFrame');
         this.elements.visualizerContainer = document.getElementById('visualizer-container');
+        this.elements.resetSelectionBtn = document.getElementById('resetSelectionBtn');
+        this.elements.traitRollContainer = document.getElementById('traitRollContainer'); 
         this.elements.resetSelectionBtn = document.getElementById('resetSelectionBtn');
     },
 
@@ -173,10 +175,57 @@ const calculatorApp = {
 
         if (this.elements.visualizerFrame) {
             this.elements.visualizerFrame.addEventListener('load', () => {
-                // The iframe is fully loaded, it's safe to send the first update.
                 this.updateVisualizer();
             });
         }
+    },
+
+    animateValue(element, from, to, options = {}) {
+        if (!element || typeof anime === 'undefined') return;
+
+        const formatValue = (val) => {
+            if (isNaN(val)) return '';
+            let displayValue;
+            if (options.toLocaleString) {
+                displayValue = Math.round(val).toLocaleString();
+            } else {
+                displayValue = val.toFixed(options.toFixed || 0);
+            }
+            return (options.prefix || '') + displayValue + (options.suffix || '');
+        };
+        
+        if (isNaN(to)) {
+            element.textContent = to;
+            return;
+        }
+
+        let startValue = from;
+        if (typeof startValue !== 'number' || isNaN(startValue)) {
+            const currentText = element.textContent.replace(/[^0-9.-]+/g, "");
+            startValue = parseFloat(currentText);
+            if (isNaN(startValue)) {
+                startValue = to; 
+            }
+        }
+        
+        if (startValue === to) {
+            element.textContent = formatValue(to);
+            return;
+        }
+        
+        let proxy = { value: startValue };
+        anime.remove(element);
+        
+        anime({
+            targets: proxy,
+            value: to,
+            duration: 500,
+            easing: 'easeOutExpo',
+            update: () => {
+                element.textContent = formatValue(proxy.value);
+            },
+            'element-target': element 
+        });
     },
 
     // --- RENDER & UPDATE ---
@@ -200,12 +249,10 @@ const calculatorApp = {
         }
     },
 
-    // AFTER THE FIX
     updateVisualizer() {
         const { activeOutputUnit, currentUpgradeIndexes, rngRoll, selectedTrait, selectedSkillTree, selectedUnit, specialAbilities } = this.state;
         const { visualizerFrame } = this.elements;
         
-        // Check if the contentWindow is accessible, which it will be after the 'load' event.
         if (!activeOutputUnit || !visualizerFrame || !visualizerFrame.contentWindow) return;
 
         const unitData = characterData[activeOutputUnit];
@@ -215,7 +262,6 @@ const calculatorApp = {
         const upgrade = unitData.upgrades[index];
         if (!upgrade || !upgrade.AOE) return;
 
-        // --- Calculate final range for visualizer ---
         const traitBonus = traitsData.find(t => t.Traits === selectedTrait);
         const skillTreeBonus = skillTreeData[selectedSkillTree];
         const baseRange = upgrade.Range;
@@ -223,7 +269,6 @@ const calculatorApp = {
         const totalRangeMultiplier = 1 + (rngRoll / 100) + traitBonus.Range + skillTreeBonus.Range;
         let finalRange = baseRange * totalRangeMultiplier;
         
-        // Apply special unit passives that affect range
         if (selectedUnit === 'Michishibo' && specialAbilities.michishiboLunarBlessingActive) {
             finalRange *= 1.04;
         }
@@ -291,6 +336,9 @@ const calculatorApp = {
             dpsOutputSection.innerHTML = `<p class="placeholder-text">Select a unit to view its stats.</p>`;
             dpsOutputSection.className = 'dps-output-section placeholder';
             this.elements.specialControls.innerHTML = '';
+            if (this.state.previousCalculations[displayUnitName]) {
+                delete this.state.previousCalculations[displayUnitName];
+            }
             return;
         }
     
@@ -302,10 +350,22 @@ const calculatorApp = {
             dpsOutputSection.innerHTML = `<p style="color: red; text-align: center;">Error: Could not find data for ${displayUnitName}.</p>`;
             return;
         }
+
+        const prevCalcs = this.state.previousCalculations[displayUnitName];
+        const newCalcs = this.calculateFinalStats(displayUnitName);
+        
+        const initialDisplay = {
+            finalDamage: (prevCalcs ? prevCalcs.finalDamage : newCalcs.finalDamage).toLocaleString(),
+            finalRange: (prevCalcs ? prevCalcs.finalRange : newCalcs.finalRange).toFixed(1),
+            finalSpa: (prevCalcs ? prevCalcs.finalSpa : newCalcs.finalSpa).toFixed(2) + 's',
+            unitDps: (prevCalcs ? prevCalcs.unitDps : newCalcs.unitDps).toLocaleString(),
+            dotDps: (prevCalcs ? prevCalcs.dotDps : newCalcs.dotDps).toLocaleString(),
+            groupDps: (prevCalcs ? prevCalcs.groupDps : newCalcs.groupDps).toLocaleString(),
+            totalCost: '$' + (prevCalcs ? prevCalcs.totalCost : newCalcs.totalCost).toLocaleString(),
+        };
         
         const currentUpgradeIndex = this.state.currentUpgradeIndexes[displayUnitName] || 0;
         const currentUpgrade = unitData.upgrades[currentUpgradeIndex];
-        const calculated = this.calculateFinalStats(displayUnitName);
     
         const upgradeLabel = currentUpgradeIndex === 0 ? 'Placement' : `Upgrade ${currentUpgradeIndex}`;
         const placementStatus = (unitData.PlacementStatus && unitData.PlacementStatus[currentUpgradeIndex]) 
@@ -365,29 +425,29 @@ const calculatorApp = {
                 <div class="stats-display">
                     <div class="stat-bar-row dmg-bar">
                         <span class="stat-grade grade-${dmgGrade}">${dmgGrade}</span><span class="stat-roll-value">(${dmgRoll.toFixed(2)}%)</span>
-                        <span class="stat-label">DMG:</span><span class="stat-value">${calculated.finalDamage.toLocaleString()}</span>
+                        <span class="stat-label">DMG:</span><span class="stat-value" id="output-dmg">${initialDisplay.finalDamage}</span>
                     </div>
                     <div class="stat-bar-row rng-bar">
                         <span class="stat-grade grade-${rngGrade}">${rngGrade}</span><span class="stat-roll-value">(${rngRoll.toFixed(2)}%)</span>
-                        <span class="stat-label">RNG:</span><span class="stat-value">${calculated.finalRange}</span>
+                        <span class="stat-label">RNG:</span><span class="stat-value" id="output-rng">${initialDisplay.finalRange}</span>
                     </div>
                     <div class="stat-bar-row spa-bar">
                         <span class="stat-grade grade-${spaGrade}">${spaGrade}</span><span class="stat-roll-value">(${spaRoll.toFixed(2)}%)</span>
-                        <span class="stat-label">SPD:</span><span class="stat-value">${calculated.finalSpa}s</span>
+                        <span class="stat-label">SPD:</span><span class="stat-value" id="output-spa">${initialDisplay.finalSpa}</span>
                     </div>
                 </div>
-                <div class="dps-summary ${calculated.dotDps > 0 ? 'has-dot' : ''}">
-                    <div class="dps-item"><h3>Unit DPS</h3><p>${calculated.unitDps.toLocaleString()}</p></div>
-                    ${calculated.dotDps > 0 ? `<div class="dps-item"><h3>DoT DPS</h3><p>${calculated.dotDps.toLocaleString()}</p></div>` : ''}
-                    <div class="dps-item"><h3>Group DPS</h3><p>${calculated.groupDps.toLocaleString()}</p></div>
+                <div class="dps-summary ${newCalcs.dotDps > 0 ? 'has-dot' : ''}">
+                    <div class="dps-item"><h3>Unit DPS</h3><p id="output-unit-dps">${initialDisplay.unitDps}</p></div>
+                    ${newCalcs.dotDps > 0 ? `<div class="dps-item"><h3>DoT DPS</h3><p id="output-dot-dps">${initialDisplay.dotDps}</p></div>` : ''}
+                    <div class="dps-item"><h3>Group DPS</h3><p id="output-group-dps">${initialDisplay.groupDps}</p></div>
                 </div>
                 <div class="additional-stats">
                     <h4>Stats for ${upgradeLabel}</h4>
                     <div class="additional-stats-grid">
                         <div class="stat-block"><span class="stat-block-label">AOE</span><span class="stat-block-value">${aoeString}</span></div>
                         <div class="stat-block"><span class="stat-block-label">DoT Type</span><span class="stat-block-value">${displayDotType}</span></div>
-                        <div class="stat-block"><span class="stat-block-label">Placement</span><span class="stat-block-value">${calculated.totalPlacementCount}</span></div>
-                        <div class="stat-block"><span class="stat-block-label">Total Cost</span><span class="stat-block-value">$${calculated.totalCost.toLocaleString()}</span></div>
+                        <div class="stat-block"><span class="stat-block-label">Placement</span><span class="stat-block-value">${newCalcs.totalPlacementCount}</span></div>
+                        <div class="stat-block"><span class="stat-block-label">Total Cost</span><span class="stat-block-value" id="output-total-cost">${initialDisplay.totalCost}</span></div>
                         <div class="stat-block"><span class="stat-block-label">Next Cost</span><span class="stat-block-value">${nextUpgradeCost}</span></div>
                     </div>
                 </div>
@@ -398,6 +458,23 @@ const calculatorApp = {
                 </div>
             </div>
         `;
+        
+        this.animateValue(dpsOutputSection.querySelector('#output-dmg'), prevCalcs?.finalDamage, newCalcs.finalDamage, { toLocaleString: true });
+        this.animateValue(dpsOutputSection.querySelector('#output-rng'), prevCalcs?.finalRange, newCalcs.finalRange, { toFixed: 1 });
+        this.animateValue(dpsOutputSection.querySelector('#output-spa'), prevCalcs?.finalSpa, newCalcs.finalSpa, { toFixed: 2, suffix: 's' });
+        
+        this.animateValue(dpsOutputSection.querySelector('#output-unit-dps'), prevCalcs?.unitDps, newCalcs.unitDps, { toLocaleString: true });
+        if (newCalcs.dotDps > 0) {
+            this.animateValue(dpsOutputSection.querySelector('#output-dot-dps'), prevCalcs?.dotDps, newCalcs.dotDps, { toLocaleString: true });
+        }
+        this.animateValue(dpsOutputSection.querySelector('#output-group-dps'), prevCalcs?.groupDps, newCalcs.groupDps, { toLocaleString: true });
+        
+        const totalCostElement = dpsOutputSection.querySelector('#output-total-cost');
+        if (totalCostElement) {
+            this.animateValue(totalCostElement, prevCalcs?.totalCost, newCalcs.totalCost, { toLocaleString: true, prefix: '$' });
+        }
+        
+        this.state.previousCalculations[displayUnitName] = newCalcs;
         
         dpsOutputSection.querySelector('#prevUpgradeBtn').addEventListener('click', () => this.navigateUpgrade(-1));
         dpsOutputSection.querySelector('#maxUpgradeBtn').addEventListener('click', () => this.goToMaxUpgrade());
@@ -590,7 +667,6 @@ const calculatorApp = {
     updateDynamicStats() {
         const { activeOutputUnit, selectedUnit } = this.state;
         const displayUnitName = activeOutputUnit || selectedUnit;
-
         if (!displayUnitName) return;
 
         const tojiLabel = document.getElementById('tojiStacksLabel');
@@ -600,25 +676,19 @@ const calculatorApp = {
             tojiLabel.innerHTML = `Sacrificed Units: <span>${stacks}</span> (${currentBonus}% Dmg)`;
         }
 
-        const calculated = this.calculateFinalStats(displayUnitName);
+        const prevCalcs = this.state.previousCalculations[displayUnitName];
+        const newCalcs = this.calculateFinalStats(displayUnitName);
         
         const dpsOutputSection = this.elements.dpsOutputSection;
 
-        const dmgValue = dpsOutputSection.querySelector('.dmg-bar .stat-value');
-        if (dmgValue) dmgValue.textContent = calculated.finalDamage.toLocaleString();
+        this.animateValue(dpsOutputSection.querySelector('.dmg-bar .stat-value'), prevCalcs?.finalDamage, newCalcs.finalDamage, { toLocaleString: true });
+        this.animateValue(dpsOutputSection.querySelector('.rng-bar .stat-value'), prevCalcs?.finalRange, newCalcs.finalRange, { toFixed: 1 });
+        this.animateValue(dpsOutputSection.querySelector('.spa-bar .stat-value'), prevCalcs?.finalSpa, newCalcs.finalSpa, { toFixed: 2, suffix: 's' });
 
-        const rngValue = dpsOutputSection.querySelector('.rng-bar .stat-value');
-        if (rngValue) rngValue.textContent = calculated.finalRange;
-
-        const spaValue = dpsOutputSection.querySelector('.spa-bar .stat-value');
-        if (spaValue) spaValue.textContent = `${calculated.finalSpa}s`;
-
-        const unitDpsValue = dpsOutputSection.querySelector('.dps-summary .dps-item:nth-child(1) p');
-        if(unitDpsValue) unitDpsValue.textContent = calculated.unitDps.toLocaleString();
-
-        const groupDpsValue = dpsOutputSection.querySelector('.dps-summary .dps-item:last-child p');
-        if(groupDpsValue) groupDpsValue.textContent = calculated.groupDps.toLocaleString();
+        this.animateValue(dpsOutputSection.querySelector('.dps-summary .dps-item:nth-child(1) p'), prevCalcs?.unitDps, newCalcs.unitDps, { toLocaleString: true });
+        this.animateValue(dpsOutputSection.querySelector('.dps-summary .dps-item:last-child p'), prevCalcs?.groupDps, newCalcs.groupDps, { toLocaleString: true });
         
+        this.state.previousCalculations[displayUnitName] = newCalcs;
         this.renderCombinedDpsSection();
     },
 
@@ -789,6 +859,8 @@ const calculatorApp = {
         if (this.elements.rollCounter) {
             this.elements.rollCounter.textContent = '0';
         }
+        
+        this.state.previousCalculations = {};
 
         this.render();
     },
@@ -832,6 +904,10 @@ const calculatorApp = {
   
         const buffDropdown = this.elements.onFieldBuffsControl.querySelector('#onFieldBuffsSelection');
         if (buffDropdown) buffDropdown.value = 'None';
+
+        if (this.state.selectedUnit) {
+            delete this.state.previousCalculations[this.state.selectedUnit];
+        }
         
         this.render();
     },
@@ -885,36 +961,133 @@ const calculatorApp = {
     },
     
     rollForTrait() {
-        const traitOdds = [
-            { name: 'Tank', odds: 12 }, { name: 'Perception 1', odds: 11.5 },
-            { name: 'Perception 2', odds: 9 }, { name: 'Perception 3', odds: 7 },
-            { name: 'Dexterity 1', odds: 10 }, { name: 'Dexterity 2', odds: 7.5 },
-            { name: 'Dexterity 3', odds: 6 }, { name: 'Prodigy', odds: 10 },
-            { name: 'Zenkai 1', odds: 5 }, { name: 'Zenkai 2', odds: 7 },
-            { name: 'Zenkai 3', odds: 10 }, { name: 'Midas', odds: 5 },
-            { name: 'Sharpshooter', odds: 4 }, { name: 'Tempest', odds: 3 },
-            { name: 'Companion', odds: 2 }, { name: 'Bloodlust', odds: 0.8 },
-            { name: 'Corrupted', odds: 0.8 }, { name: 'Genesis', odds: 0.7 },
-            { name: 'All Star', odds: 0.2 },
-        ];
+    // Disable the button immediately to prevent spamming
+    this.elements.rollTraitBtn.disabled = true;
 
-        const totalOdds = traitOdds.reduce((sum, trait) => sum + trait.odds, 0);
-        let random = Math.random() * totalOdds;
+    const traitOdds = [
+        { name: 'Tank', odds: 12 }, { name: 'Perception 1', odds: 11.5 },
+        { name: 'Perception 2', odds: 9 }, { name: 'Perception 3', odds: 7 },
+        { name: 'Dexterity 1', odds: 10 }, { name: 'Dexterity 2', odds: 7.5 },
+        { name: 'Dexterity 3', odds: 6 }, { name: 'Prodigy', odds: 10 },
+        { name: 'Zenkai 1', odds: 5 }, { name: 'Zenkai 2', odds: 7 },
+        { name: 'Zenkai 3', odds: 10 }, { name: 'Midas', odds: 5 },
+        { name: 'Sharpshooter', odds: 4 }, { name: 'Tempest', odds: 3 },
+        { name: 'Companion', odds: 2 }, { name: 'Bloodlust', odds: 10 },
+        { name: 'Corrupted', odds: 10 }, { name: 'Genesis', odds: 10 },
+        { name: 'All Star', odds: 10 },
+    ];
 
-        let selected;
-        for (const trait of traitOdds) {
-            if (random < trait.odds) { selected = trait.name; break; }
-            random -= trait.odds;
-        }
-        
-        this.state.rollCount++;
-        this.elements.rollCounter.textContent = this.state.rollCount;
-        this.state.selectedTrait = selected;
-        this.elements.traitSelectionControl.querySelector('#traitSelection').value = selected;
-        this.render();
-    },
+    const totalOdds = traitOdds.reduce((sum, trait) => sum + trait.odds, 0);
+    let random = Math.random() * totalOdds;
 
-    // --- UI POPULATION HELPERS ---
+    let selected;
+    for (const trait of traitOdds) {
+        if (random < trait.odds) { selected = trait.name; break; }
+        random -= trait.odds;
+    }
+    
+    this.state.rollCount++;
+    this.elements.rollCounter.textContent = this.state.rollCount;
+    this.state.selectedTrait = selected;
+    this.elements.traitSelectionControl.querySelector('#traitSelection').value = selected;
+
+    let animationColor = null;
+    let animationDuration = 1200;
+
+    switch (selected) {
+        case 'Corrupted':
+            animationColor = 'rgba(200, 99, 249, 0.7)'; // Purple
+            break;
+        case 'Bloodlust':
+            animationColor = 'rgba(255, 77, 77, 0.7)'; // Red
+            break;
+        case 'Genesis':
+            animationColor = 'rgba(0, 255, 163, 0.7)'; // Green
+            break;
+        case 'All Star':
+            animationColor = 'rainbow';
+            animationDuration = 2000;
+            break;
+    }
+
+    if (animationColor) {
+        // Trigger the animation, and re-enable the button on completion
+        this.triggerGlowAnimation(animationColor, animationDuration, () => {
+            this.elements.rollTraitBtn.disabled = false;
+        });
+    } else {
+        // If no special trait, re-enable the button after a short delay
+        setTimeout(() => {
+            this.elements.rollTraitBtn.disabled = false;
+        }, 200);
+    }
+    
+    this.render();
+},
+
+triggerGlowAnimation(color, duration, onComplete) {
+    const container = this.elements.traitRollContainer;
+
+    // Stop any previous animations on this element
+    anime.remove(container);
+
+    if (color === 'rainbow') {
+        // --- START: FINAL RAINBOW ANIMATION WITH FADE-IN/OUT ---
+
+        // We create a proxy object to animate multiple properties independently
+        const glowProxy = {
+            blur: 0,
+            spread: 0,
+            color: '#ff2400'
+        };
+
+        // This timeline will manage both the glow size and color change
+        const timeline = anime.timeline({
+            duration: duration,
+            easing: 'easeOutExpo',
+            update: () => {
+                // On each frame, build the boxShadow style from the proxy's current values
+                container.style.boxShadow = `0 0 ${glowProxy.blur}px ${glowProxy.spread}px ${glowProxy.color}`;
+            },
+            complete: onComplete // Re-enable the button when the entire timeline finishes
+        });
+
+        // Animation 1: The Glow Size (Flash in, hold, fade out)
+        timeline.add({
+            targets: glowProxy,
+            blur: [0, 25, 25, 0],   // Start at 0, flash to 25, hold at 25, fade to 0
+            spread: [0, 8, 8, 0],     // Same for spread
+            easing: 'easeInOutSine',
+            duration: duration,
+        }, 0); // Start at time 0 of the timeline
+
+        // Animation 2: The Color Cycle
+        timeline.add({
+            targets: glowProxy,
+            color: ['#ff2400', '#e8b71d', '#1de840', '#1ddde8', '#dd00f3', '#ff2400'],
+            easing: 'linear',
+            duration: duration,
+        }, 0); // Start at time 0 of the timeline
+
+        // --- END: FINAL RAINBOW ANIMATION WITH FADE-IN/OUT ---
+
+    } else {
+        // --- Single Color Pulse (this was already working well) ---
+        const transparentColor = color.replace(/[^,]+(?=\))/, '0');
+
+        anime({
+            targets: container,
+            boxShadow: [
+                { value: `0 0 0px 0px ${transparentColor}`, duration: 0 },
+                { value: `0 0 25px 8px ${color}`, duration: 150, easing: 'easeOutQuad' },
+                { value: `0 0 25px 8px ${color}`, duration: duration - 650 },
+                { value: `0 0 0px 0px ${transparentColor}`, duration: 500, easing: 'easeInQuad' }
+            ],
+            complete: onComplete
+        });
+    }
+},
+
     populateUnitGrid() {
         let finalHTML = '';
         const remainingUnits = { ...characterData };
@@ -987,9 +1160,10 @@ const calculatorApp = {
 
     populateTraitsDropdown() {
         const optionsHTML = traitsData.map(trait => `<option value="${trait.Traits}">${trait.Traits}</option>`).join('');
+        // --- MODIFIED: Added id="traitRollContainer" to the div ---
         this.elements.traitSelectionControl.innerHTML = `
             <label for="traitSelection">Select a Trait:</label>
-            <div class="trait-roll-container">
+            <div id="traitRollContainer" class="trait-roll-container">
                 <div class="select-wrapper"><select id="traitSelection">${optionsHTML}</select></div>
                 <button id="rollTraitBtn" class="roll-btn">Roll</button>
                 <div class="roll-counter-wrapper">Rolls: <span id="rollCounter">${this.state.rollCount}</span></div>
@@ -997,6 +1171,9 @@ const calculatorApp = {
         
         this.elements.rollTraitBtn = document.getElementById('rollTraitBtn');
         this.elements.rollCounter = document.getElementById('rollCounter');
+
+        // This needs to be re-cached here because we just created it.
+        this.elements.traitRollContainer = document.getElementById('traitRollContainer');
 
         this.elements.traitSelectionControl.querySelector('#traitSelection').addEventListener('change', (e) => {
             this.state.selectedTrait = e.target.value;

@@ -169,13 +169,15 @@
     aoeConeMask.rotation.x = -Math.PI / 2; aoeConeMask.renderOrder = 1; scene.add(aoeConeMask);
     let figure8Curve = null;
 
+     const gridFadeMultiplier = 2.5;
+
     const initialRange = parseFloat(document.getElementById('unitRange').value);
     const initialOuterRange = parseFloat(document.getElementById('outerRange').value);
 
     // Targets for smooth animation
     let targetSphereScale = new THREE.Vector3(initialRange, initialRange, initialRange);
     let targetBorderScale = new THREE.Vector3(initialRange, initialRange, initialRange);
-    let targetFadeDistance = initialRange * 2.5;
+    let targetFadeDistance = initialRange * gridFadeMultiplier;
     let targetOuterRange = Math.max(initialRange, initialOuterRange);
 
     // Set initial values directly since all objects are now created
@@ -246,7 +248,7 @@
         // Set the targets for animation in the animate() loop
         targetSphereScale.set(range, range, range);
         targetBorderScale.set(range, range, range);
-        targetFadeDistance = range * 2.5;
+        targetFadeDistance = range * gridFadeMultiplier;
 
         // Hide all AOE specific meshes by default
         aoeCircle.visible = false;
