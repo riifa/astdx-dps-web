@@ -73,6 +73,7 @@ const calculatorApp = {
             michishiboTransparentWorldActive: false,
             michishiboLunarBlessingActive: false,
             tojiHeavenlyRestrictionStacks: 0,
+            explosionArtistAoeMode: 'scouter1',
         },
         previousCalculations: {},
     },
@@ -272,10 +273,16 @@ const calculatorApp = {
         if (selectedUnit === 'Michishibo' && specialAbilities.michishiboLunarBlessingActive) {
             finalRange *= 1.04;
         }
+        
+        // --- FIX FOR EXPLOSION ARTIST ABILITY ---
+        // Determine the correct AOE type based on the unit and its current special ability state
+        const aoeType = (activeOutputUnit === 'Explosion Artist')
+            ? specialAbilities.explosionArtistAoeMode
+            : upgrade.AOE.type.toLowerCase();
 
         const visualizerData = {
             range: finalRange,
-            aoeType: upgrade.AOE.type.toLowerCase(),
+            aoeType: aoeType,
             params: upgrade.AOE.params || {}
         };
         
@@ -315,6 +322,8 @@ const calculatorApp = {
         let formattedType = type.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
         if (formattedType === 'Circle') formattedType = 'EAOE';
+        if (formattedType === 'Scouter1') formattedType = 'Scouter 1';
+        if (formattedType === 'Scouter2') formattedType = 'Scouter 2';
 
         let paramString = '';
         if (params.lineWidth) paramString = `(${params.lineWidth})`;
@@ -387,7 +396,12 @@ const calculatorApp = {
             displayDotType = 'Bleed';
         }
         
-        const aoeString = this.formatAoeToString(currentUpgrade.AOE);
+        // --- FIX FOR EXPLOSION ARTIST ABILITY ---
+        let aoeObject = currentUpgrade.AOE;
+        if (displayUnitName === 'Explosion Artist') {
+            aoeObject = { type: this.state.specialAbilities.explosionArtistAoeMode };
+        }
+        const aoeString = this.formatAoeToString(aoeObject);
     
         let nextUpgradeCost;
         if (currentUpgradeIndex < unitData.MaxUpgrades) {
@@ -680,6 +694,28 @@ const calculatorApp = {
                 this.updateDynamicStats(); 
             });
         }
+        else if (unitForControls === 'Explosion Artist') {
+            const currentAoeMode = specialAbilities.explosionArtistAoeMode;
+            const nextAoeModeLabel = currentAoeMode === 'scouter1' ? 'Figure-Eight' : 'Circular';
+            const currentAoeModeLabel = currentAoeMode === 'scouter1' ? 'Circular (Scouter 1)' : 'Figure-Eight (Scouter 2)';
+
+            specialControls.innerHTML = `
+                <div class="special-ability-control">
+                    <h4>Special Ability</h4>
+                    <p class="ability-desc">
+                        <strong>Route Change:</strong> Switches the unit's flight and attack path.
+                        <br>
+                        Current Mode: <strong>${currentAoeModeLabel}</strong>
+                    </p>
+                    <button id="explosionArtistAoeBtn" class="ability-btn">Switch to ${nextAoeModeLabel}</button>
+                </div>
+            `;
+
+            document.getElementById('explosionArtistAoeBtn').addEventListener('click', () => {
+                this.state.specialAbilities.explosionArtistAoeMode = currentAoeMode === 'scouter1' ? 'scouter2' : 'scouter1';
+                this.render(); // Re-render to update the button text and visualizer
+            });
+        }
     },
 
     updateDynamicStats() {
@@ -880,6 +916,7 @@ const calculatorApp = {
             michishiboTransparentWorldActive: false,
             michishiboLunarBlessingActive: false,
             tojiHeavenlyRestrictionStacks: 0,
+            explosionArtistAoeMode: 'scouter1',
         };
 
         this.state.rollCount = 0;
@@ -909,6 +946,7 @@ const calculatorApp = {
             michishiboTransparentWorldActive: false,
             michishiboLunarBlessingActive: false,
             tojiHeavenlyRestrictionStacks: 0,
+            explosionArtistAoeMode: 'scouter1',
         };
         
         const levelSlider = this.elements.unitLevelControl.querySelector('#unitLevelSlider');

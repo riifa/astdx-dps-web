@@ -125,13 +125,13 @@ const characterData = {
         Rarity: "5 Star",
         PlacementStatus: ["Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid", "Hybrid"],
         "upgrades": [
-            { "Damage": 305, "Range": 10, "SPA": 2, "AOE": { "type": "patrol", "params": { "patrolRadius": 10 } }, "Cost": 1000, "DoT": null },
-            { "Damage": 515, "Range": 10, "SPA": 2, "AOE": { "type": "patrol", "params": { "patrolRadius": 10 } }, "Cost": 1750, "DoT": null },
-            { "Damage": 770, "Range": 10, "SPA": 2, "AOE": { "type": "patrol", "params": { "patrolRadius": 10 } }, "Cost": 2500, "DoT": null },
-            { "Damage": 1075, "Range": 10, "SPA": 2, "AOE": { "type": "patrol", "params": { "patrolRadius": 10 } }, "Cost": 3360, "DoT": null },
-            { "Damage": 3560, "Range": 15, "SPA": 5, "AOE": { "type": "patrol", "params": { "patrolRadius": 15 } }, "Cost": 7150, "DoT": null },
-            { "Damage": 4435, "Range": 15, "SPA": 5, "AOE": { "type": "patrol", "params": { "patrolRadius": 15 } }, "Cost": 8500, "DoT": null },
-            { "Damage": 5600, "Range": 15, "SPA": 5, "AOE": { "type": "patrol", "params": { "patrolRadius": 15 } }, "Cost": 10750, "DoT": null }
+            { "Damage": 305, "Range": 10, "SPA": 2, "AOE": { "type": "scouter1", "params": {} }, "Cost": 1000, "DoT": null },
+            { "Damage": 515, "Range": 10, "SPA": 2, "AOE": { "type": "scouter1", "params": {} }, "Cost": 1750, "DoT": null },
+            { "Damage": 770, "Range": 10, "SPA": 2, "AOE": { "type": "scouter1", "params": {} }, "Cost": 2500, "DoT": null },
+            { "Damage": 1075, "Range": 10, "SPA": 2, "AOE": { "type": "scouter1", "params": {} }, "Cost": 3360, "DoT": null },
+            { "Damage": 3560, "Range": 15, "SPA": 5, "AOE": { "type": "scouter1", "params": {} }, "Cost": 7150, "DoT": null },
+            { "Damage": 4435, "Range": 15, "SPA": 5, "AOE": { "type": "scouter1", "params": {} }, "Cost": 8500, "DoT": null },
+            { "Damage": 5600, "Range": 15, "SPA": 5, "AOE": { "type": "scouter1", "params": {} }, "Cost": 10750, "DoT": null }
         ]
     },
     "Ikki (Hollow)": {
