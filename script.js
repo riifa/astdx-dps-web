@@ -373,8 +373,16 @@ const calculatorApp = {
             : 'N/A';
         const placementStatusClass = placementStatus.toLowerCase().split(' ')[0];
         const rarity = unitData.Rarity || 'N/A';
+        
+        // --- START: MODIFICATION FOR ELEMENT DISPLAY ---
         const element = unitData.Element || 'N/A';
         const elementClass = element.toLowerCase();
+        let elementImageHTML = '';
+
+        if (element !== 'N/A') {
+            elementImageHTML = `<img src="images/elements/${elementClass}.png" alt="${element}" class="element-icon">`;
+        }
+        // --- END: MODIFICATION FOR ELEMENT DISPLAY ---
 
         let displayDotType = currentUpgrade.DoT || 'None';
         if (selectedUnit === 'Michishibo' && (this.state.currentUpgradeIndexes[selectedUnit] || 0) >= 8 && this.state.specialAbilities.michishiboTransparentWorldActive) {
@@ -397,6 +405,18 @@ const calculatorApp = {
         const dmgGrade = this.getStatGrade(dmgRoll, 15);
         const rngGrade = this.getStatGrade(rngRoll, 12.5);
         const spaGrade = this.getStatGrade(spaRoll, 10);
+
+        const traitName = selectedTrait;
+        let traitClass = 'traitless';
+        let traitImageHTML = '';
+
+        if (traitName && traitName !== 'Traitless') {
+            const tempName = traitName.replace(/\s*\(.*\)$/, '');
+            const baseName = tempName.replace(/\s*\d*$/, '').replace(/\s+/g, '');
+            const imageName = (baseName === 'Corrupted') ? 'Corrupt' : baseName;
+            traitClass = baseName.toLowerCase();
+            traitImageHTML = `<img src="images/traits/${imageName}.png" alt="${traitName}" class="trait-icon">`;
+        }
     
         dpsOutputSection.innerHTML = `
             <div class="hiragana-background">
@@ -414,8 +434,8 @@ const calculatorApp = {
                 </div>
                 <div class="unit-details-row">
                     <div class="level-display">Lv. ${unitLevel}</div>
-                    <div class="element-display element-${elementClass}">${element}</div>
-                    <div class="trait-display">${selectedTrait}</div>
+                    <div class="element-display element-${elementClass}">${elementImageHTML}<span>${element}</span></div>
+                    <div class="trait-display trait-display--${traitClass}">${traitImageHTML}<span>${traitName}</span></div>
                     ${(selectedUnit === 'BOX' && (this.state.currentUpgradeIndexes[selectedUnit] || 0) >= 2 && this.state.specialAbilities.boxDeterminationActive) ? `<div class="ability-display">Determination</div>` : ''}
                     ${(selectedUnit === 'Michishibo' && (this.state.currentUpgradeIndexes[selectedUnit] || 0) >= 8 && this.state.specialAbilities.michishiboTransparentWorldActive) ? `<div class="ability-display">Transparent World</div>` : ''}
                     ${(selectedUnit === 'Michishibo' && this.state.specialAbilities.michishiboLunarBlessingActive) ? `<div class="ability-display">Lunar Blessing</div>` : ''}
@@ -972,9 +992,9 @@ const calculatorApp = {
         { name: 'Zenkai 1', odds: 5 }, { name: 'Zenkai 2', odds: 7 },
         { name: 'Zenkai 3', odds: 10 }, { name: 'Midas', odds: 5 },
         { name: 'Sharpshooter', odds: 4 }, { name: 'Tempest', odds: 3 },
-        { name: 'Companion', odds: 2 }, { name: 'Bloodlust', odds: 10 },
-        { name: 'Corrupted', odds: 10 }, { name: 'Genesis', odds: 10 },
-        { name: 'All Star', odds: 10 },
+        { name: 'Companion', odds: 2 }, { name: 'Bloodlust', odds: 0.8 },
+        { name: 'Corrupted', odds: 0.8 }, { name: 'Genesis', odds: 0.7 },
+        { name: 'All Star', odds: 0.2 },
     ];
 
     const totalOdds = traitOdds.reduce((sum, trait) => sum + trait.odds, 0);

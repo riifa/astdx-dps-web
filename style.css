@@ -646,12 +646,100 @@ main {
 }
 .trait-display {
     background-color: var(--input-bg);
-    border: 1px solid #c863f9;
-    color: #e4c2ff;
+    border: 1px solid var(--border-color); /* Default border color */
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    position: relative; /* Needed for the pseudo-element trick */
+    z-index: 1; /* Sits on top */
+    overflow: hidden; /* Clips the animated border */
+}
+
+/* 2. Style for the trait icon image */
+.trait-icon {
+    height: 1.2em; /* Sizes the icon relative to the text font size */
+    width: 1.2em;
+    object-fit: contain; /* Prevents the image from stretching */
+}
+
+/* 3. Specific modifier classes to change the border and text color for each trait */
+/* Traitless - Neutral Grey */
+.trait-display--traitless { border-color: #7f8c8d; color: #bdc3c7; }
+
+.trait-display--bloodlust { border-color: #ff3838; color: #ff8080; }
+.trait-display--companion { border-color: #adff2f; color: #e2ffae; }
+.trait-display--corrupted { border-color: #9b59b6; color: #d7bde2; }
+.trait-display--dexterity { border-color: #00e0c6; color: #8ff7e9; }
+.trait-display--tempest { border-color: #00f2a4; color: #a1ffe8; }
+.trait-display--midas { border-color: #ffd700; color: #fff0a3; }
+.trait-display--sharpshooter { border-color: #e74c3c; color: #a4c8ff; }
+.trait-display--prodigy { border-color: #29b6f6; color: #b3e5fc; }
+.trait-display--perception { border-color: #00bcd4; color: #a6eaf4; }
+.trait-display--tank { border-color: #bdc3c7; color: #ecf0f1; }
+.trait-display--zenkai { border-color: #ff6f00; color: #ffcc80; }
+.trait-display--genesis { border-color: #4caf50; color: #a5d6a7; }
+
+.trait-display--allstar {
+    border-color: transparent; /* Hide the static border */
+    color: white; /* As requested */
+}
+
+/* Create an animated pseudo-element that sits behind the badge */
+.trait-display--allstar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1; /* Place it behind the content */
+    border-radius: 5px; /* Match the parent's border-radius */
+    padding: 1px; /* This creates the border thickness */
+    
+    /* The rainbow gradient background */
+    background: linear-gradient(
+        60deg,
+        #f79533, #f37055, #ef4e7b, #a166ab, 
+        #5073b8, #1098ad, #07b39b, #6fba82
+    );
+    background-size: 300% 300%;
+    animation: rainbow-flow 3s linear infinite; /* Apply the animation */
+
+    /* The magic: clip the background to only show the border */
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+}
+
+/* Re-use the rainbow-flow keyframes from rarity headers or define it here if needed */
+/* It's already in your CSS, but here it is for completeness: */
+@keyframes rainbow-flow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.element-display {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
     padding: 0.3rem 0.8rem;
     border-radius: 5px;
     font-weight: 500;
     font-size: 0.9rem;
+    text-transform: capitalize;
+    /* Added properties to support the icon */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.element-icon {
+    height: 1.2em;
+    width: 1.2em;
+    object-fit: contain;
 }
 
 .skill-tree-display {
@@ -895,16 +983,6 @@ main {
     to   { transform: translateX(-50%); }
 }
 
-
-.element-display {
-    background-color: var(--input-bg);
-    border: 1px solid var(--border-color);
-    padding: 0.3rem 0.8rem;
-    border-radius: 5px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    text-transform: capitalize;
-}
 
 /* ADD THIS near other display styles, like .trait-display */
 .element-red { border-color: #ff4d4d; color: #ff9999; }
