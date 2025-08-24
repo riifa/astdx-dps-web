@@ -374,7 +374,6 @@ const calculatorApp = {
         const placementStatusClass = placementStatus.toLowerCase().split(' ')[0];
         const rarity = unitData.Rarity || 'N/A';
         
-        // --- START: MODIFICATION FOR ELEMENT DISPLAY ---
         const element = unitData.Element || 'N/A';
         const elementClass = element.toLowerCase();
         let elementImageHTML = '';
@@ -382,7 +381,6 @@ const calculatorApp = {
         if (element !== 'N/A') {
             elementImageHTML = `<img src="images/elements/${elementClass}.png" alt="${element}" class="element-icon">`;
         }
-        // --- END: MODIFICATION FOR ELEMENT DISPLAY ---
 
         let displayDotType = currentUpgrade.DoT || 'None';
         if (selectedUnit === 'Michishibo' && (this.state.currentUpgradeIndexes[selectedUnit] || 0) >= 8 && this.state.specialAbilities.michishiboTransparentWorldActive) {
@@ -773,7 +771,7 @@ const calculatorApp = {
             }
         }
         
-        if (unitNameToCalc === 'Toji' && mainUnitUpgradeIndexForCalc >= 7) {
+        if (unitNameToCalc === 'Sorcerer Killer' && mainUnitUpgradeIndexForCalc >= 7) {
             const stacks = this.state.specialAbilities.tojiHeavenlyRestrictionStacks || 0;
             const tojiBonus = stacks * 0.0666;
             passiveMultiplier += tojiBonus;
@@ -797,21 +795,30 @@ const calculatorApp = {
         
         let dotMultiplier = 0;
         const effect = (currentUpgrade.DoT || '').toLowerCase();
-        if (effect !== "None") {
+        
+        // --- START: FIX FOR TEMPEST DOT BUG ---
+        // First, check if the unit has a base DoT effect.
+        if (effect && effect !== 'none') {
             if (effect.includes("burn")) dotMultiplier = 0.1;
             else if (effect.includes("bleed")) dotMultiplier = 0.0833;
             else if (effect.includes("poison")) dotMultiplier = 0.05;
             else if (effect.includes("shock")) dotMultiplier = 0.025;
             else if (effect.includes("blackflames")) dotMultiplier = 0.125;
 
-            if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
+            // CRITICAL: Only check for Tempest *after* a base DoT has been confirmed and applied.
+            if (dotMultiplier > 0 && traitBonus.Traits === "Tempest") {
+                dotMultiplier += 0.3;
+            }
         }
+        // --- END: FIX FOR TEMPEST DOT BUG ---
         
+        // This handles cases where an ability GRANTS a DoT.
         if (this.state.selectedUnit === 'Michishibo' && this.state.specialAbilities.michishiboTransparentWorldActive && mainUnitUpgradeIndex >= 8) {
             dotMultiplier = 0.0833; 
+            // Optional: If Tempest should also buff this ability-granted DoT, you would add the check here as well.
+            // if (traitBonus.Traits === "Tempest") dotMultiplier += 0.3;
         }
         
-
         const dotDps = (finalDamage * dotMultiplier) / 2;
         const unitDps = finalSpa > 0 ? (finalDamage / finalSpa) : 0;
         const totalIndividualDps = unitDps + dotDps;
