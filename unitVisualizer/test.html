@@ -540,7 +540,7 @@
             aoeCircle.material.map.rotation += 0.003;
         }
         if (aoeScouter2Circle.visible && figure8Curve) {
-            scouter2PathProgress += delta * 0.1;
+            scouter2PathProgress += delta * 0.075;
             if (scouter2PathProgress > 1) scouter2PathProgress -= 1;
             const newPosition = figure8Curve.getPointAt(scouter2PathProgress);
             aoeScouter2Circle.position.set(newPosition.x, aoeScouter2Circle.position.y, newPosition.z);
